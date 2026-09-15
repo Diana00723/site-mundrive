@@ -1,0 +1,826 @@
+<style>
+:root {
+    --brun-fonce: #1E130A;
+    --brun-doux: #3E2513;
+    --brun-moyen: #6B4226;
+    --or: #C1901F;
+    --or-clair: #E7BD6E;
+    --or-pale: #F4DDA8;
+    --cuivre: #A85D2E;
+    --sable: #EFE0C0;
+    --creme: #FFF8EF;
+    --texte-sombre: #211307;
+    --texte-cuivre: #8B4A22;
+    --ombre: rgba(30,19,10,0.40);
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Montserrat:wght@700;800;900&family=Inter:wght@500;600;700&display=swap');
+
+body::before {
+    content: "";
+    display: block;
+    height: 3px;
+    background: linear-gradient(90deg, transparent 0%, var(--or-clair) 15%, var(--or) 50%, var(--or-clair) 85%, transparent 100%);
+}
+
+.site-header {
+    background: linear-gradient(180deg, var(--brun-fonce) 0%, #2c1a0d 35%, #33200f 65%, var(--brun-doux) 100%) !important;
+    min-height: 180px !important;
+    height: 180px !important;
+    padding: 0 48px !important;
+    display: flex !important;
+    align-items: center !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 1000;
+    box-sizing: border-box;
+    border-bottom: 2px solid rgba(193,144,31,0.50);
+    box-shadow: 0 14px 34px var(--ombre), 0 1px 0 rgba(255,255,255,0.04) inset;
+}
+
+header nav {
+    margin-left: auto !important;
+    display: flex;
+    align-items: center;
+}
+
+header nav a {
+    color: var(--or) !important;
+    font-weight: 700 !important;
+    font-size: 16px !important;
+    letter-spacing: 1.8px !important;
+    text-transform: uppercase !important;
+    font-style: italic !important;
+    text-decoration: none !important;
+    position: relative;
+    padding: 12px 16px 10px !important;
+    margin: 0 !important;
+    transition: color 0.35s cubic-bezier(.22,1,.36,1), transform 0.35s cubic-bezier(.22,1,.36,1), text-shadow 0.35s ease !important;
+}
+
+header nav a::after {
+    content: "";
+    position: absolute;
+    left: 16px;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--or) 0%, var(--or-clair) 50%, var(--or) 100%);
+    box-shadow: 0 0 8px rgba(231,189,110,0.4);
+    transition: width 0.4s cubic-bezier(.22,1,.36,1);
+}
+
+header nav a:hover::after, header nav .current-menu-item > a::after {
+    width: calc(100% - 32px);
+}
+
+header nav a:hover {
+    color: var(--or-clair) !important;
+    transform: translateY(-2px);
+    text-shadow: 0 0 10px rgba(231,189,110,0.55), 0 0 22px rgba(231,189,110,0.2);
+}
+
+header nav .current-menu-item > a {
+    color: var(--or-clair) !important;
+    text-shadow: 0 0 9px rgba(231,189,110,0.45);
+}
+
+header nav li {
+    position: relative;
+}
+
+header nav li:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    right: 0; top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 14px;
+    background: rgba(193,144,31,0.3);
+}
+
+.site-header::after {
+    content: "";
+    position: absolute;
+    left: 48px;
+    right: 48px;
+    bottom: 0;
+    height: 3px;
+    border-radius: 3px;
+    background: linear-gradient(90deg, transparent 0%, rgba(193,144,31,0.25) 8%, var(--or) 30%, var(--or-clair) 50%, var(--or) 70%, rgba(193,144,31,0.25) 92%, transparent 100%);
+    box-shadow: 0 0 10px rgba(231,189,110,0.28);
+}
+
+body {
+    background: linear-gradient(180deg, var(--creme) 0%, #FBE6C4 22%, #F3C99B 46%, #E4A26A 70%, #C9814F 100%) !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+}
+
+.elementor-widget-video iframe,
+.elementor-widget-video .elementor-wrapper,
+.elementor-video-iframe {
+    border-radius: 16px !important;
+    border: 2px solid var(--or) !important;
+    box-shadow: 0 14px 32px var(--ombre), 0 0 0 1px rgba(231,189,110,0.12) !important;
+    overflow: hidden !important;
+}
+
+.site-footer {
+    background: linear-gradient(180deg, var(--brun-doux) 0%, var(--brun-fonce) 100%) !important;
+    color: var(--sable) !important;
+    padding: 65px 48px !important;
+    border-top: 2px solid rgba(231,189,110,0.25);
+}
+
+.site-footer a {
+    color: var(--or) !important;
+    text-decoration: none !important;
+    transition: color 0.3s ease;
+}
+
+.site-footer a:hover {
+    color: var(--or-clair) !important;
+}
+
+.page-header .entry-title {
+    display: none !important;
+}
+
+.site-title,
+.site-title a {
+    font-family: 'Montserrat', sans-serif !important;
+    font-weight: 900 !important;
+    font-size: 34px !important;
+    letter-spacing: 1.5px !important;
+    color: var(--or-pale) !important;
+    text-decoration: none !important;
+    filter: drop-shadow(0 3px 6px rgba(0,0,0,0.45));
+    transition: transform 0.35s cubic-bezier(.22,1,.36,1), filter 0.35s ease;
+}
+
+.site-title a {
+    position: relative !important;
+    display: inline-block !important;
+}
+
+.site-title a:hover {
+    transform: scale(1.03);
+    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.55)) drop-shadow(0 0 16px rgba(231,189,110,0.35));
+}
+
+.site-title a::before {
+    content: "";
+    position: absolute !important;
+    left: 146px !important;
+    top: -16px !important;
+    width: 20px;
+    height: 20px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Ccircle cx='9' cy='9' r='7.7' fill='none' stroke='%23f4dda8' stroke-width='1.8'/%3E%3Ccircle cx='9' cy='9' r='1.9' fill='%23f4dda8'/%3E%3Cline x1='9' y1='1.5' x2='9' y2='7' stroke='%23f4dda8' stroke-width='1.8'/%3E%3Cline x1='9' y1='9' x2='3.4' y2='13.1' stroke='%23f4dda8' stroke-width='1.8'/%3E%3Cline x1='9' y1='9' x2='14.6' y2='13.1' stroke='%23f4dda8' stroke-width='1.8'/%3E%3C/svg%3E");
+}
+
+.site-description {
+    display: block !important;
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 600 !important;
+    font-size: 10px !important;
+    letter-spacing: 3px !important;
+    color: rgba(231,189,110,0.65) !important;
+    margin-top: 4px !important;
+    margin-left: 2px !important;
+    text-transform: uppercase !important;
+}
+
+.page-header {
+    padding: 0 !important;
+    margin: 0 !important;
+    min-height: 0 !important;
+    height: 0 !important;
+}
+
+.site-main,
+#content,
+.entry-content,
+.elementor {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+.site-main > *:first-child,
+#content > *:first-child {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+@media (max-width: 767px) {
+    .site-title,
+    .site-title a {
+        font-size: 26px !important;
+    }
+
+    .site-title a::before {
+        left: 112px !important;
+        top: -13px !important;
+        width: 16px;
+        height: 16px;
+    }
+}
+
+/* ---------- Page "À propos" ---------- */
+
+.mundrive-flow {
+    font-family: 'Inter', sans-serif;
+}
+
+.mundrive-flow section {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    margin-left: -50vw;
+    padding: 84px 0;
+}
+
+.mundrive-flow .contenu {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 44px;
+    box-sizing: border-box;
+}
+
+.mundrive-flow .fond-clair {
+    background: linear-gradient(175deg, var(--creme) 0%, #FBE7CB 28%, #F3D0A6 55%, #E2A96E 80%, #C9814F 100%);
+    background-size: 100vw 100%;
+}
+
+.mundrive-flow .fond-sombre {
+    background: linear-gradient(155deg, var(--brun-fonce) 0%, var(--brun-doux) 100%);
+    background-size: 100vw 100%;
+    position: relative;
+}
+
+.mundrive-flow .fond-sombre::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 45% at 50% 0%, rgba(231,189,110,0.08) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.mundrive-flow .bande-transition {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    margin-left: -50vw;
+    height: 160px;
+}
+
+.mundrive-flow .vers-clair {
+    background: linear-gradient(
+        180deg,
+        #3e2513 0%,
+        #4a2d17 8%,
+        #573521 15%,
+        #64401f 22%,
+        #714b23 29%,
+        #7f5729 36%,
+        #8d6330 43%,
+        #9b6f38 50%,
+        #aa7c40 57%,
+        #b98949 63%,
+        #c89653 68%,
+        #d6a35e 74%,
+        #e2b06d 79%,
+        #ecbc7e 84%,
+        #f3c791 88%,
+        #f8d2a4 92%,
+        #fbdcb5 95%,
+        #fce5c5 98%,
+        #f3d0a6 100%
+    );
+}
+
+.mundrive-flow .vers-sombre {
+    background: linear-gradient(
+        180deg,
+        #c9814f 0%,
+        #bd7a49 8%,
+        #b17342 15%,
+        #a46b3c 22%,
+        #986436 29%,
+        #8c5d30 36%,
+        #7f552b 43%,
+        #734e26 50%,
+        #674721 62%,
+        #5a3f1c 68%,
+        #4e3817 74%,
+        #43311a 80%,
+        #392a1a 86%,
+        #322419 91%,
+        #2e211a 95%,
+        #241608 98%,
+        #1e130a 100%
+    );
+}
+
+.mundrive-flow p,
+.mundrive-flow li,
+.mundrive-flow h2,
+.mundrive-flow h3 {
+    color: var(--texte-sombre);
+}
+
+.mundrive-flow .fond-sombre p,
+.mundrive-flow .fond-sombre li,
+.mundrive-flow .fond-sombre h2,
+.mundrive-flow .fond-sombre h3 {
+    color: var(--sable) !important;
+}
+
+.mundrive-flow .eyebrow {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--cuivre);
+    margin-bottom: 14px;
+}
+
+.mundrive-flow .fond-sombre .eyebrow {
+    color: var(--or-clair);
+}
+
+.mundrive-flow h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    font-size: 26px;
+    letter-spacing: 0.2px;
+    margin: 0 0 32px;
+    position: relative;
+    padding-bottom: 18px;
+}
+
+.mundrive-flow h2::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 46px;
+    height: 3px;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--or) 0%, var(--or-clair) 100%);
+}
+
+.mundrive-flow h2[style*="center"]::after {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.mundrive-flow .fond-sombre h2 {
+    color: var(--or-pale) !important;
+}
+
+.mundrive-flow .accroche {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 1.5;
+    color: var(--texte-sombre);
+    max-width: 640px;
+    margin-bottom: 28px;
+}
+
+.mundrive-flow .texte-premium p {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 15.5px;
+    line-height: 1.85;
+    letter-spacing: 0.1px;
+    color: var(--texte-sombre);
+    margin: 0 0 20px;
+}
+
+.mundrive-flow .texte-premium p:last-child {
+    margin-bottom: 0;
+}
+
+.mundrive-flow .texte-premium strong {
+    color: var(--texte-sombre);
+    font-weight: 800;
+}
+
+.mundrive-flow .conclusion {
+    margin-top: 30px;
+    padding: 22px 0 0 24px;
+    border-top: 1px solid rgba(33,19,7,0.15);
+    position: relative;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--texte-cuivre);
+    max-width: 580px;
+}
+
+.mundrive-flow .conclusion::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 22px;
+    width: 3px;
+    height: calc(100% - 22px);
+    border-radius: 3px;
+    background: linear-gradient(180deg, var(--or) 0%, var(--or-clair) 100%);
+}
+
+.mundrive-flow .citation-hero {
+    text-align: right;
+    max-width: 540px;
+    margin: 0 0 48px auto;
+    position: relative;
+    padding-top: 8px;
+}
+
+.mundrive-flow .citation-hero::before {
+    content: "\201D";
+    display: block;
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 64px;
+    line-height: 1;
+    color: var(--or);
+    opacity: 0.55;
+    margin-bottom: -14px;
+}
+
+.mundrive-flow .citation-hero p {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--texte-sombre);
+}
+
+.mundrive-flow .citation-hero .signature {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--cuivre);
+    margin-top: 12px;
+}
+
+.mundrive-flow .liste-articles {
+    border-top: 1px solid rgba(231,189,110,0.2);
+}
+
+.mundrive-flow .article-item {
+    display: flex;
+    align-items: center;
+    gap: 26px;
+    padding: 26px 18px;
+    margin: 0 -18px;
+    border-bottom: 1px solid rgba(231,189,110,0.15);
+    border-radius: 10px;
+    text-decoration: none;
+    transition: background-color 0.35s ease, transform 0.35s cubic-bezier(.22,1,.36,1);
+}
+
+a.article-item:hover {
+    background-color: rgba(231,189,110,0.08);
+    transform: translateX(4px);
+}
+
+.mundrive-flow .fond-clair a.article-item:hover {
+    background-color: rgba(33,19,7,0.045);
+}
+
+.mundrive-flow .article-num {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid rgba(231,189,110,0.35);
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: rgba(239,224,192,0.75);
+    transition: border-color 0.35s ease, color 0.35s ease;
+}
+
+.mundrive-flow .fond-clair .article-num {
+    border-color: rgba(33,19,7,0.2);
+    color: var(--texte-cuivre);
+}
+
+a.article-item:hover .article-num {
+    border-color: var(--or);
+    color: var(--or-clair);
+}
+
+.mundrive-flow .fond-clair a.article-item:hover .article-num {
+    border-color: var(--or);
+    color: var(--cuivre);
+}
+
+.mundrive-flow .article-titre {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 16px;
+    letter-spacing: 0.1px;
+    margin-bottom: 6px;
+    transition: color 0.3s ease;
+}
+
+.mundrive-flow .fond-sombre .article-titre {
+    color: var(--sable);
+}
+
+a.article-item:hover .article-titre {
+    color: var(--or-clair);
+}
+
+.mundrive-flow .fond-clair a.article-item:hover .article-titre {
+    color: var(--cuivre);
+}
+
+.mundrive-flow .article-desc {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: var(--texte-cuivre);
+}
+
+.mundrive-flow .fond-sombre .article-desc {
+    color: rgba(250,241,227,0.65);
+}
+
+.mundrive-flow .article-fleche {
+    font-size: 20px;
+    color: var(--or);
+    flex-shrink: 0;
+    align-self: center;
+    transition: transform 0.35s cubic-bezier(.22,1,.36,1);
+}
+
+a.article-item:hover .article-fleche {
+    transform: translateX(6px);
+}
+
+.mundrive-flow .btn-contour {
+    display: inline-block;
+    border: 2px solid var(--texte-sombre);
+    color: var(--texte-sombre) !important;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    padding: 15px 32px;
+    border-radius: 2px;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    transition: color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.mundrive-flow .btn-contour::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--texte-sombre);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s cubic-bezier(.22,1,.36,1);
+    z-index: -1;
+}
+
+.mundrive-flow .btn-contour:hover {
+    color: var(--creme) !important;
+    box-shadow: 0 10px 26px var(--ombre);
+}
+
+.mundrive-flow .btn-contour:hover::before {
+    transform: scaleX(1);
+}
+
+.mundrive-flow .fond-sombre .btn-contour {
+    border-color: var(--or-clair);
+    color: var(--or-clair) !important;
+}
+
+.mundrive-flow .fond-sombre .btn-contour::before {
+    background: var(--or-clair);
+}
+
+.mundrive-flow .fond-sombre .btn-contour:hover {
+    color: var(--brun-fonce) !important;
+}
+
+.mundrive-flow .fond-sombre a {
+    color: var(--or) !important;
+}
+
+.mundrive-flow .liens-sociaux {
+    margin-top: 36px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(231,189,110,0.2);
+    list-style: none;
+    padding-left: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.mundrive-flow .liens-sociaux a {
+    display: inline-block;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.3px;
+    padding: 10px 18px;
+    border: 1px solid rgba(231,189,110,0.3);
+    border-radius: 999px;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.mundrive-flow .liens-sociaux a:hover {
+    border-color: var(--or-clair);
+    background-color: rgba(231,189,110,0.08);
+}
+
+@media (max-width: 767px) {
+    .mundrive-flow section {
+        padding: 56px 0;
+    }
+
+    .mundrive-flow .contenu {
+        padding: 0 24px;
+    }
+
+    .mundrive-flow .bande-transition {
+        height: 90px;
+    }
+
+    .mundrive-flow .accroche {
+        font-size: 20px;
+    }
+
+    .mundrive-flow .citation-hero {
+        text-align: left;
+        margin: 0 0 36px 0;
+    }
+
+    .mundrive-flow .citation-hero::before {
+        margin-bottom: -8px;
+    }
+
+    .mundrive-flow .article-item {
+        gap: 16px;
+        padding: 20px 12px;
+        margin: 0 -12px;
+    }
+
+    .mundrive-flow .article-num {
+        width: 32px;
+        height: 32px;
+        font-size: 11px;
+    }
+}
+</style>
+
+<div class="mundrive-flow">
+
+  <section class="fond-clair">
+    <div class="contenu">
+      <div class="citation-hero">
+        <p>Des conseils qui viennent du terrain chaque semaine, un catalogue de pièces mis à jour tous les jours, et Diego, l'assistant IA pour répondre à vos questions et vous aider à choisir la bonne pièce compatible avec votre véhicule.</p>
+        <div class="signature">— CEO MUNDRIVE</div>
+      </div>
+
+      <span class="eyebrow">Notre histoire</span>
+      <h2>À propos de nous</h2>
+
+      <div class="accroche">Mundrive, c'est l'histoire d'une passion pour l'automobile née dans un garage, et transmise de génération en génération.</div>
+
+      <div class="texte-premium">
+        <p>Je suis <strong>Pedro</strong>, expert en entretien automobile, fils de mécanicien. La voiture n'a jamais été un simple objet chez moi : c'est un métier, un héritage, un savoir-faire appris geste après geste dans l'atelier familial.</p>
+
+        <p>Avec Mundrive, j'ai voulu faire vivre cette expérience autrement : <strong>des conseils clairs, des pièces choisies avec exigence</strong>, et une approche honnête de l'entretien automobile.</p>
+
+        <p><strong>Diana</strong>, rédactrice spécialisée dans l'automobile, vous accompagne chaque semaine avec des articles précis et accessibles, pour comprendre votre voiture sans jamais perdre de vue votre budget.</p>
+      </div>
+
+      <div class="conclusion">Notre ambition tient en une phrase : vous transmettre ce que nous avons appris, pour que vous rouliez l'esprit tranquille.</div>
+    </div>
+  </section>
+
+  <div class="bande-transition vers-sombre"></div>
+
+  <section class="fond-sombre">
+    <div class="contenu">
+      <span class="eyebrow">Récits & conseils</span>
+      <h2>Le journal Mundrive</h2>
+
+      <div class="liste-articles">
+        <a href="https://www.mundrive.com/#" class="article-item">
+          <div class="article-num">01</div>
+          <div style="flex: 1;">
+            <div class="article-titre">Entretenir sa voiture sans se ruiner</div>
+            <div class="article-desc">Les gestes simples pour <strong>prolonger la vie de votre véhicule</strong> tout en maîtrisant votre budget.</div>
+          </div>
+          <div class="article-fleche">→</div>
+        </a>
+
+        <a href="https://www.mundrive.com/#" class="article-item">
+          <div class="article-num">02</div>
+          <div style="flex: 1;">
+            <div class="article-titre">Les erreurs à éviter chez le garagiste</div>
+            <div class="article-desc">Comment mieux comprendre les devis et <strong>poser les bonnes questions</strong> avant de valider une réparation.</div>
+          </div>
+          <div class="article-fleche">→</div>
+        </a>
+
+        <a href="https://www.mundrive.com/#" class="article-item" style="border-bottom: none;">
+          <div class="article-num">03</div>
+          <div style="flex: 1;">
+            <div class="article-titre">Préparer sa voiture pour un long trajet</div>
+            <div class="article-desc">Une checklist simple et efficace pour <strong>partir sereinement</strong>, sans mauvaise surprise sur la route.</div>
+          </div>
+          <div class="article-fleche">→</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="bande-transition vers-clair"></div>
+
+  <section class="fond-clair" style="text-align: center;">
+    <div class="contenu">
+      <span class="eyebrow" style="text-align:center;">Restez informé</span>
+      <h2 style="text-align: center;">La newsletter</h2>
+      <p style="max-width: 480px; margin: 0 auto 28px; font-size: 15px; line-height: 1.75; color: var(--texte-cuivre);">Pourquoi s'abonner ? Recevez chaque semaine notre dernier article automobile directement dans votre boîte mail. C'est gratuit, ça prend dix secondes, et vous repartez avec <strong style="color: var(--texte-sombre);">un code de bienvenue</strong> plus des offres tout au long de l'année.</p>
+      <a href="https://www.mundrive.com/#" class="btn-contour">S'abonner à la newsletter</a>
+    </div>
+  </section>
+
+  <section class="fond-clair">
+    <div class="contenu">
+      <span class="eyebrow">Vos questions</span>
+      <h2>Questions fréquentes</h2>
+
+      <div class="liste-articles">
+        <div class="article-item">
+          <div style="flex: 1;">
+            <div class="article-titre">Livrez-vous partout en France ?</div>
+            <div class="article-desc">Oui, nous livrons partout en France métropolitaine, <strong>généralement entre 2 et 5 jours ouvrés</strong>.</div>
+          </div>
+        </div>
+
+        <div class="article-item">
+          <div style="flex: 1;">
+            <div class="article-titre">Comment savoir si une pièce est compatible avec mon véhicule ?</div>
+            <div class="article-desc">Chaque fiche produit indique les véhicules compatibles. En cas de doute, <strong>Diego, l'assistant IA, répond à vos questions</strong> et vous aide à choisir la bonne pièce avec votre marque, modèle et année.</div>
+          </div>
+        </div>
+
+        <div class="article-item" style="border-bottom: none;">
+          <div style="flex: 1;">
+            <div class="article-titre">Puis-je retourner un produit s'il ne convient pas ?</div>
+            <div class="article-desc">Oui, vous disposez de <strong>14 jours après réception</strong> pour un retour.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="bande-transition vers-sombre"></div>
+
+  <section class="fond-sombre">
+    <div class="contenu">
+      <span class="eyebrow">Contact</span>
+      <h2>Parlons de votre automobile</h2>
+      <p style="max-width: 520px;">Une question sur une pièce, un doute sur un devis ? Mundrive vous répond avec <strong>une approche honnête et basée sur l'expérience terrain</strong>.</p>
+      <a href="https://www.mundrive.com/#" class="btn-contour" style="margin-top: 8px;">Discuter avec Mundrive</a>
+
+      <ul class="liens-sociaux">
+        <li><a href="https://www.mundrive.com/#">Instagram · @mundrive_auto</a></li>
+        <li><a href="https://www.mundrive.com/#">YouTube · Mundrive Automobile</a></li>
+        <li><a href="https://www.mundrive.com/#">Newsletter · conseils & promos</a></li>
+      </ul>
+    </div>
+  </section>
+
+</div>
