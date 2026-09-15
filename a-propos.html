@@ -259,17 +259,17 @@ body {
 }
 
 /* ============================================================
-   PAGE "À PROPOS" — traitement épuré, premium, e-commerce
+   PAGE "À PROPOS" — épuré, moderne, dégradé chaleureux, e-commerce
    ================================================================ */
 
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;1,9..144,500&family=Montserrat:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap');
 
 .mundrive-flow {
-    --creme: #FBF6EC;
+    --creme: #FFFBF3;
     --texte: #2b1a10;
     --texte-att: #7A5B3C;
     --ligne: rgba(43,26,16,0.12);
-    --ligne-sombre: rgba(224,178,90,0.18);
+    --ligne-sombre: rgba(224,178,90,0.2);
     font-family: 'Inter', sans-serif;
 }
 
@@ -288,18 +288,27 @@ body {
 }
 
 .mundrive-flow .contenu {
-    max-width: 900px;
+    max-width: 1040px;
     margin: 0 auto;
     padding: 0 48px;
     box-sizing: border-box;
 }
 
 .mundrive-flow .fond-clair {
-    background: var(--creme);
+    background: linear-gradient(160deg, #FFFBF3 0%, #FBEED2 45%, #F3D9AE 100%);
 }
 
 .mundrive-flow .fond-sombre {
-    background: var(--brun-fonce);
+    background: linear-gradient(160deg, var(--brun-fonce) 0%, #3d2513 55%, var(--brun-doux) 100%);
+    position: relative;
+}
+
+.mundrive-flow .fond-sombre::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 55% at 50% 0%, rgba(224,178,90,0.08) 0%, transparent 70%);
+    pointer-events: none;
 }
 
 .mundrive-flow .separateur {
@@ -373,17 +382,48 @@ body {
 .mundrive-flow h2 {
     font-family: 'Montserrat', sans-serif;
     font-weight: 800;
-    font-size: 25px;
+    font-size: 27px;
     letter-spacing: 0.2px;
-    margin: 0 0 40px;
+    margin: 0 0 24px;
+    padding-bottom: 16px;
+    position: relative;
+}
+
+.mundrive-flow h2::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 44px;
+    height: 3px;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--or) 0%, var(--or-clair) 100%);
+}
+
+.mundrive-flow h2[style*="center"]::after {
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 /* -- citation -- */
 .mundrive-flow .citation-hero {
-    max-width: 620px;
-    margin: 0 0 64px;
-    padding-left: 22px;
+    max-width: 680px;
+    margin: 0 0 56px;
+    position: relative;
+    padding-left: 26px;
     border-left: 2px solid var(--or);
+}
+
+.mundrive-flow .citation-hero::before {
+    content: "\201C";
+    position: absolute;
+    left: -6px;
+    top: -22px;
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 40px;
+    color: var(--or);
+    opacity: 0.45;
 }
 
 .mundrive-flow .citation-hero p {
@@ -407,15 +447,22 @@ body {
     margin-top: 14px;
 }
 
+/* -- bloc histoire + vidéo -- */
+.mundrive-flow .histoire-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 56px;
+    align-items: stretch;
+}
+
 .mundrive-flow .accroche {
     font-family: 'Fraunces', serif;
     font-style: italic;
     font-weight: 500;
-    font-size: 23px;
+    font-size: 22px;
     line-height: 1.5;
     color: var(--texte);
-    max-width: 600px;
-    margin-bottom: 28px;
+    margin-bottom: 26px;
 }
 
 .mundrive-flow .texte-premium p {
@@ -424,7 +471,6 @@ body {
     font-size: 15px;
     line-height: 1.85;
     color: var(--texte);
-    max-width: 620px;
     margin: 0 0 18px;
 }
 
@@ -438,8 +484,8 @@ body {
 }
 
 .mundrive-flow .conclusion {
-    margin-top: 36px;
-    padding-top: 24px;
+    margin-top: 32px;
+    padding-top: 22px;
     border-top: 1px solid var(--ligne);
     font-family: 'Fraunces', serif;
     font-style: italic;
@@ -447,7 +493,54 @@ body {
     font-size: 16px;
     line-height: 1.6;
     color: var(--texte-att);
-    max-width: 560px;
+}
+
+.mundrive-flow .histoire-video {
+    position: relative;
+}
+
+.mundrive-flow .video-placeholder {
+    height: 100%;
+    min-height: 340px;
+    border-radius: 15px;
+    border: 2px solid var(--or);
+    box-shadow: 0 10px 28px rgba(43,26,16,0.42), 0 0 0 1px rgba(224,178,90,0.1);
+    background: linear-gradient(160deg, var(--brun-fonce) 0%, var(--brun-doux) 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    text-align: center;
+    overflow: hidden;
+    text-decoration: none;
+}
+
+.mundrive-flow .video-placeholder .lecture {
+    width: 62px;
+    height: 62px;
+    border-radius: 50%;
+    border: 2px solid var(--or-clair);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--or-clair);
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.mundrive-flow .video-placeholder:hover .lecture {
+    background: rgba(224,178,90,0.14);
+    transform: scale(1.07);
+}
+
+.mundrive-flow .video-placeholder span {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--sable);
+    max-width: 230px;
 }
 
 /* -- listes (journal / FAQ) -- */
@@ -608,7 +701,7 @@ body {
 
 .mundrive-flow .newsletter-form input:focus {
     outline: none;
-    background: rgba(191,134,23,0.06);
+    background: rgba(191,134,23,0.08);
 }
 
 .mundrive-flow .newsletter-form button {
@@ -640,7 +733,9 @@ body {
 
 /* -- CTA -- */
 .mundrive-flow .btn-plein {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
     background: var(--or);
     color: var(--brun-fonce) !important;
     font-family: 'Inter', sans-serif;
@@ -650,11 +745,12 @@ body {
     letter-spacing: 1px;
     padding: 15px 30px;
     text-decoration: none;
-    transition: background-color 0.25s ease;
+    transition: background-color 0.25s ease, transform 0.25s ease;
 }
 
 .mundrive-flow .btn-plein:hover {
     background: var(--or-clair);
+    transform: translateX(3px);
 }
 
 .mundrive-flow .liens-sociaux {
@@ -691,6 +787,17 @@ body {
     color: var(--or-clair) !important;
 }
 
+@media (max-width: 900px) {
+    .mundrive-flow .histoire-grid {
+        grid-template-columns: 1fr;
+        gap: 36px;
+    }
+
+    .mundrive-flow .video-placeholder {
+        min-height: 260px;
+    }
+}
+
 @media (max-width: 767px) {
     .mundrive-flow section {
         padding: 60px 0;
@@ -701,7 +808,7 @@ body {
     }
 
     .mundrive-flow h2 {
-        font-size: 21px;
+        font-size: 22px;
     }
 
     .mundrive-flow .accroche {
@@ -740,20 +847,33 @@ body {
         <span class="signature">— CEO Mundrive</span>
       </div>
 
-      <span class="kicker">Notre histoire</span>
-      <h2>À propos de nous</h2>
+      <div class="histoire-grid">
+        <div class="histoire-texte">
+          <h2>À propos de nous</h2>
 
-      <div class="accroche">Mundrive, c'est l'histoire d'une passion pour l'automobile née dans un garage, et transmise de génération en génération.</div>
+          <div class="accroche">Mundrive, c'est l'histoire d'une passion pour l'automobile née dans un garage, et transmise de génération en génération.</div>
 
-      <div class="texte-premium">
-        <p>Je suis <strong>Pedro</strong>, expert en entretien automobile, fils de mécanicien. La voiture n'a jamais été un simple objet chez moi : c'est un métier, un héritage, un savoir-faire appris geste après geste dans l'atelier familial.</p>
+          <div class="texte-premium">
+            <p>Je suis <strong>Pedro</strong>, expert en entretien automobile, fils de mécanicien. La voiture n'a jamais été un simple objet chez moi : c'est un métier, un héritage, un savoir-faire appris geste après geste dans l'atelier familial.</p>
 
-        <p>Avec Mundrive, j'ai voulu faire vivre cette expérience autrement : <strong>des conseils clairs, des pièces choisies avec exigence</strong>, et une approche honnête de l'entretien automobile.</p>
+            <p>Avec Mundrive, j'ai voulu faire vivre cette expérience autrement : <strong>des conseils clairs, des pièces choisies avec exigence</strong>, et une approche honnête de l'entretien automobile.</p>
 
-        <p><strong>Diana</strong>, rédactrice spécialisée dans l'automobile, vous accompagne chaque semaine avec des articles précis et accessibles, pour comprendre votre voiture sans jamais perdre de vue votre budget.</p>
+            <p><strong>Diana</strong>, rédactrice spécialisée dans l'automobile, vous accompagne chaque semaine avec des articles précis et accessibles, pour comprendre votre voiture sans jamais perdre de vue votre budget.</p>
+          </div>
+
+          <div class="conclusion">Notre ambition tient en une phrase : vous transmettre ce que nous avons appris, pour que vous rouliez l'esprit tranquille.</div>
+        </div>
+
+        <div class="histoire-video">
+          <!-- Remplacer ce bloc par le widget vidéo Elementor (même style : bordure et radius déjà définis plus haut dans .elementor-widget-video) -->
+          <a href="#" class="video-placeholder">
+            <span class="lecture">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </span>
+            <span>Vidéo de présentation — nos ateliers</span>
+          </a>
+        </div>
       </div>
-
-      <div class="conclusion">Notre ambition tient en une phrase : vous transmettre ce que nous avons appris, pour que vous rouliez l'esprit tranquille.</div>
     </div>
   </section>
 
@@ -800,7 +920,7 @@ body {
     <div class="contenu">
       <span class="kicker">Restez informé</span>
       <h2>La newsletter</h2>
-      <p style="max-width: 460px; margin: -18px auto 32px; font-size: 14.5px; line-height: 1.75; color: var(--texte-att);">Recevez chaque semaine notre dernier article automobile, un code de bienvenue et nos offres tout au long de l'année.</p>
+      <p style="max-width: 460px; margin: 0 auto 32px; font-size: 14.5px; line-height: 1.75; color: var(--texte-att);">Recevez chaque semaine notre dernier article automobile, un code de bienvenue et nos offres tout au long de l'année.</p>
 
       <form class="newsletter-form" onsubmit="return false;">
         <label for="newsletter-email" style="position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0);">Adresse email</label>
@@ -841,8 +961,8 @@ body {
     <div class="contenu">
       <span class="kicker">Contact</span>
       <h2>Parlons de votre automobile</h2>
-      <p style="max-width: 480px; margin: -18px 0 32px; font-size: 14.5px; line-height: 1.75; color: rgba(232,213,176,0.75);">Une question sur une pièce, un doute sur un devis ? Mundrive vous répond avec une approche honnête et basée sur l'expérience terrain.</p>
-      <a href="https://www.mundrive.com/#" class="btn-plein">Discuter avec Mundrive</a>
+      <p style="max-width: 480px; margin: 0 0 32px; font-size: 14.5px; line-height: 1.75; color: rgba(232,213,176,0.75);">Une question sur une pièce, un doute sur un devis ? Mundrive vous répond avec une approche honnête et basée sur l'expérience terrain.</p>
+      <a href="https://www.mundrive.com/#" class="btn-plein">Discuter avec Mundrive <span aria-hidden="true">→</span></a>
 
       <ul class="liens-sociaux">
         <li><a href="https://www.mundrive.com/#">Instagram · @mundrive_auto</a></li>
