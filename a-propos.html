@@ -332,7 +332,7 @@ body {
 }
 
 .mundrive-flow .fond-sombre {
-    background: linear-gradient(160deg, var(--brun-fonce) 0%, #7A3B16 55%, var(--brun-doux) 100%);
+    background: linear-gradient(160deg, var(--brun-fonce) 0%, #8A3D1B 40%, #CB7530 55%, #8A3D1B 70%, var(--brun-doux) 100%);
     position: relative;
 }
 
@@ -352,18 +352,16 @@ body {
     height: 220px;
     background: linear-gradient(180deg,
         #F3D9AE 0%,
-        #EFCE9C 10%,
-        #ECC994 18%,
-        #E2B87A 28%,
-        #D5A462 38%,
-        #C48D4E 48%,
-        #B87F42 56%,
-        #AE723C 64%,
-        #986232 72%,
-        #8F5527 78%,
-        #7A4620 86%,
-        #6B3416 92%,
-        #4F2710 97%,
+        #EFC989 10%,
+        #EAB566 20%,
+        #E39F49 30%,
+        #D88736 40%,
+        #CB7530 45%,
+        #B7642B 55%,
+        #9C5225 65%,
+        #82401D 75%,
+        #653016 85%,
+        #4F2710 93%,
         #431F0D 100%
     );
 }
@@ -376,19 +374,16 @@ body {
     height: 220px;
     background: linear-gradient(180deg,
         #7C3D1B 0%,
-        #85431F 6%,
-        #93502A 14%,
-        #A06136 22%,
-        #AE723C 28%,
-        #B87F42 36%,
-        #C48D4E 42%,
-        #D5A462 56%,
-        #E2B87A 70%,
-        #ECC994 78%,
-        #EFCE9C 84%,
-        #F3D9AE 90%,
-        #F8E5C1 95%,
-        #FAEAD4 97%,
+        #8A451F 8%,
+        #9C5225 18%,
+        #B7642B 28%,
+        #CB7530 38%,
+        #D88736 48%,
+        #E39F49 58%,
+        #EAB566 68%,
+        #EFC989 78%,
+        #F3D9AE 88%,
+        #F8E7C7 95%,
         #FFFBF3 100%
     );
 }
@@ -835,6 +830,34 @@ body {
     transform: translateX(3px);
 }
 
+.mundrive-flow .cta-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 28px;
+    margin-top: 8px;
+}
+
+.mundrive-flow .btn-texte {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--or-clair);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.25s ease, color 0.25s ease;
+}
+
+.mundrive-flow .btn-texte:hover {
+    color: var(--sable);
+    border-bottom-color: var(--or-clair);
+}
+
 .mundrive-flow .liens-sociaux {
     margin-top: 40px;
     padding-top: 24px;
@@ -945,6 +968,16 @@ body {
 
     .mundrive-flow .btn-plein {
         width: 100%;
+        justify-content: center;
+    }
+
+    .mundrive-flow .cta-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+    }
+
+    .mundrive-flow .btn-texte {
         justify-content: center;
     }
 
@@ -1128,10 +1161,14 @@ body {
 
   <section class="fond-sombre">
     <div class="contenu">
-      <span class="kicker">Contact</span>
+      <span class="kicker">Contact & boutique</span>
       <h2>Parlons de votre automobile</h2>
-      <p style="max-width: 480px; margin: 0 0 32px; font-size: 14.5px; line-height: 1.75; color: rgba(232,213,176,0.75);">Une question sur une pièce, un doute sur un devis ? Mundrive vous répond avec une approche honnête et basée sur l'expérience terrain.</p>
-      <a href="https://www.mundrive.com/#" class="btn-plein">Discuter avec Mundrive <span aria-hidden="true">→</span></a>
+      <p style="max-width: 480px; margin: 0 0 32px; font-size: 14.5px; line-height: 1.75; color: rgba(232,213,176,0.75);">Une question sur une pièce, un doute sur un devis ? Mundrive vous répond avec une approche honnête et basée sur l'expérience terrain. Retrouvez aussi tout notre catalogue de pièces certifiées, sélectionnées avec la même exigence que nos conseils.</p>
+
+      <div class="cta-row">
+        <a href="https://www.mundrive.com/#" class="btn-plein">Voir la boutique <span aria-hidden="true">→</span></a>
+        <a href="https://www.mundrive.com/#" class="btn-texte">Discuter avec Mundrive <span aria-hidden="true">→</span></a>
+      </div>
 
       <ul class="liens-sociaux">
         <li><a href="https://www.mundrive.com/#">Instagram · @mundrive_auto</a></li>
