@@ -52,14 +52,49 @@
     pointer-events: none;
 }
 
-.mundrive-flow .separateur {
+.mundrive-flow .transition-vers-sombre {
     width: 100vw;
     position: relative;
     left: 50%;
     margin-left: -50vw;
-    height: 1px;
-    background: linear-gradient(90deg, transparent 0%, var(--or) 50%, transparent 100%);
-    opacity: 0.55;
+    height: 130px;
+    background: linear-gradient(180deg,
+        #F3D9AE 0%,
+        #ECC994 14%,
+        #E2B87A 28%,
+        #D5A462 42%,
+        #C48D4E 56%,
+        #AE723C 70%,
+        #8F5527 84%,
+        #6B3416 94%,
+        #431F0D 100%
+    );
+}
+
+.mundrive-flow .transition-vers-clair {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    margin-left: -50vw;
+    height: 130px;
+    background: linear-gradient(180deg,
+        #7C3D1B 0%,
+        #93502A 12%,
+        #AE723C 28%,
+        #C48D4E 42%,
+        #D5A462 56%,
+        #E2B87A 70%,
+        #ECC994 84%,
+        #F3D9AE 94%,
+        #FFFBF3 100%
+    );
+}
+
+@media (max-width: 767px) {
+    .mundrive-flow .transition-vers-sombre,
+    .mundrive-flow .transition-vers-clair {
+        height: 80px;
+    }
 }
 
 .mundrive-flow p,
@@ -717,7 +752,7 @@
     </div>
   </section>
 
-  <div class="separateur"></div>
+  <div class="transition-vers-sombre"></div>
 
   <section class="fond-sombre">
     <div class="contenu">
@@ -754,7 +789,7 @@
     </div>
   </section>
 
-  <div class="separateur"></div>
+  <div class="transition-vers-clair"></div>
 
   <section class="fond-clair" style="text-align: center;">
     <div class="contenu">
@@ -771,7 +806,6 @@
     </div>
   </section>
 
-  <div class="separateur"></div>
 
   <section class="fond-clair">
     <div class="contenu">
@@ -795,7 +829,7 @@
     </div>
   </section>
 
-  <div class="separateur"></div>
+  <div class="transition-vers-sombre"></div>
 
   <section class="fond-sombre">
     <div class="contenu">
