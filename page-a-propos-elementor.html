@@ -40,16 +40,27 @@
 }
 
 .mundrive-flow .fond-sombre {
-    background: linear-gradient(160deg, var(--brun-fonce) 0%, #6B3D1D 20%, #C67939 38%, #6B3D1D 58%, var(--brun-doux) 100%);
+    background: linear-gradient(160deg, var(--brun-fonce) 0%, var(--brun-doux) 100%);
     position: relative;
 }
 
 .mundrive-flow .fond-sombre::before {
     content: "";
     position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse 70% 55% at 50% 0%, rgba(224,178,90,0.08) 0%, transparent 70%);
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 340px;
+    background:
+        radial-gradient(ellipse 70% 100% at 50% 0%, rgba(224,178,90,0.08) 0%, transparent 70%),
+        linear-gradient(180deg, var(--brun-fonce) 0%, #6B3D1D 26%, #C67939 48%, #6B3D1D 74%, transparent 100%);
     pointer-events: none;
+}
+
+@media (max-width: 767px) {
+    .mundrive-flow .fond-sombre::before {
+        height: 220px;
+    }
 }
 
 .mundrive-flow .transition-vers-sombre {
@@ -100,6 +111,16 @@
     .mundrive-flow .transition-vers-sombre,
     .mundrive-flow .transition-vers-clair {
         height: 130px;
+    }
+}
+
+.mundrive-flow .transition-ouverture {
+    height: 90px;
+}
+
+@media (max-width: 767px) {
+    .mundrive-flow .transition-ouverture {
+        height: 50px;
     }
 }
 
@@ -159,6 +180,11 @@
     font-size: 14.5px;
     color: var(--texte);
     margin-bottom: 4px;
+    transition: color 0.3s ease;
+}
+
+.mundrive-flow .avantage:hover .avantage-titre {
+    color: var(--or);
 }
 
 .mundrive-flow .avantage-desc {
@@ -299,6 +325,13 @@
     text-align: center;
     overflow: hidden;
     text-decoration: none;
+    transition: transform 0.35s cubic-bezier(.22,1,.36,1), box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+.mundrive-flow .video-placeholder:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 36px rgba(67,31,13,0.48), 0 0 0 1px rgba(224,178,90,0.2);
+    border-color: var(--or-clair);
 }
 
 .mundrive-flow .video-placeholder .lecture {
@@ -431,6 +464,11 @@
     font-weight: 700;
     font-size: 15.5px;
     color: var(--texte);
+    transition: color 0.25s ease;
+}
+
+.mundrive-flow details.faq summary:hover {
+    color: var(--texte-att);
 }
 
 .mundrive-flow details.faq summary::-webkit-details-marker {
@@ -722,9 +760,9 @@
 
 <div class="mundrive-flow">
 
-  <div class="transition-vers-clair"></div>
+  <div class="transition-vers-clair transition-ouverture"></div>
 
-  <section class="fond-clair">
+  <section class="fond-clair" style="padding-top: 36px;">
     <div class="contenu">
       <div class="avantages">
         <div class="avantage">
