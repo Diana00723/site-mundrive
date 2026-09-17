@@ -6,8 +6,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;1,9..144,500&family=Montserrat:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
-    --brun-fonce: #431F0D;
-    --brun-doux: #7C3D1B;
+    --brun-fonce: #7A3B12;
+    --brun-doux: #A8571F;
     --or: #BF8617;
     --or-clair: #E0B25A;
     --sable: #E8D5B0;
@@ -27,7 +27,7 @@ body::before {
    HEADER — bandeau agrandi
    ============================================ */
 .site-header {
-    background: linear-gradient(180deg, var(--brun-fonce) 0%, #58290F 35%, #6B3316 65%, var(--brun-doux) 100%) !important;
+    background: linear-gradient(180deg, var(--brun-fonce) 0%, #8A4517 35%, #984D1A 65%, var(--brun-doux) 100%) !important;
     min-height: 180px !important;
     height: 180px !important;
     padding: 0 48px !important;
@@ -38,7 +38,7 @@ body::before {
     z-index: 1000;
     box-sizing: border-box;
     border-bottom: 2px solid rgba(191,134,23,0.50);
-    box-shadow: 0 12px 30px rgba(67,31,13,0.55), 0 2px 0 rgba(255,255,255,0.03) inset;
+    box-shadow: 0 12px 30px rgba(122,59,18,0.55), 0 2px 0 rgba(255,255,255,0.03) inset;
 }
 
 /* ============================================
@@ -141,7 +141,7 @@ body {
 .elementor-video-iframe {
     border-radius: 15px !important;
     border: 2px solid var(--or) !important;
-    box-shadow: 0 10px 28px rgba(67,31,13,0.42), 0 0 0 1px rgba(224,178,90,0.10) !important;
+    box-shadow: 0 10px 28px rgba(122,59,18,0.42), 0 0 0 1px rgba(224,178,90,0.10) !important;
     overflow: hidden !important;
 }
 
