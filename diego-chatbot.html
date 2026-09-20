@@ -2,7 +2,7 @@
 <title>Diego MunDrive</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Sans+3:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;1,9..144,500&family=Montserrat:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg:#FFF6E8;
@@ -72,14 +72,20 @@
     margin:0;
     background:var(--bg);
     color:var(--ink);
-    font-family:"Source Sans 3", system-ui, -apple-system, sans-serif;
+    font-family:"Inter", system-ui, -apple-system, sans-serif;
     padding:0 20px 40px;
   }
-  h1,h2,h3,.brand,.chip,.quick label,nav a,.cta,.badge,.eyebrow{
-    font-family:"Barlow Condensed", "Arial Narrow", sans-serif;
+  h1{
+    font-family:"Fraunces", Georgia, serif;
+    font-weight:500;
+  }
+  h2,h3,.brand,.chip,.quick label,nav a,.cta,.badge,.eyebrow{
+    font-family:"Montserrat", "Arial Narrow", sans-serif;
+    font-weight:800;
   }
   code,.ref,.stat-value{
-    font-family:"JetBrains Mono", ui-monospace, monospace;
+    font-family:"Inter", system-ui, -apple-system, sans-serif;
+    font-weight:600;
     font-variant-numeric: tabular-nums;
   }
   a{color:inherit;}
@@ -107,13 +113,13 @@
   .brand-mark svg{width:19px;height:19px;stroke:#FFF6E8;}
   .nav-links{display:flex;gap:26px;list-style:none;margin:0;padding:0;flex-wrap:wrap;}
   .nav-links a{
-    font-size:16px;font-weight:600;text-decoration:none;color:var(--ink-soft);
+    font-size:16px;font-weight:700;text-decoration:none;color:var(--ink-soft);
     text-transform:uppercase;letter-spacing:0.03em;transition:color .15s ease;
   }
   .nav-links a:hover{color:var(--orange);}
   .cta{
     background:var(--orange);color:var(--orange-ink);border:none;
-    padding:10px 20px;border-radius:8px;font-size:16px;font-weight:600;
+    padding:10px 20px;border-radius:8px;font-size:16px;font-weight:700;
     text-transform:uppercase;letter-spacing:0.03em;cursor:pointer;
     transition:background .15s ease;
   }
@@ -125,11 +131,11 @@
     padding:36px 0 44px;align-items:center;
   }
   .eyebrow{
-    display:inline-block;color:var(--copper);font-weight:600;font-size:15px;
+    display:inline-block;color:var(--copper);font-weight:700;font-size:15px;
     text-transform:uppercase;letter-spacing:0.12em;margin-bottom:10px;
   }
   h1{
-    font-size:clamp(34px,4.6vw,54px);line-height:1.04;font-weight:700;
+    font-size:clamp(34px,4.6vw,54px);line-height:1.1;font-weight:500;
     margin:0 0 18px;text-wrap:balance;
   }
   h1 em{font-style:normal;color:var(--orange);}
@@ -201,7 +207,7 @@
     align-self:flex-start;font-size:12px;font-weight:700;color:var(--copper);
     text-transform:uppercase;letter-spacing:0.06em;
   }
-  .blog-card h3{margin:0;font-size:19px;line-height:1.25;font-weight:600;text-transform:none;letter-spacing:0;}
+  .blog-card h3{margin:0;font-size:19px;line-height:1.25;font-weight:700;text-transform:none;letter-spacing:0;}
   .blog-card p{margin:0;font-size:14.5px;color:var(--ink-soft);line-height:1.5;}
   .read-time{font-size:12.5px;color:var(--ink-faint);margin-top:auto;padding-top:6px;}
 
@@ -210,7 +216,7 @@
     padding:18px;display:flex;flex-direction:column;gap:10px;
   }
   .part-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;}
-  .part-card h3{margin:0;font-size:18px;font-weight:600;text-transform:none;letter-spacing:0;}
+  .part-card h3{margin:0;font-size:18px;font-weight:700;text-transform:none;letter-spacing:0;}
   .part-card .ref{font-size:12.5px;color:var(--ink-faint);}
   .badge{
     font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;
@@ -250,7 +256,7 @@
     background:var(--brown);color:#FFF6E8;font-size:13px;font-weight:600;
     padding:7px 13px;border-radius:8px;white-space:nowrap;
     opacity:0;pointer-events:none;transition:opacity .18s ease, transform .18s ease;
-    font-family:"Source Sans 3",sans-serif;text-transform:none;letter-spacing:0;
+    font-family:"Inter",sans-serif;text-transform:none;letter-spacing:0;
     box-shadow:0 6px 16px var(--shadow);
   }
   .diego-launcher:hover::after{opacity:1;transform:translateY(-50%) translateX(0);}
@@ -259,7 +265,7 @@
   .diego-badge{
     position:absolute;top:-3px;right:-3px;min-width:20px;height:20px;padding:0 5px;
     border-radius:100px;background:var(--gold);color:#2A1810;
-    font-family:"Source Sans 3",sans-serif;font-size:12px;font-weight:700;
+    font-family:"Inter",sans-serif;font-size:12px;font-weight:700;
     display:flex;align-items:center;justify-content:center;
     border:2px solid var(--bg);transition:opacity .15s ease, transform .15s ease;
   }
@@ -290,7 +296,7 @@
   }
   .diego-avatar svg{width:100%;height:100%;}
   .diego-head .who{flex:1;min-width:0;}
-  .diego-head .name{font-family:"Barlow Condensed",sans-serif;font-size:18px;font-weight:700;letter-spacing:0.02em;text-transform:uppercase;line-height:1.15;}
+  .diego-head .name{font-family:"Montserrat",sans-serif;font-size:18px;font-weight:700;letter-spacing:0.02em;text-transform:uppercase;line-height:1.15;}
   .diego-head .status{font-size:12.5px;display:flex;align-items:center;gap:6px;opacity:0.9;}
   .status .dot{width:7px;height:7px;border-radius:50%;background:#8FE08A;display:inline-block;}
   .icon-btn{
@@ -352,7 +358,7 @@
     display:inline-flex;align-items:center;gap:6px;background:var(--surface);
     border:1px solid var(--border);color:var(--ink);font-size:13px;font-weight:600;
     padding:7px 12px;border-radius:100px;cursor:pointer;text-transform:none;
-    letter-spacing:0;font-family:"Source Sans 3",sans-serif;
+    letter-spacing:0;font-family:"Inter",sans-serif;
   }
   .chip:hover{border-color:var(--orange);color:var(--copper);}
   .chip svg{width:13px;height:13px;stroke:currentColor;flex-shrink:0;}
@@ -414,7 +420,7 @@
       <path d="M22.5,14 Q32,18.5 41.5,14 Q41.5,16.5 32,20 Q22.5,16.5 22.5,14 Z" fill="#9C3F16"></path>
       <path d="M32,2 L32,9.5" stroke="#9C3F16" stroke-width="0.9" opacity="0.45" stroke-linecap="round"></path>
       <circle cx="32" cy="2.3" r="1.1" fill="#9C3F16"></circle>
-      <text x="32" y="9" text-anchor="middle" font-family="'Barlow Condensed',sans-serif" font-weight="700" font-size="3.6" textLength="18" lengthAdjust="spacingAndGlyphs" fill="#FBEADA">MUNDRIVE</text>
+      <text x="32" y="9" text-anchor="middle" font-family="'Montserrat',sans-serif" font-weight="700" font-size="3.6" textLength="18" lengthAdjust="spacingAndGlyphs" fill="#FBEADA">MUNDRIVE</text>
       <path d="M23,24.3 Q26.3,22.2 29.8,23.7" fill="none" stroke="#4A2E1D" stroke-width="1.6" stroke-linecap="round"></path>
       <path d="M34.2,23.7 Q37.7,22.2 41,24.3" fill="none" stroke="#4A2E1D" stroke-width="1.6" stroke-linecap="round"></path>
       <ellipse cx="27" cy="28" rx="1.7" ry="2.1" fill="#241407"></ellipse>
