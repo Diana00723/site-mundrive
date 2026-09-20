@@ -640,27 +640,131 @@
     if(t) t.remove();
   }
 
-  const REPLIES = [
-    { test: /compat|r[ée]f[ée]rence|ref-|mod[eè]le|convient|va (avec|sur)/i,
-      html: "Dites-m'en un peu plus&nbsp;: le modèle de votre véhicule, son année, et la référence ou le nom de la pièce — je regarde tout de suite si elle correspond." },
-    { test: /blog|article|conseil|guide|comment (faire|changer|poser)/i,
-      html: "Sur quel entretien souhaitez-vous un conseil&nbsp;? Freinage, distribution, hivernage… je vous pointe vers l'article de l'atelier qui colle le mieux." },
-    { test: /newsletter|abonn|infolettre/i,
-      html: "Avec plaisir — un email par mois avec nos conseils d'atelier et les meilleures offres, sans spam. Voulez-vous que je vous inscrive avec votre adresse email ?" },
-    { test: /humain|quelqu.un|conseiller|parler [aà]|sav|service client|probl[eè]me|bloqu|command/i,
-      html: "Je vous mets en relation avec l'équipe MunDrive&nbsp;: écrivez à <strong>contact@mundrive.com</strong> en décrivant votre situation, vous aurez une réponse sous 24h." },
-    { test: /merci|top|parfait|super/i,
-      html: "Avec plaisir&nbsp;! Autre chose sur une pièce, un article ou votre abonnement&nbsp;?" }
+  /* ---- quotas quotidiens par visiteur (stockés dans ce navigateur) ---- */
+  const DAILY_LIMITS = { entretien: 30, compat: 30, general: 10 };
+
+  function todayKey(){
+    const d = new Date();
+    return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+  }
+  function getQuota(){
+    let state;
+    try { state = JSON.parse(localStorage.getItem('diegoQuota') || 'null'); } catch(e){ state = null; }
+    const today = todayKey();
+    if(!state || state.date !== today){
+      state = { date: today, entretien: 0, compat: 0, general: 0 };
+    }
+    return state;
+  }
+  function saveQuota(state){
+    try { localStorage.setItem('diegoQuota', JSON.stringify(state)); } catch(e){ /* navigation privée, etc. */ }
+  }
+
+  /* ---- articles réellement publiés sur le blog MunDrive : on source toujours ceux-ci en priorité ---- */
+  const ARTICLES = [
+    { test: /plaquette|frein/i,
+      title: "Changer ses plaquettes de frein : le guide complet",
+      excerpt: "reconnaître l'usure, choisir la bonne référence et poser sans y laisser un dimanche.",
+      href: "#" },
+    { test: /occasion|reconditionn|pi[eè]ce moteur/i,
+      title: "Occasion ou neuf : comment choisir sa pièce moteur",
+      excerpt: "ce que change vraiment le kilométrage d'une pièce reconditionnée sur sa durée de vie.",
+      href: "#" },
+    { test: /hiver|frimas/i,
+      title: "7 pièces à vérifier avant les premiers frimas",
+      excerpt: "la liste que nos garagistes partenaires suivent chaque année.",
+      href: "#" }
   ];
+
+  /* ---- questions générales auto, sans article dédié sur le site : réponse de bon sens, sans jamais citer un concurrent ---- */
+  const GENERAL_KNOWLEDGE = [
+    { test: /distribution|courroie/i,
+      html: "En général, une courroie de distribution se change tous les 60 000 à 160 000 km selon les constructeurs, ou tous les 5 à 10 ans si le véhicule roule peu. L'intervalle exact est précisé dans le carnet d'entretien de votre voiture." },
+    { test: /pneu/i,
+      html: "Un pneu se remplace en général tous les 40 000 à 50 000 km, ou dès que la profondeur des sculptures descend sous 1,6 mm (le minimum légal), et de toute façon après 5 à 10 ans même s'il est peu usé." },
+    { test: /batterie/i,
+      html: "Une batterie de voiture dure en moyenne 4 à 5 ans. Un démarrage difficile ou des équipements électriques capricieux sont souvent les premiers signes qu'il est temps de la faire contrôler." },
+    { test: /huile|vidange/i,
+      html: "La vidange se fait en général tous les 10 000 à 15 000 km, ou une fois par an selon ce qui arrive en premier — certains moteurs récents tolèrent des intervalles plus longs, à vérifier dans le carnet d'entretien." },
+    { test: /bougie/i,
+      html: "Les bougies d'allumage se changent en général tous les 30 000 à 100 000 km selon leur type (cuivre, platine, iridium) — le carnet d'entretien de votre véhicule précise l'intervalle exact." },
+    { test: /embrayage/i,
+      html: "Un embrayage dure en moyenne entre 100 000 et 150 000 km, mais cela varie beaucoup selon le type de trajets et la conduite." },
+    { test: /amortisseur/i,
+      html: "Les amortisseurs se changent en général tous les 80 000 km environ, ou dès que la tenue de route se dégrade (rebonds, distances de freinage qui rallongent)." },
+    { test: /filtre/i,
+      html: "Un filtre à air ou à habitacle se change en général tous les 15 000 à 30 000 km selon le modèle et l'usage." },
+    { test: /essuie/i,
+      html: "Des essuie-glaces se changent en général tous les 6 à 12 mois, ou dès qu'ils strient ou couinent sur le pare-brise." }
+  ];
+
+  const MAINTENANCE_LIKE = /entretien|conseil|guide|comment (faire|changer|poser)|plaquette|frein|distribution|courroie|pneu|batterie|huile|vidange|bougie|embrayage|amortisseur|filtre|essuie|hiver|frimas|moteur|occasion|neuf|reconditionn/i;
+  const COMPAT_LIKE = /compat|r[ée]f[ée]rence|ref-|mod[eè]le|convient|va (avec|sur)|prix|stock|combien coute|combien ça coûte/i;
+
+  function classify(text){
+    if(/merci|top|parfait|super/i.test(text)) return { cat: null, kind: 'thanks' };
+    if(/newsletter|abonn|infolettre/i.test(text)) return { cat: null, kind: 'newsletter' };
+    if(/humain|quelqu.un|conseiller|parler [aà]|sav|service client|probl[eè]me|bloqu|command/i.test(text)) return { cat: null, kind: 'human' };
+    if(COMPAT_LIKE.test(text)) return { cat: 'compat', kind: 'compat' };
+    if(MAINTENANCE_LIKE.test(text)){
+      const article = ARTICLES.find(a => a.test.test(text));
+      if(article) return { cat: 'entretien', kind: 'article', article: article };
+      const known = GENERAL_KNOWLEDGE.find(g => g.test.test(text));
+      if(known) return { cat: 'general', kind: 'general-known', info: known };
+      return { cat: 'general', kind: 'general-fallback' };
+    }
+    return { cat: null, kind: 'fallback' };
+  }
+
+  function quotaMessage(cat){
+    if(cat === 'entretien') return "Vous avez atteint la limite de 30 conseils entretien sourcés depuis notre site pour aujourd'hui 🙏 Revenez demain, ou écrivez directement à <strong>contact@mundrive.com</strong>.";
+    if(cat === 'compat') return "Vous avez atteint la limite de 30 questions compatibilité / produits pour aujourd'hui. Revenez demain, ou écrivez à <strong>contact@mundrive.com</strong> pour une réponse rapide.";
+    return "Vous avez atteint la limite de 10 questions générales (non sourcées par le site) pour aujourd'hui. Je reste disponible pour vos questions sur nos pièces, leur compatibilité, ou nos articles !";
+  }
+
   const FALLBACK = "Je ne suis pas sûr de bien comprendre. Je peux vérifier une compatibilité de pièce, vous conseiller un article du blog, gérer votre abonnement à la newsletter — ou, si vous êtes bloqué·e, vous mettre en relation à <strong>contact@mundrive.com</strong>.";
 
+  function buildReply(c){
+    switch(c.kind){
+      case 'compat':
+        return "Dites-m'en un peu plus&nbsp;: le modèle de votre véhicule, son année, et la référence ou le nom de la pièce — je regarde tout de suite si elle correspond.";
+      case 'article':
+        return "Bonne question&nbsp;! Notre atelier a justement écrit un article là-dessus&nbsp;: <strong>" + c.article.title + "</strong> — " + c.article.excerpt + ' <a class="link-chip" href="' + c.article.href + '">Lire l\'article<svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"></path></svg></a>';
+      case 'general-known':
+        return c.info.html + " <em>(Information générale à titre indicatif&nbsp;: vérifiez toujours le carnet d'entretien de votre véhicule ou demandez l'avis d'un professionnel.)</em>";
+      case 'general-fallback':
+        return "Je n'ai pas encore d'article dédié à ce sujet sur le site, mais en règle générale le meilleur réflexe reste de consulter le carnet d'entretien de votre véhicule ou un garagiste pour un diagnostic précis. Je reste à votre disposition pour toute question sur nos pièces et leur compatibilité !";
+      case 'newsletter':
+        return "Avec plaisir — un email par mois avec nos conseils d'atelier et les meilleures offres, sans spam. Voulez-vous que je vous inscrive avec votre adresse email ?";
+      case 'human':
+        return "Je vous mets en relation avec l'équipe MunDrive&nbsp;: écrivez à <strong>contact@mundrive.com</strong> en décrivant votre situation, vous aurez une réponse sous 24h.";
+      case 'thanks':
+        return "Avec plaisir&nbsp;! Autre chose sur une pièce, un article ou votre abonnement&nbsp;?";
+      default:
+        return FALLBACK;
+    }
+  }
+
   function respondTo(text){
+    const c = classify(text);
+    if(c.cat){
+      const state = getQuota();
+      if(state[c.cat] >= DAILY_LIMITS[c.cat]){
+        showTyping();
+        setTimeout(function(){
+          removeTyping();
+          addMessage('bot', quotaMessage(c.cat));
+        }, 500);
+        return;
+      }
+      state[c.cat] += 1;
+      saveQuota(state);
+    }
     showTyping();
-    const match = REPLIES.find(r => r.test.test(text));
     const delay = 650 + Math.random()*450;
     setTimeout(function(){
       removeTyping();
-      addMessage('bot', match ? match.html : FALLBACK);
+      addMessage('bot', buildReply(c));
     }, delay);
   }
 
