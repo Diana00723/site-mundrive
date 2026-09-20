@@ -9,14 +9,19 @@
     --creme: #FFFBF3;
     --texte: #2b1a10;
     --texte-att: #7A5B3C;
-    --ligne: rgba(67,31,13,0.12);
-    --ligne-sombre: rgba(224,178,90,0.2);
+    --ligne: rgba(74,29,7,0.12);
+    --ligne-sombre: rgba(245,174,94,0.2);
     font-family: 'Inter', sans-serif;
 }
 
 @media (prefers-reduced-motion: reduce) {
     .mundrive-flow * {
         transition: none !important;
+        animation: none !important;
+    }
+    .mundrive-flow .reveal {
+        opacity: 1 !important;
+        transform: none !important;
     }
 }
 
@@ -33,14 +38,16 @@
     margin: 0 auto;
     padding: 0 48px;
     box-sizing: border-box;
+    position: relative;
+    z-index: 1;
 }
 
 .mundrive-flow .fond-clair {
-    background: linear-gradient(160deg, #FFFBF3 0%, #FBEED2 45%, #F3D9AE 100%);
+    background: linear-gradient(180deg, #FFF8EE 0%, #FBDDAF 55%, #F8E3C0 100%);
 }
 
 .mundrive-flow .fond-sombre {
-    background: linear-gradient(160deg, var(--brun-fonce) 0%, var(--brun-doux) 100%);
+    background: linear-gradient(180deg, var(--brun-fonce) 0%, var(--brun-doux) 100%);
     position: relative;
 }
 
@@ -50,67 +57,50 @@
     top: 0;
     left: 0;
     right: 0;
-    height: 340px;
+    height: 280px;
     background:
-        radial-gradient(ellipse 70% 100% at 50% 0%, rgba(224,178,90,0.1) 0%, transparent 70%),
+        radial-gradient(ellipse 70% 100% at 50% 0%, rgba(245,174,94,0.14) 0%, transparent 70%),
         linear-gradient(180deg, var(--brun-fonce) 0%, #8F4818 26%, #E08F42 48%, #8F4818 74%, transparent 100%);
     pointer-events: none;
 }
 
-@media (max-width: 767px) {
-    .mundrive-flow .fond-sombre::before {
-        height: 220px;
-    }
+.mundrive-flow .fond-sombre::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(115deg, rgba(255,255,255,0.018) 0px, rgba(255,255,255,0.018) 1px, transparent 1px, transparent 6px);
+    pointer-events: none;
 }
 
+/* Bande claire → sombre : part de la teinte réelle du bas de .fond-clair (#F8E3C0)
+   et finit exactement sur --brun-fonce, le haut de .fond-sombre, pour un raccord sans coupure */
 .mundrive-flow .transition-vers-sombre {
     width: 100vw;
     position: relative;
     left: 50%;
     margin-left: -50vw;
-    height: 220px;
-    background: linear-gradient(180deg,
-        #F3D9AE 0%,
-        #EFCB93 9%,
-        #E9BB79 18%,
-        #E2A862 27%,
-        #DE9750 36%,
-        #E08F42 41%,
-        #CD7E3A 50%,
-        #B96E33 59%,
-        #A25E2C 68%,
-        #8C4E23 77%,
-        #7F441A 86%,
-        #7A3B12 100%
-    );
+    height: 240px;
+    background: linear-gradient(180deg, #F8E3C0 0%, var(--or) 55%, var(--brun-fonce) 100%);
 }
 
+/* Bande sombre → claire : part de --brun-doux, le bas réel de .fond-sombre,
+   et finit sur la teinte du haut de .fond-clair (#FFF8EE) */
 .mundrive-flow .transition-vers-clair {
     width: 100vw;
     position: relative;
     left: 50%;
     margin-left: -50vw;
-    height: 220px;
-    background: linear-gradient(180deg,
-        #A8571F 0%,
-        #B4642A 14%,
-        #C07136 23%,
-        #CC7F3F 32%,
-        #E08F42 41%,
-        #DE9750 50%,
-        #E2A862 59%,
-        #E9BB79 68%,
-        #EFCB93 77%,
-        #F3D9AE 86%,
-        #F8E7C7 95%,
-        #FFFBF3 100%
-    );
+    height: 240px;
+    background: linear-gradient(180deg, var(--brun-doux) 0%, var(--or) 45%, #FFF8EE 100%);
 }
 
 @media (max-width: 767px) {
     .mundrive-flow .transition-vers-sombre,
     .mundrive-flow .transition-vers-clair {
-        height: 130px;
+        height: 150px;
+    }
+    .mundrive-flow .fond-sombre::before {
+        height: 200px;
     }
 }
 
@@ -138,85 +128,190 @@
     color: var(--sable) !important;
 }
 
-/* -- avantages mis en avant (livraison, retours, Diego, conseils) -- */
-.mundrive-flow .avantages {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 28px;
-    margin-bottom: 64px;
-    padding-bottom: 48px;
-    border-bottom: 1px solid var(--ligne);
+/* -- effet metal brosse / reflet lumineux -- */
+.mundrive-flow .metal-sheen {
+    position: relative;
+    overflow: hidden;
 }
 
-.mundrive-flow .avantage {
+.mundrive-flow .metal-sheen::after {
+    content: "";
+    position: absolute;
+    top: -60%;
+    left: -60%;
+    width: 45%;
+    height: 220%;
+    background: linear-gradient(115deg, transparent 0%, rgba(255,255,255,0.5) 45%, rgba(255,255,255,0.12) 55%, transparent 100%);
+    transform: translateX(-30%) rotate(8deg);
+    transition: transform 0.75s cubic-bezier(.22,1,.36,1);
+    pointer-events: none;
+}
+
+.mundrive-flow .metal-sheen:hover::after {
+    transform: translateX(320%) rotate(8deg);
+}
+
+/* -- animations au defilement -- */
+.mundrive-flow .reveal {
+    opacity: 0;
+    transform: translateY(26px);
+    transition: opacity 0.7s cubic-bezier(.22,1,.36,1), transform 0.7s cubic-bezier(.22,1,.36,1);
+}
+
+.mundrive-flow .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ============================================
+   BARRE DE CONFIANCE — 3 items, toujours sur une ligne
+   ============================================ */
+.mundrive-flow .trust-bar {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 28px 32px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.18) 100%);
+    border: 1px solid var(--ligne);
+    box-shadow: 0 10px 28px rgba(74,29,7,0.10);
+    margin-bottom: 56px;
 }
 
-.mundrive-flow .avantage-icone {
-    width: 54px;
-    height: 54px;
+.mundrive-flow .trust-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 8px 12px;
+    border-radius: 14px;
+    position: relative;
+    transition: transform 0.3s cubic-bezier(.22,1,.36,1), background-color 0.3s ease;
+}
+
+.mundrive-flow .trust-item:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    right: -6px;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 60%;
+    width: 1px;
+    background: var(--ligne);
+}
+
+.mundrive-flow .trust-item:hover {
+    transform: translateY(-4px);
+    background: rgba(224,138,44,0.08);
+}
+
+.mundrive-flow .trust-icone {
+    width: 48px;
+    height: 48px;
     flex-shrink: 0;
-    border-radius: 17px;
-    background: linear-gradient(145deg, var(--or-clair) 0%, var(--or) 55%, #9C6A1F 100%);
+    border-radius: 14px;
+    background:
+        repeating-linear-gradient(115deg, rgba(255,255,255,0.18) 0px, rgba(255,255,255,0.18) 1px, transparent 1px, transparent 3px),
+        linear-gradient(145deg, var(--or-clair) 0%, var(--or) 100%);
+    background-blend-mode: overlay, normal;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--creme, #FFFBF3);
-    box-shadow: 0 8px 18px rgba(67,31,13,0.28), 0 0 0 1px rgba(224,178,90,0.3);
-    transition: transform 0.3s cubic-bezier(.22,1,.36,1), box-shadow 0.3s ease;
+    color: var(--creme);
+    box-shadow: 0 6px 16px rgba(74,29,7,0.24), 0 0 0 4px rgba(245,174,94,0.14);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.mundrive-flow .avantage:hover .avantage-icone {
-    transform: translateY(-5px) rotate(-2deg);
-    box-shadow: 0 14px 26px rgba(67,31,13,0.32), 0 0 0 1px rgba(224,178,90,0.4);
+.mundrive-flow .trust-item:hover .trust-icone {
+    transform: scale(1.08) rotate(-3deg);
+    box-shadow: 0 10px 22px rgba(74,29,7,0.30), 0 0 0 5px rgba(245,174,94,0.22);
 }
 
-.mundrive-flow .avantage-titre {
+.mundrive-flow .trust-icone svg {
+    width: 22px;
+    height: 22px;
+}
+
+.mundrive-flow .trust-texte {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.mundrive-flow .trust-titre {
     font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    font-size: 14.5px;
+    font-weight: 800;
+    font-size: 13.5px;
     color: var(--texte);
-    margin-bottom: 4px;
-    transition: color 0.3s ease;
+    white-space: nowrap;
 }
 
-.mundrive-flow .avantage:hover .avantage-titre {
-    color: var(--or);
-}
-
-.mundrive-flow .avantage-desc {
+.mundrive-flow .trust-desc {
     font-family: 'Inter', sans-serif;
-    font-size: 12.5px;
-    line-height: 1.55;
+    font-size: 11.5px;
     color: var(--texte-att);
+    white-space: nowrap;
 }
 
-@media (max-width: 900px) {
-    .mundrive-flow .avantages {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 32px 24px;
+@media (max-width: 1024px) {
+    .mundrive-flow .trust-bar {
+        padding: 24px 20px;
+        gap: 8px;
+    }
+    .mundrive-flow .trust-item {
+        gap: 10px;
+        padding: 6px 8px;
+    }
+    .mundrive-flow .trust-icone {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+    }
+    .mundrive-flow .trust-icone svg {
+        width: 19px;
+        height: 19px;
+    }
+    .mundrive-flow .trust-titre {
+        font-size: 12.5px;
+    }
+    .mundrive-flow .trust-desc {
+        display: none;
     }
 }
 
-@media (max-width: 500px) {
-    .mundrive-flow .avantages {
-        grid-template-columns: 1fr;
-        gap: 24px;
-        margin-bottom: 44px;
-        padding-bottom: 32px;
+@media (max-width: 767px) {
+    .mundrive-flow .trust-bar {
+        flex-wrap: wrap;
+        padding: 20px;
+        gap: 14px 10px;
+        margin-bottom: 40px;
     }
-
-    .mundrive-flow .avantage-icone {
-        width: 48px;
-        height: 48px;
-        border-radius: 14px;
+    .mundrive-flow .trust-item {
+        flex: 1 1 auto;
+        min-width: 130px;
+    }
+    .mundrive-flow .trust-item:not(:last-child)::after {
+        display: none;
+    }
+    .mundrive-flow .trust-desc {
+        display: block;
     }
 }
 
-/* -- kicker / eyebrow -- */
+/* ============================================
+   HISTOIRE — texte original, lettrine agrandie, pas de kicker
+   ============================================ */
+.mundrive-flow .histoire-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 56px;
+    align-items: center;
+}
+
 .mundrive-flow .kicker {
     display: block;
     font-family: 'Inter', sans-serif;
@@ -253,57 +348,46 @@
     background: linear-gradient(90deg, var(--or) 0%, var(--or-clair) 100%);
 }
 
-.mundrive-flow h2[style*="center"]::after {
+.mundrive-flow h2.titre-centre::after {
     left: 50%;
     transform: translateX(-50%);
 }
 
-/* -- bloc histoire + vidéo -- */
-.mundrive-flow .histoire-grid {
-    display: grid;
-    grid-template-columns: 1.15fr 1fr;
-    gap: 56px;
-    align-items: stretch;
-}
-
-.mundrive-flow .accroche {
-    font-family: 'Fraunces', serif;
-    font-style: italic;
-    font-weight: 500;
-    font-size: 22px;
-    line-height: 1.5;
-    color: var(--texte);
-    margin-bottom: 26px;
-}
-
-.mundrive-flow .texte-premium p {
+.mundrive-flow .recit {
     font-family: 'Inter', sans-serif;
+}
+
+.mundrive-flow .recit p {
     font-weight: 400;
-    font-size: 15px;
-    line-height: 1.85;
+    font-size: 16.5px;
+    line-height: 1.9;
     color: var(--texte);
     margin: 0 0 18px;
 }
 
-.mundrive-flow .texte-premium p:last-child {
+.mundrive-flow .recit p:last-of-type {
     margin-bottom: 0;
 }
 
-.mundrive-flow .texte-premium strong {
-    color: var(--texte);
+.mundrive-flow .recit .lettrine {
+    font-family: 'Fraunces', serif;
     font-weight: 700;
+    color: var(--or);
+    font-size: 2.3em;
+    line-height: 1;
+    display: inline-block;
+    vertical-align: -0.18em;
+    margin-right: 2px;
 }
 
-.mundrive-flow .conclusion {
-    margin-top: 32px;
-    padding-top: 22px;
-    border-top: 1px solid var(--ligne);
+.mundrive-flow .recit .signature {
+    display: block;
+    margin-top: 22px;
     font-family: 'Fraunces', serif;
     font-style: italic;
     font-weight: 500;
     font-size: 16px;
-    line-height: 1.6;
-    color: var(--texte-att);
+    color: var(--brun-doux);
 }
 
 .mundrive-flow .histoire-video {
@@ -312,10 +396,10 @@
 
 .mundrive-flow .video-placeholder {
     height: 100%;
-    min-height: 340px;
-    border-radius: 15px;
+    min-height: 400px;
+    border-radius: 18px;
     border: 2px solid var(--or);
-    box-shadow: 0 10px 28px rgba(67,31,13,0.42), 0 0 0 1px rgba(224,178,90,0.1);
+    box-shadow: 0 14px 34px rgba(74,29,7,0.40), 0 0 0 1px rgba(245,174,94,0.1);
     background: linear-gradient(160deg, var(--brun-fonce) 0%, var(--brun-doux) 100%);
     display: flex;
     flex-direction: column;
@@ -325,18 +409,19 @@
     text-align: center;
     overflow: hidden;
     text-decoration: none;
+    position: relative;
     transition: transform 0.35s cubic-bezier(.22,1,.36,1), box-shadow 0.35s ease, border-color 0.35s ease;
 }
 
 .mundrive-flow .video-placeholder:hover {
     transform: translateY(-4px);
-    box-shadow: 0 18px 36px rgba(67,31,13,0.48), 0 0 0 1px rgba(224,178,90,0.2);
+    box-shadow: 0 20px 40px rgba(74,29,7,0.46), 0 0 0 1px rgba(245,174,94,0.2);
     border-color: var(--or-clair);
 }
 
 .mundrive-flow .video-placeholder .lecture {
-    width: 62px;
-    height: 62px;
+    width: 66px;
+    height: 66px;
     border-radius: 50%;
     border: 2px solid var(--or-clair);
     display: flex;
@@ -347,8 +432,8 @@
 }
 
 .mundrive-flow .video-placeholder:hover .lecture {
-    background: rgba(224,178,90,0.14);
-    transform: scale(1.07);
+    background: rgba(245,174,94,0.16);
+    transform: scale(1.08);
 }
 
 .mundrive-flow .video-placeholder span {
@@ -361,76 +446,178 @@
     max-width: 230px;
 }
 
-/* -- listes (journal / FAQ) -- */
-.mundrive-flow .liste {
-    border-top: 1px solid var(--ligne-sombre);
+@media (max-width: 900px) {
+    .mundrive-flow .histoire-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+    .mundrive-flow .video-placeholder {
+        min-height: 260px;
+    }
 }
 
-.mundrive-flow .fond-clair .liste {
-    border-top-color: var(--ligne);
+/* ============================================
+   BANDEAU CHIFFRES CLES — sert aussi de transition claire → sombre
+   (part de #F8E3C0, le bas réel de .fond-clair, et finit sur --brun-fonce,
+   le haut de .fond-sombre : pas besoin d'une bande de transition séparée après)
+   ============================================ */
+.mundrive-flow .chiffres-band {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    margin-left: -50vw;
+    background: linear-gradient(180deg, #F8E3C0 0%, var(--sable) 22%, var(--or) 60%, var(--brun-fonce) 100%);
+    padding: 44px 0;
+    margin-top: 64px;
 }
 
-.mundrive-flow a.ligne-item {
+.mundrive-flow .chiffres-inner {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 0 48px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    box-sizing: border-box;
+}
+
+.mundrive-flow .chiffre {
+    text-align: center;
+    position: relative;
+}
+
+.mundrive-flow .chiffre:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    right: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 70%;
+    width: 1px;
+    background: rgba(245,174,94,0.2);
+}
+
+.mundrive-flow .chiffre-nombre {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    font-size: 38px;
+    background: linear-gradient(180deg, var(--or-clair) 0%, var(--or) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    line-height: 1;
+    margin-bottom: 8px;
+}
+
+.mundrive-flow .chiffre-label {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: rgba(248,227,192,0.75);
+}
+
+@media (max-width: 600px) {
+    .mundrive-flow .chiffres-inner {
+        grid-template-columns: 1fr;
+        gap: 28px;
+    }
+    .mundrive-flow .chiffre:not(:last-child)::after {
+        display: none;
+    }
+}
+
+/* ============================================
+   JOURNAL — style magazine, grands numeros
+   ============================================ */
+.mundrive-flow .journal-liste {
     display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 32px;
-    padding: 26px 4px;
+    flex-direction: column;
+}
+
+.mundrive-flow .journal-item {
+    display: grid;
+    grid-template-columns: 64px 1fr auto;
+    align-items: center;
+    gap: 28px;
+    padding: 30px 0;
     border-bottom: 1px solid var(--ligne-sombre);
     text-decoration: none;
+    position: relative;
+    transition: padding-left 0.3s ease;
 }
 
-.mundrive-flow .fond-clair a.ligne-item {
-    border-bottom-color: var(--ligne);
+.mundrive-flow .journal-item::before {
+    content: "";
+    position: absolute;
+    left: -24px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, var(--or) 0%, var(--or-clair) 100%);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.35s ease;
 }
 
-.mundrive-flow .ligne-titre {
+.mundrive-flow .journal-item:hover {
+    padding-left: 12px;
+}
+
+.mundrive-flow .journal-item:hover::before {
+    transform: scaleY(1);
+}
+
+.mundrive-flow .journal-numero {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 34px;
+    color: var(--or);
+    opacity: 0.55;
+    line-height: 1;
+    transition: opacity 0.3s ease, color 0.3s ease;
+}
+
+.mundrive-flow .journal-item:hover .journal-numero {
+    opacity: 1;
+    color: var(--or-clair);
+}
+
+.mundrive-flow .journal-titre {
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
-    font-size: 15.5px;
+    font-size: 16.5px;
+    color: var(--sable);
     margin-bottom: 6px;
     transition: color 0.25s ease;
 }
 
-.mundrive-flow .fond-sombre .ligne-titre {
-    color: var(--sable);
-}
-
-.mundrive-flow a.ligne-item:hover .ligne-titre {
+.mundrive-flow .journal-item:hover .journal-titre {
     color: var(--or-clair);
 }
 
-.mundrive-flow .fond-clair a.ligne-item:hover .ligne-titre {
-    color: var(--or);
-}
-
-.mundrive-flow .ligne-desc {
+.mundrive-flow .journal-desc {
     font-family: 'Inter', sans-serif;
     font-size: 13px;
     line-height: 1.6;
-    color: var(--texte-att);
+    color: rgba(248,227,192,0.65);
     max-width: 480px;
 }
 
-.mundrive-flow .fond-sombre .ligne-desc {
-    color: rgba(232,213,176,0.68);
-}
-
-.mundrive-flow .ligne-fleche {
-    flex-shrink: 0;
-    align-self: center;
-    font-size: 16px;
+.mundrive-flow .journal-fleche {
+    font-size: 20px;
     color: var(--or);
     transition: transform 0.3s ease;
 }
 
-.mundrive-flow a.ligne-item:hover .ligne-fleche {
-    transform: translateX(5px);
+.mundrive-flow .journal-item:hover .journal-fleche {
+    transform: translateX(6px);
 }
 
 .mundrive-flow .voir-plus {
     display: inline-block;
-    margin-top: 28px;
+    margin-top: 32px;
     font-family: 'Inter', sans-serif;
     font-weight: 600;
     font-size: 12px;
@@ -447,10 +634,28 @@
     border-bottom-color: var(--or-clair);
 }
 
-/* -- FAQ en accordéon -- */
+@media (max-width: 600px) {
+    .mundrive-flow .journal-item {
+        grid-template-columns: 42px 1fr;
+        gap: 16px;
+    }
+    .mundrive-flow .journal-numero {
+        font-size: 24px;
+    }
+    .mundrive-flow .journal-fleche {
+        display: none;
+    }
+}
+
+/* -- FAQ en accordeon -- */
 .mundrive-flow details.faq {
     border-bottom: 1px solid var(--ligne);
     padding: 22px 0;
+    transition: padding-left 0.25s ease;
+}
+
+.mundrive-flow details.faq:hover {
+    padding-left: 8px;
 }
 
 .mundrive-flow details.faq summary {
@@ -468,7 +673,7 @@
 }
 
 .mundrive-flow details.faq summary:hover {
-    color: var(--texte-att);
+    color: var(--brun-doux);
 }
 
 .mundrive-flow details.faq summary::-webkit-details-marker {
@@ -505,6 +710,11 @@
     max-width: 420px;
     margin: 0 auto;
     border: 1px solid var(--texte);
+    transition: box-shadow 0.3s ease;
+}
+
+.mundrive-flow .newsletter-form:focus-within {
+    box-shadow: 0 0 0 3px rgba(224,138,44,0.15);
 }
 
 .mundrive-flow .newsletter-form input {
@@ -524,7 +734,7 @@
 
 .mundrive-flow .newsletter-form input:focus {
     outline: none;
-    background: rgba(191,134,23,0.08);
+    background: rgba(224,138,44,0.08);
 }
 
 .mundrive-flow .newsletter-form button {
@@ -558,22 +768,27 @@
 .mundrive-flow .btn-plein {
     display: inline-flex;
     align-items: center;
-    gap: 10px;
-    background: var(--or);
+    gap: 12px;
+    background:
+        repeating-linear-gradient(115deg, rgba(255,255,255,0.12) 0px, rgba(255,255,255,0.12) 1px, transparent 1px, transparent 3px),
+        var(--or);
+    background-blend-mode: overlay, normal;
     color: var(--brun-fonce) !important;
     font-family: 'Inter', sans-serif;
     font-weight: 700;
-    font-size: 12px;
+    font-size: 13.5px;
     text-transform: uppercase;
     letter-spacing: 1px;
-    padding: 15px 30px;
+    padding: 19px 38px;
     text-decoration: none;
-    transition: background-color 0.25s ease, transform 0.25s ease;
+    position: relative;
+    box-shadow: 0 8px 20px rgba(74,29,7,0.30);
+    transition: background-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .mundrive-flow .btn-plein:hover {
-    background: var(--or-clair);
-    transform: translateX(3px);
+    transform: translateX(3px) translateY(-2px);
+    box-shadow: 0 12px 26px rgba(74,29,7,0.38);
 }
 
 .mundrive-flow .cta-row {
@@ -638,6 +853,26 @@
     color: var(--or-clair) !important;
 }
 
+/* -- grille contact/boutique -- */
+.mundrive-flow .contact-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 48px;
+    align-items: stretch;
+}
+
+.mundrive-flow .cadre-photo {
+    border-radius: 16px;
+    border: 2px solid var(--or);
+    background: linear-gradient(160deg, var(--brun-doux) 0%, var(--brun-fonce) 100%);
+    box-shadow: 0 10px 28px rgba(74,29,7,0.35), 0 0 0 1px rgba(245,174,94,0.1);
+    overflow: hidden;
+    position: relative;
+    color: var(--sable);
+    min-height: 260px;
+    height: 100%;
+}
+
 /* ============================================
    RESPONSIVE — tablette
    ============================================ */
@@ -646,17 +881,13 @@
         padding: 0 32px;
     }
 
-    .mundrive-flow .histoire-grid {
+    .mundrive-flow .contact-grid {
         grid-template-columns: 1fr;
-        gap: 36px;
+        gap: 32px;
     }
 
-    .mundrive-flow .video-placeholder {
-        min-height: 260px;
-    }
-
-    .mundrive-flow a.ligne-item {
-        gap: 20px;
+    .mundrive-flow .cadre-photo {
+        min-height: 240px;
     }
 }
 
@@ -665,7 +896,7 @@
    ============================================ */
 @media (max-width: 767px) {
     .mundrive-flow section {
-        padding: 56px 0;
+        padding: 52px 0;
     }
 
     .mundrive-flow .contenu {
@@ -673,27 +904,25 @@
     }
 
     .mundrive-flow h2 {
-        font-size: 22px;
-        margin-bottom: 20px;
+        font-size: 21px;
+        margin-bottom: 18px;
     }
 
-    .mundrive-flow .accroche {
-        font-size: 19px;
+    .mundrive-flow .recit p {
+        font-size: 15px;
     }
 
-    .mundrive-flow .texte-premium p {
-        font-size: 14.5px;
+    .mundrive-flow .recit .lettrine {
+        font-size: 2em;
     }
 
-    .mundrive-flow a.ligne-item {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-        padding: 22px 0;
+    .mundrive-flow .chiffres-band {
+        padding: 32px 0;
+        margin-top: 44px;
     }
 
-    .mundrive-flow .ligne-fleche {
-        display: none;
+    .mundrive-flow .chiffre-nombre {
+        font-size: 30px;
     }
 
     .mundrive-flow details.faq summary {
@@ -721,6 +950,7 @@
     .mundrive-flow .btn-plein {
         width: 100%;
         justify-content: center;
+        padding: 17px 24px;
     }
 
     .mundrive-flow .cta-row {
@@ -742,91 +972,61 @@
         display: none;
     }
 }
-
-/* ============================================
-   RESPONSIVE — petit mobile
-   ============================================ */
-@media (max-width: 420px) {
-    .mundrive-flow .video-placeholder {
-        min-height: 220px;
-    }
-
-    .mundrive-flow .citation-hero,
-    .mundrive-flow .accroche {
-        font-size: 18px;
-    }
-}
 </style>
 
 <div class="mundrive-flow">
 
   <div class="transition-vers-clair transition-ouverture"></div>
 
-  <section class="fond-clair" style="padding-top: 36px;">
+  <section class="fond-clair" style="padding-top: 36px; padding-bottom: 0;">
     <div class="contenu">
-      <div class="avantages">
-        <div class="avantage">
-          <span class="avantage-icone">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 17h4V5H2v12h3"/><path d="M14 9h4l3 3v5h-2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>
+
+      <div class="trust-bar reveal">
+        <div class="trust-item">
+          <span class="trust-icone metal-sheen">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 17h4V5H2v12h3"/><path d="M14 9h4l3 3v5h-2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>
           </span>
-          <div>
-            <div class="avantage-titre">Livraison rapide</div>
-            <div class="avantage-desc">Partout en France, sous 2 à 5 jours ouvrés.</div>
+          <div class="trust-texte">
+            <div class="trust-titre">Livraison rapide</div>
+            <div class="trust-desc">2 à 5 jours en France</div>
           </div>
         </div>
-
-        <div class="avantage">
-          <span class="avantage-icone">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 5v5h5"/></svg>
+        <div class="trust-item">
+          <span class="trust-icone metal-sheen">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 5v5h5"/></svg>
           </span>
-          <div>
-            <div class="avantage-titre">Retours simples</div>
-            <div class="avantage-desc">14 jours pour changer d'avis, sans question.</div>
+          <div class="trust-texte">
+            <div class="trust-titre">Retours simples</div>
+            <div class="trust-desc">14 jours, sans question</div>
           </div>
         </div>
-
-        <div class="avantage">
-          <span class="avantage-icone">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        <div class="trust-item">
+          <span class="trust-icone metal-sheen">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
           </span>
-          <div>
-            <div class="avantage-titre">Diego, assistant IA</div>
-            <div class="avantage-desc">Trouvez la pièce compatible avec votre véhicule.</div>
-          </div>
-        </div>
-
-        <div class="avantage">
-          <span class="avantage-icone">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94z"/></svg>
-          </span>
-          <div>
-            <div class="avantage-titre">Conseils chaque semaine</div>
-            <div class="avantage-desc">Un article d'entretien publié toutes les semaines.</div>
+          <div class="trust-texte">
+            <div class="trust-titre">Diego, assistant IA</div>
+            <div class="trust-desc">La bonne pièce, sans erreur</div>
           </div>
         </div>
       </div>
 
       <div class="histoire-grid">
-        <div class="histoire-texte">
+        <div class="reveal">
           <h2>À propos de nous</h2>
 
-          <div class="accroche">Mundrive, c'est l'histoire d'une passion pour l'automobile née dans un garage, et transmise de génération en génération.</div>
-
-          <div class="texte-premium">
-            <p>Je suis <strong>Pedro</strong>, expert en entretien automobile, fils de mécanicien. La voiture n'a jamais été un simple objet chez moi : c'est un métier, un héritage, un savoir-faire appris geste après geste dans l'atelier familial.</p>
-
-            <p>Avec Mundrive, j'ai voulu faire vivre cette expérience autrement : <strong>des conseils clairs, des pièces choisies avec exigence</strong>, et une approche honnête de l'entretien automobile.</p>
-
-            <p><strong>Diana</strong>, rédactrice spécialisée dans l'automobile, vous accompagne chaque semaine avec des articles précis et accessibles, pour comprendre votre voiture sans jamais perdre de vue votre budget.</p>
+          <div class="recit">
+            <p><span class="lettrine">M</span>undrive, c'est l'histoire d'une passion pour l'automobile qui s'est transmise de génération en génération.</p>
+            <p>Je suis Pedro, expert en entretien automobile, fils de mécanicien. Depuis toujours, la voiture fait partie de mon quotidien, avec un savoir-faire construit dans l'atelier familial.</p>
+            <p>Avec Mundrive, nous avons voulu donner une nouvelle vie à cette expérience en la partageant avec vous. Des conseils simples, des produits sélectionnés avec attention et une vision honnête de l'entretien automobile.</p>
+            <p>Diana, rédactrice spécialisée dans l'automobile, vous accompagne chaque semaine avec des articles clairs et pratiques pour mieux comprendre et entretenir votre voiture… tout en maîtrisant votre budget.</p>
+            <span class="signature">Notre ambition est simple : vous transmettre ce que nous avons appris, pour vous aider à faire les bons choix.</span>
           </div>
-
-          <div class="conclusion">Notre ambition tient en une phrase : vous transmettre ce que nous avons appris, pour que vous rouliez l'esprit tranquille.</div>
         </div>
 
-        <div class="histoire-video">
-          <!-- Remplacer ce bloc par le widget vidéo Elementor (même style : bordure et radius déjà définis dans le CSS additionnel, règle .elementor-widget-video) -->
+        <div class="histoire-video reveal" style="transition-delay: 0.12s;">
           <a href="#" class="video-placeholder">
-            <span class="lecture">
+            <span class="lecture metal-sheen">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
             </span>
             <span>Vidéo de présentation — nos ateliers</span>
@@ -834,38 +1034,56 @@
         </div>
       </div>
     </div>
-  </section>
 
-  <div class="transition-vers-sombre"></div>
+    <div class="chiffres-band reveal">
+      <div class="chiffres-inner">
+        <div class="chiffre">
+          <div class="chiffre-nombre">2-5j</div>
+          <div class="chiffre-label">Livraison France</div>
+        </div>
+        <div class="chiffre">
+          <div class="chiffre-nombre">14j</div>
+          <div class="chiffre-label">Retour gratuit</div>
+        </div>
+        <div class="chiffre">
+          <div class="chiffre-nombre">100%</div>
+          <div class="chiffre-label">Pièces vérifiées</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <section class="fond-sombre">
     <div class="contenu">
-      <span class="kicker">Récits & conseils</span>
-      <h2>Le journal Mundrive</h2>
+      <span class="kicker reveal">Récits & conseils</span>
+      <h2 class="reveal">Le journal Mundrive</h2>
 
-      <div class="liste">
-        <a href="https://www.mundrive.com/#" class="ligne-item">
+      <div class="journal-liste">
+        <a href="https://www.mundrive.com/#" class="journal-item reveal">
+          <span class="journal-numero">01</span>
           <div>
-            <div class="ligne-titre">Entretenir sa voiture sans se ruiner</div>
-            <div class="ligne-desc">Les gestes simples pour <strong>prolonger la vie de votre véhicule</strong> tout en maîtrisant votre budget.</div>
+            <div class="journal-titre">Entretenir sa voiture sans se ruiner</div>
+            <div class="journal-desc">Les gestes simples pour prolonger la vie de votre véhicule tout en maîtrisant votre budget.</div>
           </div>
-          <span class="ligne-fleche">→</span>
+          <span class="journal-fleche">→</span>
         </a>
 
-        <a href="https://www.mundrive.com/#" class="ligne-item">
+        <a href="https://www.mundrive.com/#" class="journal-item reveal" style="transition-delay: 0.08s;">
+          <span class="journal-numero">02</span>
           <div>
-            <div class="ligne-titre">Les erreurs à éviter chez le garagiste</div>
-            <div class="ligne-desc">Comment mieux comprendre les devis et <strong>poser les bonnes questions</strong> avant de valider une réparation.</div>
+            <div class="journal-titre">Les erreurs à éviter chez le garagiste</div>
+            <div class="journal-desc">Comment mieux comprendre les devis et poser les bonnes questions avant de valider une réparation.</div>
           </div>
-          <span class="ligne-fleche">→</span>
+          <span class="journal-fleche">→</span>
         </a>
 
-        <a href="https://www.mundrive.com/#" class="ligne-item" style="border-bottom: none;">
+        <a href="https://www.mundrive.com/#" class="journal-item reveal" style="transition-delay: 0.16s;">
+          <span class="journal-numero">03</span>
           <div>
-            <div class="ligne-titre">Préparer sa voiture pour un long trajet</div>
-            <div class="ligne-desc">Une checklist simple et efficace pour <strong>partir sereinement</strong>, sans mauvaise surprise sur la route.</div>
+            <div class="journal-titre">Préparer sa voiture pour un long trajet</div>
+            <div class="journal-desc">Une checklist simple et efficace pour partir sereinement, sans mauvaise surprise sur la route.</div>
           </div>
-          <span class="ligne-fleche">→</span>
+          <span class="journal-fleche">→</span>
         </a>
       </div>
 
@@ -877,11 +1095,11 @@
 
   <section class="fond-clair" style="text-align: center;">
     <div class="contenu">
-      <span class="kicker">Restez informé</span>
-      <h2>La newsletter</h2>
-      <p style="max-width: 460px; margin: 0 auto 32px; font-size: 14.5px; line-height: 1.75; color: var(--texte-att);">Recevez chaque semaine notre dernier article automobile, un code de bienvenue et nos offres tout au long de l'année.</p>
+      <span class="kicker reveal">Restez informé</span>
+      <h2 class="titre-centre reveal">La newsletter</h2>
+      <p class="reveal" style="max-width: 420px; margin: 0 auto 32px; font-size: 14px; line-height: 1.7; color: var(--texte-att);">Un article par semaine, un code de bienvenue offert.</p>
 
-      <form class="newsletter-form" onsubmit="return false;">
+      <form class="newsletter-form reveal" onsubmit="return false;">
         <label for="newsletter-email" style="position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0);">Adresse email</label>
         <input id="newsletter-email" type="email" placeholder="Votre adresse email" required>
         <button type="submit">S'abonner</button>
@@ -893,20 +1111,20 @@
 
   <section class="fond-clair">
     <div class="contenu">
-      <span class="kicker">Vos questions</span>
-      <h2>Questions fréquentes</h2>
+      <span class="kicker reveal">Vos questions</span>
+      <h2 class="reveal">Questions fréquentes</h2>
 
-      <details class="faq">
+      <details class="faq reveal">
         <summary>Livrez-vous partout en France ?</summary>
         <p class="reponse">Oui, nous livrons partout en France métropolitaine, généralement entre 2 et 5 jours ouvrés.</p>
       </details>
 
-      <details class="faq">
+      <details class="faq reveal" style="transition-delay: 0.08s;">
         <summary>Comment savoir si une pièce est compatible avec mon véhicule ?</summary>
         <p class="reponse">Chaque fiche produit indique les véhicules compatibles. En cas de doute, Diego, l'assistant IA, répond à vos questions et vous aide à choisir la bonne pièce avec votre marque, modèle et année.</p>
       </details>
 
-      <details class="faq" style="border-bottom: none;">
+      <details class="faq reveal" style="border-bottom: none; transition-delay: 0.16s;">
         <summary>Puis-je retourner un produit s'il ne convient pas ?</summary>
         <p class="reponse">Oui, vous disposez de 14 jours après réception pour un retour.</p>
       </details>
@@ -917,21 +1135,59 @@
 
   <section class="fond-sombre">
     <div class="contenu">
-      <span class="kicker">Contact & boutique</span>
-      <h2>Parlons de votre automobile</h2>
-      <p style="max-width: 480px; margin: 0 0 32px; font-size: 14.5px; line-height: 1.75; color: rgba(232,213,176,0.75);">Une question sur une pièce, un doute sur un devis ? Mundrive vous répond avec une approche honnête et basée sur l'expérience terrain. Retrouvez aussi tout notre catalogue de pièces certifiées, sélectionnées avec la même exigence que nos conseils.</p>
+      <div class="contact-grid">
+        <div class="reveal">
+          <span class="kicker">Contact & boutique</span>
+          <h2>Parlons de votre automobile</h2>
+          <p style="max-width: 460px; margin: 0 0 28px; font-size: 14px; line-height: 1.7; color: rgba(248,227,192,0.75);">Une question sur une pièce, un doute sur un devis ? Mundrive vous répond avec une approche honnête et basée sur l'expérience terrain.</p>
 
-      <div class="cta-row">
-        <a href="https://www.mundrive.com/#" class="btn-plein">Voir la boutique <span aria-hidden="true">→</span></a>
-        <a href="https://www.mundrive.com/#" class="btn-texte">Discuter avec Mundrive <span aria-hidden="true">→</span></a>
+          <div class="cta-row">
+            <a href="https://www.mundrive.com/#" class="btn-plein metal-sheen">Voir la boutique <span aria-hidden="true">→</span></a>
+            <a href="https://www.mundrive.com/#" class="btn-texte">Discuter avec Mundrive <span aria-hidden="true">→</span></a>
+          </div>
+
+          <ul class="liens-sociaux">
+            <li><a href="https://www.mundrive.com/#">Instagram · @mundrive_auto</a></li>
+            <li><a href="https://www.mundrive.com/#">YouTube · Mundrive Automobile</a></li>
+            <li><a href="https://www.mundrive.com/#">Newsletter</a></li>
+          </ul>
+        </div>
+
+        <div class="cadre-photo reveal" style="transition-delay: 0.1s;">
+          <img src="https://www.mundrive.com/wp-content/uploads/2026/09/Pieces-Automobile-scaled.png" alt="Pièces automobile Mundrive" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; margin:0;">
+        </div>
       </div>
-
-      <ul class="liens-sociaux">
-        <li><a href="https://www.mundrive.com/#">Instagram · @mundrive_auto</a></li>
-        <li><a href="https://www.mundrive.com/#">YouTube · Mundrive Automobile</a></li>
-        <li><a href="https://www.mundrive.com/#">Newsletter</a></li>
-      </ul>
     </div>
   </section>
 
 </div>
+
+<noscript><style>.mundrive-flow .reveal{opacity:1!important;transform:none!important;}</style></noscript>
+
+<script>
+(function() {
+    try {
+        if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            return;
+        }
+        var elements = document.querySelectorAll('.mundrive-flow .reveal');
+        if (!('IntersectionObserver' in window)) {
+            elements.forEach(function(el) { el.classList.add('is-visible'); });
+            return;
+        }
+        var observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+        elements.forEach(function(el) { observer.observe(el); });
+    } catch (e) {
+        document.querySelectorAll('.mundrive-flow .reveal').forEach(function(el) {
+            el.classList.add('is-visible');
+        });
+    }
+})();
+</script>
