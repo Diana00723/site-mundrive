@@ -395,6 +395,75 @@ function mundrive_diego_notify_litige($question) {
     wp_mail($to, $subject, $body);
 }
 
+/* ============================================================
+   SUIVI DE COMMANDE — pas d'IA, pas de quota : on demande le numéro,
+   puis on cherche la vraie commande WooCommerce et son statut/suivi
+   ============================================================ */
+
+function mundrive_diego_order_tracking_intent($t) {
+    return (bool) preg_match(
+        '/suivre? (ma |la )?commande|suivi (de )?(ma |la )?commande|o[uù] en est (ma |la )?commande|statut (de )?(ma |la )?commande|(mon )?colis|tracking|trouver ma commande/iu',
+        $t
+    );
+}
+
+// un message qui n'est (à peu de choses près) qu'un numéro : on le traite comme
+// une réponse à "donnez-moi votre numéro de commande", sans avoir besoin de
+// mémoriser l'état de la conversation entre deux appels
+function mundrive_diego_looks_like_order_number($t) {
+    return (bool) preg_match('/^\s*#?\s*(cmd|commande)?\s*[-\s]?\s*\d{2,10}\s*$/iu', trim($t));
+}
+
+function mundrive_diego_order_tracking_number($order) {
+    // compatible avec les métadonnées des principaux plugins de suivi WooCommerce
+    foreach (['_tracking_number', 'tracking_number'] as $key) {
+        $v = $order->get_meta($key);
+        if ($v) { return $v; }
+    }
+    return null;
+}
+
+function mundrive_diego_lookup_order($text) {
+    preg_match('/(\d{2,10})/', $text, $m);
+    $order_id = isset($m[1]) ? (int) $m[1] : 0;
+
+    if (!$order_id || !function_exists('wc_get_order')) {
+        return ['text' => "Je n'arrive pas à identifier de numéro de commande valide. Vérifiez-le dans votre email de confirmation, ou écrivez à contact@mundrive.com.", 'link' => null];
+    }
+
+    $order = wc_get_order($order_id);
+    if (!$order) {
+        return ['text' => "Je ne trouve pas de commande correspondant au numéro {$order_id}. Vérifiez-le, ou écrivez à contact@mundrive.com avec ce numéro pour qu'on regarde directement.", 'link' => null];
+    }
+
+    // sécurité : un numéro de commande WooCommerce est un simple compteur, donc
+    // devinable — on n'affiche le détail que si la commande appartient bien au
+    // visiteur connecté, jamais à un·e visiteur·se anonyme ou à quelqu'un d'autre
+    $current_user_id = get_current_user_id();
+    if (!$current_user_id || (int) $order->get_customer_id() !== $current_user_id) {
+        return [
+            'text' => "Pour votre sécurité, je ne peux afficher le détail d'une commande que si vous êtes connecté·e à votre compte MunDrive. Connectez-vous, ou écrivez à contact@mundrive.com avec le numéro {$order_id}.",
+            'link' => null,
+        ];
+    }
+
+    $status    = wc_get_order_status_name($order->get_status());
+    $tracking  = mundrive_diego_order_tracking_number($order);
+    $text = "Votre commande #{$order_id} est actuellement au statut : « {$status} ».";
+    $link = null;
+
+    if ($tracking) {
+        $text .= " Numéro de suivi transporteur : {$tracking}.";
+        $link = ['label' => 'Suivre mon colis (Chronopost)', 'url' => 'https://www.chronopost.fr/fr/suivi-colis'];
+    } elseif ($order->get_status() === 'completed') {
+        $text .= " Elle a été expédiée.";
+    } else {
+        $text .= " Vous recevrez un email avec le numéro de suivi dès l'expédition.";
+    }
+
+    return ['text' => $text, 'link' => $link];
+}
+
 function mundrive_diego_quota_blocked_payload($cat) {
     $links = mundrive_diego_useful_links();
     if ($cat === 'entretien') {
@@ -533,6 +602,20 @@ function mundrive_diego_ask_route(WP_REST_Request $req) {
     }
 
     $user_name = mundrive_diego_visitor_first_name();
+
+    // 0a) réponse (numéro de commande) à une demande de suivi précédente : ni IA, ni quota
+    if (mundrive_diego_looks_like_order_number($question)) {
+        $lookup = mundrive_diego_lookup_order($question);
+        mundrive_diego_log(null, $question, null, null, 'order-lookup');
+        return new WP_REST_Response(['allowed' => true, 'answer' => $lookup['text'], 'article' => null, 'product' => null, 'link' => $lookup['link']], 200);
+    }
+
+    // 0b) "où en est ma commande" sans numéro fourni : on le demande, ni IA ni quota
+    if (mundrive_diego_order_tracking_intent($question)) {
+        mundrive_diego_log(null, $question, null, null, 'order-ask');
+        $reply = ($user_name ? $user_name . ', b' : 'B') . "ien sûr ! Donnez-moi votre numéro de commande (dans l'email de confirmation, ou dans « Mes commandes » sur votre compte) et je vous dis où ça en est.";
+        return new WP_REST_Response(['allowed' => true, 'answer' => $reply, 'article' => null, 'product' => null, 'link' => null], 200);
+    }
 
     // 1) garantie / remboursement / accident : jamais l'IA, toujours transmis par email,
     //    ni IA ni quota (c'est une décision commerciale, pas une question support)
