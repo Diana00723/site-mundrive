@@ -761,6 +761,9 @@
     if(data.article && data.article.url){
       html += linkChip(data.article.url, "Lire l'article");
     }
+    if(data.product && data.product.url){
+      html += linkChip(data.product.url, 'Voir le produit');
+    }
     if(data.link && data.link.url){
       html += linkChip(data.link.url, data.link.label || 'En savoir plus');
     }

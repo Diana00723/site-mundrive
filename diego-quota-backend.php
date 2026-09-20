@@ -34,6 +34,16 @@ define('MUNDRIVE_DIEGO_LIMITS', [
 ]);
 define('MUNDRIVE_DIEGO_MODEL', 'claude-opus-5');
 
+// budget IA global (tous visiteurs confondus) : 5000 réponses IA par quinzaine
+// (1er-15 / 16-fin de mois) => jamais plus de 10 000/mois. Au-delà, Diego repasse
+// en réponses scriptées (articles/produits trouvés, ou message générique) sans
+// appeler l'API — les visiteurs peuvent toujours discuter, juste sans IA.
+define('MUNDRIVE_DIEGO_GLOBAL_AI_BUDGET', 5000);
+
+// durée de conservation des questions dans le journal (tableau de bord) avant purge automatique
+define('MUNDRIVE_DIEGO_LOG_RETENTION_DAYS', 365);
+define('MUNDRIVE_DIEGO_QUOTA_RETENTION_DAYS', 90);
+
 /* ============================================================
    TABLES : quotas quotidiens + journal des conversations
    ============================================================ */
@@ -85,6 +95,29 @@ function mundrive_diego_maybe_create_tables() {
     update_option('mundrive_diego_db_v2', '1');
 }
 add_action('init', 'mundrive_diego_maybe_create_tables');
+
+/* ============================================================
+   PURGE AUTOMATIQUE — conservation limitée dans le temps (RGPD :
+   pas de données gardées indéfiniment sans raison)
+   ============================================================ */
+
+add_action('init', function () {
+    if (!wp_next_scheduled('mundrive_diego_purge_logs')) {
+        wp_schedule_event(time(), 'daily', 'mundrive_diego_purge_logs');
+    }
+});
+
+add_action('mundrive_diego_purge_logs', function () {
+    global $wpdb;
+    $log_cutoff = gmdate('Y-m-d H:i:s', strtotime('-' . MUNDRIVE_DIEGO_LOG_RETENTION_DAYS . ' days'));
+    $wpdb->query($wpdb->prepare(
+        'DELETE FROM ' . mundrive_diego_log_table() . ' WHERE created_at < %s', $log_cutoff
+    ));
+    $quota_cutoff = gmdate('Y-m-d', strtotime('-' . MUNDRIVE_DIEGO_QUOTA_RETENTION_DAYS . ' days'));
+    $wpdb->query($wpdb->prepare(
+        'DELETE FROM ' . mundrive_diego_quota_table() . ' WHERE day < %s', $quota_cutoff
+    ));
+});
 
 /* ============================================================
    IDENTITÉ VISITEUR (cookie anonyme httpOnly) + IP (journal uniquement)
@@ -290,6 +323,64 @@ function mundrive_diego_useful_links() {
     return ['blog' => $blog ?: home_url('/'), 'shop' => $shop ?: home_url('/')];
 }
 
+/* ============================================================
+   BUDGET IA GLOBAL — quinzaine calendaire (1-15 / 16-fin de mois),
+   5000 réponses IA chacune => jamais plus de 10 000/mois au total
+   ============================================================ */
+
+function mundrive_diego_period_bounds() {
+    $day   = (int) current_time('j');
+    $year  = (int) current_time('Y');
+    $month = (int) current_time('n');
+    if ($day <= 15) {
+        $start = sprintf('%04d-%02d-01', $year, $month);
+        $end   = sprintf('%04d-%02d-15', $year, $month);
+    } else {
+        $start = sprintf('%04d-%02d-16', $year, $month);
+        $end   = date('Y-m-t', strtotime($start));
+    }
+    return ['start' => $start, 'end' => $end];
+}
+
+function mundrive_diego_global_ai_used() {
+    global $wpdb;
+    $p = mundrive_diego_period_bounds();
+    return (int) $wpdb->get_var($wpdb->prepare(
+        "SELECT COUNT(*) FROM " . mundrive_diego_log_table() . " WHERE answered_via = 'ai' AND created_at >= %s AND created_at < %s",
+        $p['start'] . ' 00:00:00', date('Y-m-d', strtotime($p['end'] . ' +1 day')) . ' 00:00:00'
+    ));
+}
+
+function mundrive_diego_global_ai_budget_available() {
+    return mundrive_diego_global_ai_used() < MUNDRIVE_DIEGO_GLOBAL_AI_BUDGET;
+}
+
+/* ============================================================
+   LITIGE / SAV — garantie, remboursement, accident : jamais répondu
+   par l'IA (décision commerciale), toujours transmis par email à
+   l'équipe MunDrive avec la politique de retour rappelée au visiteur
+   ============================================================ */
+
+function mundrive_diego_litige_intent($t) {
+    return (bool) preg_match(
+        '/garantie|litige|rembours|avarie|cass[ée]e?|d[ée]fectueux|accident|endommag[ée]|retourner (la|ma|une) pi[eè]ce|renvoyer (la|ma|une) pi[eè]ce/iu',
+        $t
+    );
+}
+
+function mundrive_diego_notify_litige($question) {
+    $to      = get_option('admin_email');
+    $subject = '[Diego] Nouveau signalement SAV / litige';
+    $body    = "Un visiteur a signalé un problème via le chatbot Diego :\n\n"
+        . "Message : " . $question . "\n"
+        . "Date : " . current_time('d/m/Y H:i') . "\n"
+        . "IP : " . mundrive_diego_client_ip() . "\n"
+        . "Identifiant visiteur (cookie) : " . mundrive_diego_get_uid() . "\n\n"
+        . "Rappel de la politique communiquée au visiteur : réponse sous 24h, retour "
+        . "accepté sous 14 jours si la pièce revient dans le même état qu'à la réception.";
+    wp_mail($to, $subject, $body);
+}
+
 function mundrive_diego_quota_blocked_payload($cat) {
     $links = mundrive_diego_useful_links();
     if ($cat === 'entretien') {
@@ -407,14 +498,25 @@ function mundrive_diego_ask_route(WP_REST_Request $req) {
         $question = mb_substr($question, 0, 600);
     }
 
-    // 1) salutations / newsletter / humain : ni IA, ni quota
+    // 1) garantie / remboursement / accident : jamais l'IA, toujours transmis par email,
+    //    ni IA ni quota (c'est une décision commerciale, pas une question support)
+    if (mundrive_diego_litige_intent($question)) {
+        mundrive_diego_notify_litige($question);
+        mundrive_diego_log(null, $question, null, null, 'litige');
+        $reply = "Je suis désolé pour ce désagrément. J'ai transmis votre message à notre équipe, qui vous répondra sous 24h avec une décision. "
+            . "Pour rappel, vous disposez de 14 jours pour nous retourner une pièce, à condition qu'elle revienne dans le même état qu'à la réception. "
+            . "Pour un suivi encore plus rapide, écrivez aussi à contact@mundrive.com avec votre numéro de commande.";
+        return new WP_REST_Response(['allowed' => true, 'answer' => $reply, 'article' => null, 'product' => null, 'link' => null], 200);
+    }
+
+    // 2) salutations / newsletter / humain générique : ni IA, ni quota
     $quick = mundrive_diego_quick_intent($question);
     if ($quick !== null) {
         mundrive_diego_log(null, $question, null, null, 'quick');
-        return new WP_REST_Response(['allowed' => true, 'answer' => $quick, 'article' => null, 'link' => null], 200);
+        return new WP_REST_Response(['allowed' => true, 'answer' => $quick, 'article' => null, 'product' => null, 'link' => null], 200);
     }
 
-    // 2) catégorie brute (décidée par le serveur, jamais par le client)
+    // 3) catégorie brute (décidée par le serveur, jamais par le client)
     $bucket  = mundrive_diego_bucket($question); // 'compat' | 'maintenance' | null
     $article = null;
     $product = null;
@@ -434,12 +536,17 @@ function mundrive_diego_ask_route(WP_REST_Request $req) {
         if (!$quota['allowed']) {
             $payload = mundrive_diego_quota_blocked_payload($cat);
             mundrive_diego_log($cat, $question, $article, $product, 'quota-blocked');
-            return new WP_REST_Response(['allowed' => false, 'answer' => $payload['text'], 'link' => $payload['link'], 'article' => null], 200);
+            return new WP_REST_Response(['allowed' => false, 'answer' => $payload['text'], 'link' => $payload['link'], 'article' => null, 'product' => null], 200);
         }
     }
 
     $context   = mundrive_diego_build_context($article, $product);
-    $ai_answer = mundrive_diego_call_claude($question, $cat, $context);
+    // le budget IA global protège la facture : au-delà, on répond quand même
+    // (articles/produits trouvés automatiquement, sinon message générique),
+    // simplement sans appeler Claude jusqu'à la prochaine quinzaine.
+    $ai_answer = mundrive_diego_global_ai_budget_available()
+        ? mundrive_diego_call_claude($question, $cat, $context)
+        : null;
 
     if ($ai_answer !== null) {
         $answer = $ai_answer;
@@ -455,6 +562,7 @@ function mundrive_diego_ask_route(WP_REST_Request $req) {
         'allowed' => true,
         'answer'  => $answer,
         'article' => $article ? ['title' => $article->post_title, 'url' => get_permalink($article)] : null,
+        'product' => $product ? ['name' => $product->get_name(), 'url' => $product->get_permalink()] : null,
         'link'    => null,
     ], 200);
 }
@@ -573,6 +681,8 @@ function mundrive_diego_render_dashboard() {
     $recent = $wpdb->get_results("SELECT * FROM $log ORDER BY created_at DESC LIMIT 50", ARRAY_A);
 
     $key_ok = mundrive_diego_key_configured();
+    $period = mundrive_diego_period_bounds();
+    $ai_used = mundrive_diego_global_ai_used();
     ?>
     <div class="wrap">
         <h1>Diego — Tableau de bord</h1>
@@ -607,6 +717,17 @@ function mundrive_diego_render_dashboard() {
             <div style="background:#fff;border:1px solid #e1e0d9;border-radius:8px;padding:16px 20px;min-width:160px;">
                 <div style="font-size:12px;color:#898781;text-transform:uppercase;letter-spacing:.04em;">Quotas atteints aujourd'hui</div>
                 <div style="font-size:28px;font-weight:700;color:#0b0b0b;"><?php echo (int) $blocked_today; ?></div>
+            </div>
+            <div style="background:#fff;border:1px solid #e1e0d9;border-radius:8px;padding:16px 20px;min-width:220px;">
+                <div style="font-size:12px;color:#898781;text-transform:uppercase;letter-spacing:.04em;">
+                    Budget IA — quinzaine du <?php echo esc_html(date_i18n('d/m', strtotime($period['start']))); ?> au <?php echo esc_html(date_i18n('d/m', strtotime($period['end']))); ?>
+                </div>
+                <div style="font-size:28px;font-weight:700;color:<?php echo $ai_used >= MUNDRIVE_DIEGO_GLOBAL_AI_BUDGET ? '#d03b3b' : '#0b0b0b'; ?>;">
+                    <?php echo (int) $ai_used; ?> / <?php echo (int) MUNDRIVE_DIEGO_GLOBAL_AI_BUDGET; ?>
+                </div>
+                <?php if ($ai_used >= MUNDRIVE_DIEGO_GLOBAL_AI_BUDGET): ?>
+                <div style="font-size:12px;color:#d03b3b;">Budget épuisé — Diego répond en mode scripté jusqu'à la prochaine quinzaine.</div>
+                <?php endif; ?>
             </div>
         </div>
 
