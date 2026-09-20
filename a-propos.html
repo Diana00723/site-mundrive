@@ -1,27 +1,32 @@
 <style>
+/* ============================================================
+   CSS ADDITIONNEL — à coller dans Apparence > Personnaliser > CSS additionnel
+   Palette cuivrée/orangée premium — volant repositionné (mesure exacte : 143px)
+   ================================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;1,9..144,500&family=Montserrat:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap');
+
 :root {
-    --brun-fonce: #7A3B12;
-    --brun-doux: #A8571F;
-    --or: #BF8617;
-    --or-clair: #E0B25A;
-    --sable: #E8D5B0;
+    --brun-fonce: #4A1D07;
+    --brun-doux: #B85A1E;
+    --or: #E08A2C;
+    --or-clair: #F5AE5E;
+    --sable: #F8E3C0;
+    --volant: #FFF6E8;
 }
 
-/* ============================================
-   LIGNE DE COURSE — tout en haut du site
-   ============================================ */
-body::before {
+html body::before {
     content: "";
     display: block;
     height: 3px;
     background: linear-gradient(90deg, transparent 0%, var(--or-clair) 15%, var(--or) 50%, var(--or-clair) 85%, transparent 100%);
 }
 
-/* ============================================
-   HEADER — bandeau agrandi
-   ============================================ */
-.site-header {
-    background: linear-gradient(180deg, var(--brun-fonce) 0%, #8A4517 35%, #984D1A 65%, var(--brun-doux) 100%) !important;
+html .site-header {
+    background:
+        repeating-linear-gradient(115deg, rgba(255,255,255,0.025) 0px, rgba(255,255,255,0.025) 1px, transparent 1px, transparent 6px),
+        linear-gradient(180deg, var(--brun-fonce) 0%, var(--brun-doux) 55%, var(--brun-fonce) 100%) !important;
+    background-blend-mode: overlay, normal;
     min-height: 180px !important;
     height: 180px !important;
     padding: 0 48px !important;
@@ -31,20 +36,17 @@ body::before {
     top: 0 !important;
     z-index: 1000;
     box-sizing: border-box;
-    border-bottom: 2px solid rgba(191,134,23,0.50);
-    box-shadow: 0 12px 30px rgba(122,59,18,0.55), 0 2px 0 rgba(255,255,255,0.03) inset;
+    border-bottom: 2px solid rgba(224,138,44,0.50);
+    box-shadow: 0 12px 30px rgba(74,29,7,0.55), 0 2px 0 rgba(255,255,255,0.03) inset;
 }
 
-/* ============================================
-   MENU — DORÉ, séparateurs fins
-   ============================================ */
-header nav {
+html header nav {
     margin-left: auto !important;
     display: flex;
     align-items: center;
 }
 
-header nav a {
+html header nav a {
     color: var(--or) !important;
     font-weight: 700 !important;
     font-size: 17px !important;
@@ -58,7 +60,7 @@ header nav a {
     transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease !important;
 }
 
-header nav a::after {
+html header nav a::after {
     content: "";
     position: absolute;
     left: 16px;
@@ -67,31 +69,31 @@ header nav a::after {
     height: 2px;
     border-radius: 3px;
     background: linear-gradient(90deg, var(--or) 0%, var(--or-clair) 50%, var(--or) 100%);
-    box-shadow: 0 0 8px rgba(224,178,90,0.35);
+    box-shadow: 0 0 8px rgba(245,174,94,0.35);
     transition: width 0.35s ease;
 }
 
-header nav a:hover::after,
-header nav .current-menu-item > a::after {
+html header nav a:hover::after,
+html header nav .current-menu-item > a::after {
     width: calc(100% - 32px);
 }
 
-header nav a:hover {
+html header nav a:hover {
     color: var(--or-clair) !important;
     transform: translateY(-3px);
-    text-shadow: 0 0 10px rgba(224,178,90,0.55), 0 0 20px rgba(224,178,90,0.18);
+    text-shadow: 0 0 10px rgba(245,174,94,0.55), 0 0 20px rgba(245,174,94,0.18);
 }
 
-header nav .current-menu-item > a {
+html header nav .current-menu-item > a {
     color: var(--or-clair) !important;
-    text-shadow: 0 0 9px rgba(224,178,90,0.45);
+    text-shadow: 0 0 9px rgba(245,174,94,0.45);
 }
 
-header nav li {
+html header nav li {
     position: relative;
 }
 
-header nav li:not(:last-child)::after {
+html header nav li:not(:last-child)::after {
     content: "";
     position: absolute;
     right: 0;
@@ -99,13 +101,10 @@ header nav li:not(:last-child)::after {
     transform: translateY(-50%);
     width: 1px;
     height: 14px;
-    background: rgba(191,134,23,0.3);
+    background: rgba(224,138,44,0.3);
 }
 
-/* ============================================
-   LISERÉ DORÉ EN BAS DU HEADER
-   ============================================ */
-.site-header::after {
+html .site-header::after {
     content: "";
     position: absolute;
     left: 48px;
@@ -113,130 +112,123 @@ header nav li:not(:last-child)::after {
     bottom: 0;
     height: 3px;
     border-radius: 3px;
-    background: linear-gradient(90deg, transparent 0%, rgba(191,134,23,0.25) 8%, var(--or) 30%, var(--or-clair) 50%, var(--or) 70%, rgba(191,134,23,0.25) 92%, transparent 100%);
-    box-shadow: 0 0 10px rgba(224,178,90,0.28);
+    background: linear-gradient(90deg, transparent 0%, rgba(224,138,44,0.25) 8%, var(--or) 30%, var(--or-clair) 50%, var(--or) 70%, rgba(224,138,44,0.25) 92%, transparent 100%);
+    box-shadow: 0 0 10px rgba(245,174,94,0.28);
 }
 
-/* ============================================
-   FOND DU SITE
-   ============================================ */
-body {
-    background: linear-gradient(180deg, #FFF7ED 0%, #FDE7C5 25%, #F9CFA2 50%, #F5A96C 75%, #E08A52 100%) !important;
+html body {
+    background: linear-gradient(180deg, #FFF8EE 0%, #FBDDAF 40%, #F2A85E 70%, #DE8032 100%) !important;
     background-attachment: fixed !important;
     background-repeat: no-repeat !important;
     background-size: cover !important;
 }
 
-/* ============================================
-   VIDÉO
-   ============================================ */
-.elementor-widget-video iframe,
-.elementor-widget-video .elementor-wrapper,
-.elementor-video-iframe {
+html .elementor-widget-video iframe,
+html .elementor-widget-video .elementor-wrapper,
+html .elementor-video-iframe {
     border-radius: 15px !important;
     border: 2px solid var(--or) !important;
-    box-shadow: 0 10px 28px rgba(122,59,18,0.42), 0 0 0 1px rgba(224,178,90,0.10) !important;
+    box-shadow: 0 10px 28px rgba(74,29,7,0.42), 0 0 0 1px rgba(245,174,94,0.10) !important;
     overflow: hidden !important;
 }
 
-/* ============================================
-   FOOTER
-   ============================================ */
-.site-footer {
-    background: linear-gradient(180deg, var(--brun-doux) 0%, var(--brun-fonce) 100%) !important;
+html .site-footer {
+    background:
+        repeating-linear-gradient(115deg, rgba(255,255,255,0.025) 0px, rgba(255,255,255,0.025) 1px, transparent 1px, transparent 6px),
+        linear-gradient(180deg, var(--brun-fonce) 0%, var(--brun-doux) 55%, var(--brun-fonce) 100%) !important;
+    background-blend-mode: overlay, normal;
     color: var(--sable) !important;
     padding: 65px 48px !important;
-    border-top: 2px solid rgba(224,178,90,0.25);
+    border-top: 2px solid rgba(245,174,94,0.25);
 }
 
-.site-footer a {
+html .site-footer a {
     color: var(--or) !important;
     text-decoration: none !important;
 }
 
-.site-footer a:hover {
+html .site-footer a:hover {
     color: var(--or-clair) !important;
 }
 
-/* ============================================
-   SUPPRESSION DE "ACCUEIL"
-   ============================================ */
-.page-header .entry-title {
+html .page-header .entry-title {
     display: none !important;
 }
 
 /* ============================================
-   TITRE DU SITE — MUNDRIVE, volant au-dessus du I
+   TITRE DU SITE — MUNDRIVE
    ============================================ */
-.site-title,
-.site-title a {
+html .site-title,
+html .site-title a {
     font-family: 'Montserrat', sans-serif !important;
     font-weight: 900 !important;
     font-size: 34px !important;
     letter-spacing: 1.5px !important;
-    color: #f3d9a8 !important;
+    color: #F5DDA6 !important;
     text-decoration: none !important;
     filter: drop-shadow(0 3px 6px rgba(0,0,0,0.45));
     transition: transform 0.3s ease, filter 0.3s ease;
 }
 
-.site-title a {
+html .site-title a {
     position: relative !important;
     display: inline-block !important;
 }
 
-.site-title a:hover {
+html .site-title a:hover {
     transform: scale(1.03);
-    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.55)) drop-shadow(0 0 16px rgba(224,178,90,0.35));
+    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.55)) drop-shadow(0 0 16px rgba(245,174,94,0.35));
 }
 
-.site-title a::before {
+/* ============================================
+   VOLANT — position exacte mesurée : 143px (desktop)
+   ============================================ */
+html .site-title a::before {
     content: "";
+    display: block !important;
     position: absolute !important;
-    left: 146px !important;
-    top: -16px !important;
-    width: 20px;
-    height: 20px;
+    left: 143px !important;
+    top: -17px !important;
+    width: 21px;
+    height: 21px;
     background-size: contain;
     background-repeat: no-repeat;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Ccircle cx='9' cy='9' r='7.7' fill='none' stroke='%23f3d9a8' stroke-width='1.8'/%3E%3Ccircle cx='9' cy='9' r='1.9' fill='%23f3d9a8'/%3E%3Cline x1='9' y1='1.5' x2='9' y2='7' stroke='%23f3d9a8' stroke-width='1.8'/%3E%3Cline x1='9' y1='9' x2='3.4' y2='13.1' stroke='%23f3d9a8' stroke-width='1.8'/%3E%3Cline x1='9' y1='9' x2='14.6' y2='13.1' stroke='%23f3d9a8' stroke-width='1.8'/%3E%3C/svg%3E");
+    filter: drop-shadow(0 0 5px rgba(245,174,94,0.65));
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Ccircle cx='9' cy='9' r='7.7' fill='none' stroke='%23F5AE5E' stroke-width='2'/%3E%3Ccircle cx='9' cy='9' r='1.9' fill='%23FFF6E8'/%3E%3Cline x1='9' y1='1.5' x2='9' y2='7' stroke='%23FFF6E8' stroke-width='1.8'/%3E%3Cline x1='9' y1='9' x2='3.4' y2='13.1' stroke='%23FFF6E8' stroke-width='1.8'/%3E%3Cline x1='9' y1='9' x2='14.6' y2='13.1' stroke='%23FFF6E8' stroke-width='1.8'/%3E%3C/svg%3E");
 }
 
 /* ============================================
    SLOGAN — baseline sous le nom MUNDRIVE
    ============================================ */
-.site-description {
+html .site-description {
     display: block !important;
     font-family: 'Inter', sans-serif !important;
     font-weight: 600 !important;
     font-size: 10px !important;
     letter-spacing: 3px !important;
-    color: rgba(224,178,90,0.65) !important;
+    color: rgba(245,174,94,0.65) !important;
     margin-top: 4px !important;
     margin-left: 2px !important;
     text-transform: uppercase !important;
 }
 
-/* ============================================
-   RÉDUCTION DE L'ESPACE SOUS LE HEADER
-   ============================================ */
-.page-header {
+html .page-header {
     padding: 0 !important;
     margin: 0 !important;
     min-height: 0 !important;
     height: 0 !important;
 }
 
-.site-main,
-#content,
-.entry-content,
-.elementor {
+html .site-main,
+html #content,
+html .entry-content,
+html .elementor {
     margin-top: 0 !important;
     padding-top: 0 !important;
 }
 
-.site-main > *:first-child,
-#content > *:first-child {
+html .site-main > *:first-child,
+html #content > *:first-child {
     margin-top: 0 !important;
     padding-top: 10px !important;
 }
@@ -245,7 +237,7 @@ body {
    VERSION MOBILE / TABLETTE — header qui s'empile proprement
    ============================================ */
 @media (max-width: 900px) {
-    .site-header {
+    html .site-header {
         height: auto !important;
         min-height: 0 !important;
         flex-wrap: wrap !important;
@@ -254,7 +246,7 @@ body {
         padding: 22px 24px !important;
     }
 
-    header nav {
+    html header nav {
         margin-left: 0 !important;
         width: 100%;
         justify-content: center;
@@ -262,40 +254,38 @@ body {
         row-gap: 4px;
     }
 
-    header nav a {
+    html header nav a {
         font-size: 13px !important;
         letter-spacing: 1.2px !important;
         padding: 8px 10px !important;
     }
 
-    header nav li:not(:last-child)::after {
+    html header nav li:not(:last-child)::after {
         display: none;
     }
 
-    .site-footer {
+    html .site-footer {
         padding: 48px 24px !important;
     }
 }
 
+/* ============================================
+   VERSION MOBILE — titre réduit + volant repositionné proportionnellement
+   (le titre passe de 34px à 26px, donc le volant est décalé selon le même ratio)
+   ============================================ */
 @media (max-width: 767px) {
-    .site-title,
-    .site-title a {
+    html .site-title,
+    html .site-title a {
         font-size: 26px !important;
     }
 
-    .site-title a::before {
-        left: 112px !important;
-        top: -13px !important;
-        width: 16px;
-        height: 16px;
+    html .site-title a::before {
+        left: 110px !important;
+        top: -14px !important;
+        width: 17px;
+        height: 17px;
     }
 }
-
-/* ============================================================
-   PAGE "À PROPOS" — épuré, moderne, dégradé chaleureux, e-commerce
-   ================================================================ */
-
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;1,9..144,500&family=Montserrat:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap');
 
 .mundrive-flow {
     --creme: #FFFBF3;
@@ -396,8 +386,13 @@ body {
     }
 }
 
+/* Le header se termine désormais sur --brun-fonce (dégradé symétrique brun-fonce→brun-doux→brun-fonce),
+   donc cette bande d'ouverture doit partir de --brun-fonce et non plus de --brun-doux comme la bande
+   .transition-vers-clair générique (réutilisée ailleurs entre le Journal et la Newsletter, où le bas
+   réel de la section sombre est bien --brun-doux, lui, inchangé). */
 .mundrive-flow .transition-ouverture {
     height: 90px;
+    background: linear-gradient(180deg, var(--brun-fonce) 0%, var(--or) 45%, #FFF8EE 100%);
 }
 
 @media (max-width: 767px) {
@@ -611,7 +606,9 @@ body {
     font-size: 11px;
     letter-spacing: 2.5px;
     text-transform: uppercase;
-    color: var(--or);
+    /* --or est trop clair pour un petit texte sur fond crème (contraste ~2:1) ;
+       --brun-doux garde l'esprit doré/cuivré tout en restant lisible */
+    color: var(--brun-doux);
     margin-bottom: 16px;
 }
 
@@ -758,7 +755,7 @@ body {
     position: relative;
     left: 50%;
     margin-left: -50vw;
-    background: linear-gradient(180deg, #F8E3C0 0%, var(--sable) 22%, var(--or) 60%, var(--brun-fonce) 100%);
+    background: linear-gradient(180deg, #F8E3C0 0%, var(--or) 60%, var(--brun-fonce) 100%);
     padding: 44px 0;
     margin-top: 64px;
 }
@@ -1426,7 +1423,10 @@ body {
 
   <div class="transition-vers-sombre"></div>
 
-  <section class="fond-sombre">
+  <!-- Dégradé propre à cette section (au lieu du fond-sombre générique) : le footer se termine
+       maintenant sur --brun-fonce (dégradé symétrique), donc cette dernière section sombre avant
+       le footer doit elle aussi revenir à --brun-fonce en bas pour un raccord sans coupure -->
+  <section class="fond-sombre" style="background: linear-gradient(180deg, var(--brun-fonce) 0%, var(--brun-doux) 55%, var(--brun-fonce) 100%);">
     <div class="contenu">
       <div class="contact-grid">
         <div class="reveal">

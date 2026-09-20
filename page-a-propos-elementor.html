@@ -104,8 +104,13 @@
     }
 }
 
+/* Le header se termine désormais sur --brun-fonce (dégradé symétrique brun-fonce→brun-doux→brun-fonce),
+   donc cette bande d'ouverture doit partir de --brun-fonce et non plus de --brun-doux comme la bande
+   .transition-vers-clair générique (réutilisée ailleurs entre le Journal et la Newsletter, où le bas
+   réel de la section sombre est bien --brun-doux, lui, inchangé). */
 .mundrive-flow .transition-ouverture {
     height: 90px;
+    background: linear-gradient(180deg, var(--brun-fonce) 0%, var(--or) 45%, #FFF8EE 100%);
 }
 
 @media (max-width: 767px) {
@@ -319,7 +324,9 @@
     font-size: 11px;
     letter-spacing: 2.5px;
     text-transform: uppercase;
-    color: var(--or);
+    /* --or est trop clair pour un petit texte sur fond crème (contraste ~2:1) ;
+       --brun-doux garde l'esprit doré/cuivré tout en restant lisible */
+    color: var(--brun-doux);
     margin-bottom: 16px;
 }
 
@@ -466,7 +473,7 @@
     position: relative;
     left: 50%;
     margin-left: -50vw;
-    background: linear-gradient(180deg, #F8E3C0 0%, var(--sable) 22%, var(--or) 60%, var(--brun-fonce) 100%);
+    background: linear-gradient(180deg, #F8E3C0 0%, var(--or) 60%, var(--brun-fonce) 100%);
     padding: 44px 0;
     margin-top: 64px;
 }
@@ -1133,7 +1140,10 @@
 
   <div class="transition-vers-sombre"></div>
 
-  <section class="fond-sombre">
+  <!-- Dégradé propre à cette section (au lieu du fond-sombre générique) : le footer se termine
+       maintenant sur --brun-fonce (dégradé symétrique), donc cette dernière section sombre avant
+       le footer doit elle aussi revenir à --brun-fonce en bas pour un raccord sans coupure -->
+  <section class="fond-sombre" style="background: linear-gradient(180deg, var(--brun-fonce) 0%, var(--brun-doux) 55%, var(--brun-fonce) 100%);">
     <div class="contenu">
       <div class="contact-grid">
         <div class="reveal">
