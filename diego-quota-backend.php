@@ -32,7 +32,9 @@ define('MUNDRIVE_DIEGO_LIMITS', [
     'compat'    => 30,
     'general'   => 10,
 ]);
-define('MUNDRIVE_DIEGO_MODEL', 'claude-opus-5');
+// Pour repasser sur Opus 5 (plus fin, ~5x plus cher) plus tard, il suffit de
+// changer cette seule ligne : define('MUNDRIVE_DIEGO_MODEL', 'claude-opus-5');
+define('MUNDRIVE_DIEGO_MODEL', 'claude-haiku-4-5-20251001');
 
 // budget IA global (tous visiteurs confondus) : 5000 réponses IA par quinzaine
 // (1er-15 / 16-fin de mois) => jamais plus de 10 000/mois. Au-delà, Diego repasse
@@ -443,14 +445,19 @@ function mundrive_diego_call_claude($question, $cat, $context, $user_name = null
             : "\n\nAucun article ni fiche produit MunDrive ne correspond à cette question : réponds avec des informations générales fiables sur l'automobile.");
 
     $body = [
-        'model'         => MUNDRIVE_DIEGO_MODEL,
-        'max_tokens'    => 1024,
-        'output_config' => ['effort' => 'low'],
-        'system'        => $system,
-        'messages'      => [
+        'model'      => MUNDRIVE_DIEGO_MODEL,
+        'max_tokens' => 1024,
+        'system'     => $system,
+        'messages'   => [
             ['role' => 'user', 'content' => $question],
         ],
     ];
+    // "effort" (contrôle du raisonnement) n'existe que sur Opus/Sonnet/Fable — l'envoyer
+    // à Haiku renvoie une erreur. En l'omettant ici, changer MUNDRIVE_DIEGO_MODEL plus
+    // haut suffit à basculer d'un modèle à l'autre sans toucher au reste du code.
+    if (strpos(MUNDRIVE_DIEGO_MODEL, 'haiku') === false) {
+        $body['output_config'] = ['effort' => 'low'];
+    }
 
     $res = wp_remote_post('https://api.anthropic.com/v1/messages', [
         'timeout' => 20,
