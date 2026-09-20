@@ -745,58 +745,68 @@
     }
   }
 
-  /* ---- essaie d'abord le vrai compteur côté serveur (cookie httpOnly, infalsifiable en JS) ;
-     si le endpoint n'existe pas ou n'est pas joignable (ex: aperçu Artifact hors du site),
-     on retombe sur le compteur localStorage du navigateur ---- */
-  async function checkQuotaServer(cat){
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, function(c){
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  function linkChip(url, label){
+    return ' <a class="link-chip" href="' + escapeHtml(url) + '">' + escapeHtml(label) +
+      '<svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"></path></svg></a>';
+  }
+
+  function renderServerAnswer(data){
+    let html = escapeHtml(data.answer || '').replace(/\n/g, '<br>');
+    if(data.article && data.article.url){
+      html += linkChip(data.article.url, "Lire l'article");
+    }
+    if(data.link && data.link.url){
+      html += linkChip(data.link.url, data.link.label || 'En savoir plus');
+    }
+    return html;
+  }
+
+  /* ---- appelle le vrai backend (IA + vos articles/produits + quotas serveur, cookie
+     httpOnly infalsifiable) ; si le endpoint n'existe pas ou n'est pas joignable
+     (ex: aperçu Artifact hors du site, ou backend pas encore installé), on retombe
+     sur la logique scriptée locale avec un compteur localStorage ---- */
+  async function respondTo(text){
     try {
-      const res = await fetch('/wp-json/mundrive/v1/diego-quota', {
+      const res = await fetch('/wp-json/mundrive/v1/diego-ask', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'same-origin',
-        body: JSON.stringify({ category: cat })
+        body: JSON.stringify({ question: text })
       });
-      if(!res.ok) return { ok: false };
-      const data = await res.json();
-      return { ok: true, allowed: !!data.allowed };
-    } catch(e){
-      return { ok: false };
-    }
-  }
+      if(res.ok){
+        const data = await res.json();
+        showTyping();
+        const delay = 250 + Math.random()*300;
+        setTimeout(function(){
+          removeTyping();
+          addMessage('bot', renderServerAnswer(data));
+        }, delay);
+        return;
+      }
+    } catch(e){ /* backend injoignable : repli local ci-dessous */ }
 
-  async function respondTo(text){
     const c = classify(text);
     let allowed = true;
-
     if(c.cat){
-      const server = await checkQuotaServer(c.cat);
-      if(server.ok){
-        allowed = server.allowed;
+      const state = getQuota();
+      if(state[c.cat] >= DAILY_LIMITS[c.cat]){
+        allowed = false;
       } else {
-        const state = getQuota();
-        if(state[c.cat] >= DAILY_LIMITS[c.cat]){
-          allowed = false;
-        } else {
-          state[c.cat] += 1;
-          saveQuota(state);
-        }
+        state[c.cat] += 1;
+        saveQuota(state);
       }
     }
-
-    if(!allowed){
-      showTyping();
-      setTimeout(function(){
-        removeTyping();
-        addMessage('bot', quotaMessage(c.cat));
-      }, 500);
-      return;
-    }
-
     showTyping();
     const delay = 650 + Math.random()*450;
     setTimeout(function(){
       removeTyping();
-      addMessage('bot', buildReply(c));
+      addMessage('bot', allowed ? buildReply(c) : quotaMessage(c.cat));
     }, delay);
   }
 
