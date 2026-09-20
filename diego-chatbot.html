@@ -847,6 +847,22 @@
   minimizeBtn.addEventListener('click', function(){ setOpen(false); });
 
   setOpen(false);
+
+  /* si le visiteur est déjà connecté à son compte MunDrive, personnalise le message
+     d'accueil avec son prénom ; sinon le message générique chaleureux reste tel quel */
+  (async function(){
+    try {
+      const res = await fetch('/wp-json/mundrive/v1/diego-whoami', { credentials: 'same-origin' });
+      if(!res.ok) return;
+      const who = await res.json();
+      if(who.logged_in && who.first_name){
+        const firstBubble = thread.querySelector('.msg.bot .bubble');
+        if(firstBubble){
+          firstBubble.innerHTML = firstBubble.innerHTML.replace('Bonjour, je suis Diego', 'Bonjour ' + escapeHtml(who.first_name) + ', je suis Diego');
+        }
+      }
+    } catch(e){ /* pas de backend joignable : accueil générique, pas grave */ }
+  })();
 })();
 </script>
 

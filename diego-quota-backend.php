@@ -132,6 +132,18 @@ function mundrive_diego_get_uid() {
     return $uid;
 }
 
+// prénom du visiteur s'il est connecté à un compte (client WooCommerce compris,
+// ce sont de vrais utilisateurs WordPress) — sinon null, Diego reste chaleureux
+// et expert sans jamais présumer d'un prénom
+function mundrive_diego_visitor_first_name() {
+    if (!is_user_logged_in()) {
+        return null;
+    }
+    $u = wp_get_current_user();
+    $name = $u->first_name ?: $u->display_name;
+    return $name !== '' ? $name : null;
+}
+
 function mundrive_diego_client_ip() {
     foreach (['HTTP_CF_CONNECTING_IP', 'HTTP_X_FORWARDED_FOR', 'REMOTE_ADDR'] as $key) {
         if (!empty($_SERVER[$key])) {
@@ -410,7 +422,7 @@ function mundrive_diego_key_configured() {
     return defined('MUNDRIVE_ANTHROPIC_KEY') && MUNDRIVE_ANTHROPIC_KEY !== '';
 }
 
-function mundrive_diego_call_claude($question, $cat, $context) {
+function mundrive_diego_call_claude($question, $cat, $context, $user_name = null) {
     if (!mundrive_diego_key_configured()) {
         return null;
     }
@@ -423,6 +435,9 @@ function mundrive_diego_call_claude($question, $cat, $context) {
         . "3) Si un ARTICLE MUNDRIVE est fourni ci-dessous, base ta réponse dessus et mentionne naturellement que MunDrive a un article sur le sujet (ne donne pas d'URL toi-même, elle est ajoutée automatiquement après ta réponse). "
         . "4) Si un PRODUIT MUNDRIVE est fourni ci-dessous, utilise exactement ces données (nom, référence, prix, stock) sans en inventer d'autres. "
         . "5) Ne te présente jamais comme un humain ; tu es un assistant automatisé."
+        . ($user_name
+            ? "\n\nLe visiteur est connecté à son compte et s'appelle " . $user_name . " — vous pouvez l'appeler par son prénom naturellement, sans en abuser (pas besoin à chaque phrase)."
+            : "\n\nLe visiteur n'est pas connecté à un compte : vous ne connaissez pas son prénom, restez chaleureux et expert sans en inventer un.")
         . ($context !== ''
             ? "\n\nCONTEXTE DISPONIBLE :\n" . $context
             : "\n\nAucun article ni fiche produit MunDrive ne correspond à cette question : réponds avec des informations générales fiables sur l'automobile.");
@@ -481,7 +496,19 @@ add_action('rest_api_init', function () {
         'callback'            => 'mundrive_diego_ask_route',
         'permission_callback' => '__return_true',
     ]);
+    register_rest_route('mundrive/v1', '/diego-whoami', [
+        'methods'             => 'GET',
+        'callback'            => 'mundrive_diego_whoami_route',
+        'permission_callback' => '__return_true',
+    ]);
 });
+
+// utilisé par le widget au chargement pour personnaliser le message d'accueil
+// avec le prénom si le visiteur est déjà connecté à son compte
+function mundrive_diego_whoami_route(WP_REST_Request $req) {
+    $name = mundrive_diego_visitor_first_name();
+    return new WP_REST_Response(['logged_in' => $name !== null, 'first_name' => $name], 200);
+}
 
 // conservée pour compatibilité — /diego-ask fait tout en un seul appel désormais
 function mundrive_diego_quota_route(WP_REST_Request $req) {
@@ -498,12 +525,14 @@ function mundrive_diego_ask_route(WP_REST_Request $req) {
         $question = mb_substr($question, 0, 600);
     }
 
+    $user_name = mundrive_diego_visitor_first_name();
+
     // 1) garantie / remboursement / accident : jamais l'IA, toujours transmis par email,
     //    ni IA ni quota (c'est une décision commerciale, pas une question support)
     if (mundrive_diego_litige_intent($question)) {
         mundrive_diego_notify_litige($question);
         mundrive_diego_log(null, $question, null, null, 'litige');
-        $reply = "Je suis désolé pour ce désagrément. J'ai transmis votre message à notre équipe, qui vous répondra sous 24h avec une décision. "
+        $reply = ($user_name ? $user_name . ', je' : "Je") . " suis désolé pour ce désagrément. J'ai transmis votre message à notre équipe, qui vous répondra sous 24h avec une décision. "
             . "Pour rappel, vous disposez de 14 jours pour nous retourner une pièce, à condition qu'elle revienne dans le même état qu'à la réception. "
             . "Pour un suivi encore plus rapide, écrivez aussi à contact@mundrive.com avec votre numéro de commande.";
         return new WP_REST_Response(['allowed' => true, 'answer' => $reply, 'article' => null, 'product' => null, 'link' => null], 200);
@@ -545,7 +574,7 @@ function mundrive_diego_ask_route(WP_REST_Request $req) {
     // (articles/produits trouvés automatiquement, sinon message générique),
     // simplement sans appeler Claude jusqu'à la prochaine quinzaine.
     $ai_answer = mundrive_diego_global_ai_budget_available()
-        ? mundrive_diego_call_claude($question, $cat, $context)
+        ? mundrive_diego_call_claude($question, $cat, $context, $user_name)
         : null;
 
     if ($ai_answer !== null) {
