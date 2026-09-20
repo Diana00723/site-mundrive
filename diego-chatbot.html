@@ -745,21 +745,53 @@
     }
   }
 
-  function respondTo(text){
-    const c = classify(text);
-    if(c.cat){
-      const state = getQuota();
-      if(state[c.cat] >= DAILY_LIMITS[c.cat]){
-        showTyping();
-        setTimeout(function(){
-          removeTyping();
-          addMessage('bot', quotaMessage(c.cat));
-        }, 500);
-        return;
-      }
-      state[c.cat] += 1;
-      saveQuota(state);
+  /* ---- essaie d'abord le vrai compteur côté serveur (cookie httpOnly, infalsifiable en JS) ;
+     si le endpoint n'existe pas ou n'est pas joignable (ex: aperçu Artifact hors du site),
+     on retombe sur le compteur localStorage du navigateur ---- */
+  async function checkQuotaServer(cat){
+    try {
+      const res = await fetch('/wp-json/mundrive/v1/diego-quota', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'same-origin',
+        body: JSON.stringify({ category: cat })
+      });
+      if(!res.ok) return { ok: false };
+      const data = await res.json();
+      return { ok: true, allowed: !!data.allowed };
+    } catch(e){
+      return { ok: false };
     }
+  }
+
+  async function respondTo(text){
+    const c = classify(text);
+    let allowed = true;
+
+    if(c.cat){
+      const server = await checkQuotaServer(c.cat);
+      if(server.ok){
+        allowed = server.allowed;
+      } else {
+        const state = getQuota();
+        if(state[c.cat] >= DAILY_LIMITS[c.cat]){
+          allowed = false;
+        } else {
+          state[c.cat] += 1;
+          saveQuota(state);
+        }
+      }
+    }
+
+    if(!allowed){
+      showTyping();
+      setTimeout(function(){
+        removeTyping();
+        addMessage('bot', quotaMessage(c.cat));
+      }, 500);
+      return;
+    }
+
     showTyping();
     const delay = 650 + Math.random()*450;
     setTimeout(function(){
