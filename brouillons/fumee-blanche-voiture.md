@@ -1,334 +1,262 @@
-# Proposition d'article : Fumée blanche voiture
+# Proposition d'article : Fumée blanche voiture (version 2 : interview)
 
-> **Brouillon à valider par Diana — ne pas publier en l'état.**
-> Mot-clé principal : **fumée blanche voiture** (≈ 2 400 recherches/mois en France, difficulté 23 %, intention informationnelle).
-> Mots-clés secondaires à glisser naturellement : *fumée blanche échappement*, *fumée blanche au démarrage*, *fumée blanche diesel*, *joint de culasse*, *fumée noire échappement*, *fumée bleue échappement*.
+> **Brouillon à valider par Diana. Ne pas publier en l'état.**
+> Les réponses de Pedro sont **proposées** : elles doivent être relues et validées par lui avant publication.
 
----
+## Fiche SEO
 
-## Infos SEO
-
-- **Méta-titre (58 caractères) :** Fumée blanche voiture : normal ou grave ? Causes et solutions
-- **Méta-description (151 caractères) :** Fumée blanche à l'échappement ? Condensation, joint de culasse, diesel… Pedro vous aide à trouver la cause et à savoir quand s'inquiéter.
-- **URL conseillée :** /fumee-blanche-voiture/
-- **Image principale (suggestion) :** pot d'échappement qui fume par un matin froid. Texte alternatif : « fumée blanche à l'échappement d'une voiture au démarrage par temps froid ».
-
----
-
-# Fumée blanche à l'échappement : normal ou grave ? Les explications de Pedro
-
-Un matin d'hiver, vous démarrez votre voiture et un nuage blanc sort du pot d'échappement. Premier réflexe : l'inquiétude. Est-ce que le moteur est en train de lâcher ?
-
-Rassurez-vous : **dans la grande majorité des cas, une fumée blanche au démarrage par temps froid est tout à fait normale.** C'est simplement de la vapeur d'eau. En revanche, si la fumée reste épaisse une fois le moteur chaud, ou si elle a une odeur particulière, c'est un signal à prendre au sérieux.
-
-Dans cet article, on vous explique comment faire la différence, quelles sont les causes possibles, les vérifications que vous pouvez faire vous-même, et à quel moment il vaut mieux passer au garage. Le tout avec les conseils de Pedro, notre expert, fils de mécanicien et passionné d'automobile depuis toujours.
+| Élément | Contenu |
+|---|---|
+| **Mot-clé principal** | fumée blanche voiture |
+| **Mots-clés secondaires** | fumée blanche échappement, fumée blanche au démarrage, fumée blanche diesel, joint de culasse, fumée noire échappement, fumée bleue échappement |
+| **Méta-titre** (59 car.) | Fumée blanche voiture : normal ou grave ? L'avis de l'expert |
+| **Méta-description** (150 car.) | Fumée blanche à l'échappement ? Condensation, joint de culasse, diesel… Pedro, fils de mécanicien, vous aide à savoir quand vous inquiéter. |
+| **URL** | /fumee-blanche-voiture/ |
+| **Image principale** | Pot d'échappement qui fume par un matin d'hiver. Alt : « fumée blanche voiture au démarrage par temps froid » |
+| **Format** | Article people first + interview d'expert |
 
 ---
 
-## Fumée blanche : la réponse rapide
+<!-- H1 -->
+# Fumée blanche voiture : normal ou grave ? On a posé la question à Pedro
 
-Avant d'entrer dans les détails, voici l'essentiel :
+Il est 7 h 30, il fait 2 °C, vous tournez la clé… et votre pot d'échappement se met à cracher un nuage blanc digne d'une machine à fumée de boîte de nuit. Moment de solitude. Est-ce que le moteur vient de rendre l'âme ?
 
-| Ce que vous observez | Cause la plus probable | Gravité |
+**Dans la plupart des cas, non : une fumée blanche au démarrage, par temps froid, c'est de la vapeur d'eau.** Rien de plus. Mais quand cette fumée reste épaisse moteur chaud, elle peut cacher un vrai souci, comme un joint de culasse fatigué.
+
+Pour faire le tri entre « pas de panique » et « on file au garage », je suis allée voir Pedro, notre expert. Fils de mécanicien, il a grandi entre les crics et les bidons d'huile de l'atelier familial. Café en main, il m'a tout expliqué.
+
+<!-- H2 -->
+## La réponse rapide : votre fumée blanche est-elle normale ?
+
+Pas le temps de tout lire ? Voici le tableau à garder en tête.
+
+| Ce que vous voyez | Cause probable | Verdict |
 |---|---|---|
-| Fumée légère au démarrage, par temps froid, qui disparaît après quelques minutes | Condensation (vapeur d'eau) | ✅ Normal |
-| Quelques gouttes d'eau au bout du pot d'échappement | Condensation | ✅ Normal |
-| Fumée épaisse qui continue moteur chaud, odeur sucrée, niveau de liquide de refroidissement qui baisse | Liquide de refroidissement qui brûle (joint de culasse, culasse fissurée, refroidisseur EGR sur diesel) | 🔴 À faire contrôler rapidement |
-| Fumée blanc-gris sur un diesel au démarrage, odeur de gazole, démarrage difficile | Bougies de préchauffage ou injecteurs | 🟠 À surveiller et à réparer |
+| Fumée légère à froid, qui disparaît en quelques minutes | Condensation (vapeur d'eau) | ✅ Normal |
+| Quelques gouttes d'eau au bout du pot | Condensation | ✅ Normal |
+| Fumée épaisse moteur chaud, odeur sucrée, liquide de refroidissement qui baisse | Liquide de refroidissement brûlé (joint de culasse…) | 🔴 Garage rapidement |
+| Diesel : fumée blanc-gris au démarrage, odeur de gazole, démarrage difficile | Bougies de préchauffage ou injecteurs | 🟠 À réparer sans trop tarder |
 
-Si vous êtes dans le premier cas, vous pouvez souffler. Pour les autres, lisez la suite.
+<!-- H2 -->
+## Pourquoi ma voiture fait de la fumée blanche quand il fait froid ?
 
----
+<!-- H3 -->
+### Un moteur, ça fabrique de l'eau
 
-## Pourquoi votre voiture fait de la fumée blanche quand il fait froid
+On l'oublie souvent, mais quand un moteur brûle du carburant, il produit des gaz… et de l'eau. Tant que l'échappement est froid, cette vapeur se condense au contact du métal, exactement comme votre souffle qui fait de la buée dehors en hiver.
 
-### La condensation, un phénomène tout à fait naturel
+> **Diana :** Pedro, honnêtement, combien de clients arrivent paniqués pour de la simple condensation ?
+>
+> **Pedro :** Beaucoup, surtout dès les premières gelées ! Je leur dis toujours la même chose : regardez ce qui se passe au bout de cinq ou dix minutes. Si la fumée a disparu et que le niveau de liquide de refroidissement ne bouge pas, votre voiture respire, c'est tout. Elle fait comme nous le matin quand il fait froid.
 
-Quand votre moteur brûle du carburant, il ne produit pas seulement du gaz : il produit aussi de **l'eau**, sous forme de vapeur. C'est de la chimie de base.
+<!-- H3 -->
+### Les signes d'une fumée « normale »
 
-Quand le moteur et la ligne d'échappement sont froids, cette vapeur d'eau se condense au contact du métal froid, exactement comme la buée sur une vitre. Résultat : un petit nuage blanc sort du pot, et parfois quelques gouttes d'eau coulent au bout de l'échappement.
+- Elle apparaît **au démarrage**, par temps **froid ou humide**.
+- Elle est **légère** et se dissipe vite dans l'air.
+- Elle **n'a pas d'odeur** particulière.
+- Elle **disparaît** une fois le moteur chaud.
+- Le **niveau de liquide de refroidissement reste stable**.
 
-C'est le même principe que la buée qui sort de votre bouche quand vous parlez dehors en hiver.
+<!-- H3 -->
+### Le piège des petits trajets
 
-### Comment reconnaître une fumée de condensation
+Boulangerie, école, retour maison : si vous ne faites que des trajets de quelques minutes, l'échappement n'a jamais le temps de chauffer. La condensation dure plus longtemps et l'eau stagne dans la ligne d'échappement, ce qui favorise la rouille.
 
-Une fumée de condensation a plusieurs caractéristiques :
+> **Pedro :** Une fois de temps en temps, offrez à votre voiture une vraie balade : vingt minutes sur route ou voie rapide. Ça sèche tout, et le moteur vous dit merci.
 
-- elle apparaît surtout **au démarrage**, quand il fait froid ou humide ;
-- elle est **légère** et se dissipe très vite dans l'air ;
-- elle **n'a pas d'odeur particulière** ;
-- elle **diminue puis disparaît** une fois le moteur et l'échappement chauds, généralement après quelques minutes de route ;
-- le **niveau de liquide de refroidissement reste stable** d'une semaine sur l'autre.
+<!-- H2 -->
+## Fumée blanche moteur chaud : quand faut-il s'inquiéter ?
 
-Si vous cochez toutes ces cases, pas d'inquiétude. Votre voiture se porte bien.
+Là, on change de registre. Si la fumée est **épaisse**, **continue** et toujours présente **après 15 ou 20 minutes de route**, il y a de fortes chances que ce ne soit plus de l'eau, mais du **liquide de refroidissement** qui brûle dans le moteur.
 
-### Le cas des petits trajets
+<!-- H3 -->
+### Les symptômes qui doivent vous alerter
 
-Si vous faites surtout des trajets courts (aller au travail à 5 minutes, déposer les enfants à l'école…), le moteur et l'échappement n'ont jamais le temps de bien chauffer. La condensation peut donc être visible plus longtemps, et de l'eau peut s'accumuler dans la ligne d'échappement.
+- Une **odeur légèrement sucrée** à l'échappement.
+- Un **niveau de liquide de refroidissement qui baisse** sans fuite visible sous la voiture.
+- Une **température moteur plus haute** que d'habitude, voire un voyant de surchauffe.
+- Des **bulles** dans le vase d'expansion, moteur tournant.
 
-Ce n'est pas une panne, mais ce n'est pas idéal non plus pour la mécanique sur le long terme : l'humidité favorise la corrosion de l'échappement. De temps en temps, un trajet plus long (une vingtaine de minutes sur route ou voie rapide) permet de tout faire sécher.
+<!-- H3 -->
+### Le joint de culasse, suspect numéro un
 
----
+Le joint de culasse fait l'étanchéité entre le bloc moteur et la culasse, la partie haute du moteur. Avec l'âge, ou après une surchauffe, il peut céder et laisser le liquide de refroidissement passer dans les cylindres.
 
-## Quand la fumée blanche devient inquiétante
+> **Diana :** Comment tu fais, toi, pour savoir si c'est vraiment le joint de culasse ?
+>
+> **Pedro :** Je cherche trois indices ensemble : la fumée blanche qui continue à chaud, l'odeur sucrée, et le liquide qui disparaît. Quand j'ai les trois, je fais confirmer par un test : un test de compression, ou un test qui détecte des gaz d'échappement dans le liquide de refroidissement. On ne change pas un joint de culasse « au cas où », ça coûte trop cher pour ça.
 
-La fumée blanche devient un vrai signal d'alerte quand elle **persiste moteur chaud**, qu'elle est **épaisse** et qu'elle s'accompagne d'autres symptômes.
+<!-- H3 -->
+### Les autres coupables possibles
 
-### Le liquide de refroidissement qui passe dans le moteur
+- **Une culasse fissurée ou déformée**, souvent après une grosse surchauffe.
+- **Le refroidisseur EGR** sur certains diesels : ce petit échangeur refroidit les gaz recyclés grâce au liquide de refroidissement. S'il fuit de l'intérieur, les symptômes ressemblent à ceux d'un joint de culasse. D'où l'importance d'un vrai diagnostic.
 
-C'est la cause la plus sérieuse. Normalement, le liquide de refroidissement circule dans un circuit fermé, séparé de la chambre de combustion. Si ce liquide arrive à passer dans les cylindres, il est brûlé avec le carburant et ressort sous forme de fumée blanche épaisse.
+> **Pedro :** Le refroidisseur EGR, c'est le cas typique où un bon diagnostic fait économiser beaucoup d'argent. Les symptômes se ressemblent, mais ce n'est pas du tout la même réparation.
 
-Les signes qui doivent vous alerter :
-
-- une fumée blanche **dense et abondante**, même après 15 ou 20 minutes de route ;
-- une **odeur légèrement sucrée** à l'échappement (le liquide de refroidissement a une odeur caractéristique) ;
-- un **niveau de liquide de refroidissement qui baisse** dans le vase d'expansion, sans fuite visible sous la voiture ;
-- une **température moteur qui monte** plus que d'habitude, voire un voyant de surchauffe ;
-- des **bulles** dans le vase d'expansion, moteur en marche.
-
-### Les causes possibles
-
-**Le joint de culasse.** C'est le suspect numéro un. Ce joint assure l'étanchéité entre le bloc moteur et la culasse (la partie haute du moteur). Avec l'âge ou après une surchauffe, il peut s'abîmer et laisser passer le liquide de refroidissement.
-
-**Une culasse fissurée ou déformée.** Souvent la conséquence d'une forte surchauffe. Le résultat est le même que pour le joint : le liquide passe là où il ne devrait pas.
-
-**Le refroidisseur de la vanne EGR (sur certains diesels).** Sur beaucoup de moteurs diesel récents, les gaz d'échappement recyclés sont refroidis par un petit échangeur qui utilise le liquide de refroidissement. S'il fuit de l'intérieur, le liquide est envoyé dans l'admission et brûlé. Les symptômes ressemblent beaucoup à ceux d'un joint de culasse, mais la réparation est souvent moins lourde. D'où l'intérêt d'un bon diagnostic avant de se lancer.
-
+<!-- H3 -->
 ### Pourquoi il ne faut pas attendre
 
-Un joint de culasse qui fuit, ça ne s'arrange jamais tout seul. En continuant à rouler, vous risquez :
+Un joint de culasse ne se répare jamais tout seul. En continuant à rouler, vous risquez une surchauffe, une huile polluée par l'eau, et dans le pire des cas la casse moteur.
 
-- une **surchauffe du moteur**, qui peut aggraver les dégâts (culasse déformée) ;
-- un mélange d'eau et d'huile qui **abîme la lubrification** du moteur ;
-- dans le pire des cas, une **casse moteur**.
+> **Pedro :** Je vais être franc : la panne qu'on laisse traîner, c'est celle qui coûte le plus cher. Un moteur qui a chauffé fort, c'est souvent la facture qui double.
 
-Une réparation de joint de culasse coûte cher, mais un moteur à remplacer coûte bien plus. Plus le problème est pris tôt, plus la facture reste raisonnable.
+<!-- H2 -->
+## Fumée blanche diesel : le cas particulier du démarrage à froid
 
----
+Sur un diesel, une fumée blanc-gris au démarrage peut aussi venir de **gazole mal brûlé**. Comment la reconnaître ? Elle sent le **gazole**, elle peut **piquer les yeux**, elle diminue quand le moteur chauffe, et le **démarrage est laborieux**. Le liquide de refroidissement, lui, ne bouge pas.
 
-## Fumée blanche sur un moteur diesel : les cas particuliers
-
-Sur un diesel, une fumée blanche ou blanc-gris au démarrage n'est pas toujours de la condensation ni du liquide de refroidissement. Elle peut aussi venir de **gazole mal brûlé**.
-
-### Comment la reconnaître
-
-- la fumée a une **odeur de gazole** assez forte et peut **piquer les yeux** ;
-- elle apparaît surtout **à froid** et diminue quand le moteur chauffe ;
-- le **démarrage est difficile**, le moteur tourne de façon irrégulière les premières secondes ;
-- le **niveau de liquide de refroidissement ne bouge pas**.
-
+<!-- H3 -->
 ### Les bougies de préchauffage
 
-Un moteur diesel n'a pas de bougies d'allumage comme un moteur essence. Il s'allume grâce à la chaleur de la compression. Mais à froid, cette chaleur ne suffit pas toujours : ce sont les **bougies de préchauffage** qui chauffent la chambre de combustion avant le démarrage (c'est le voyant en forme de « tire-bouchon » qui s'allume au tableau de bord).
+Un diesel n'a pas de bougies d'allumage : il s'enflamme grâce à la chaleur de la compression. Par temps froid, les **bougies de préchauffage** donnent un coup de pouce en chauffant la chambre de combustion (c'est le voyant en forme de tire-bouchon au tableau de bord). Si l'une d'elles est hors service, le moteur tousse, peine à démarrer et fume blanc.
 
-Si une ou plusieurs bougies sont hors service, le gazole brûle mal dans les premières minutes. Résultat : démarrage laborieux, moteur qui « tousse » et fumée blanche à odeur de gazole. Le problème se voit surtout en hiver.
+> **Diana :** C'est grave ?
+>
+> **Pedro :** Non, c'est même une des pannes d'hiver les plus classiques. Mais il ne faut pas la laisser traîner : chaque démarrage difficile fatigue la batterie et le démarreur. Je conseille de les faire contrôler avant les grands froids. Le matin, la différence au démarrage est flagrante.
 
-C'est souvent une réparation abordable, et c'est typiquement le genre de panne qui donne l'impression que « la voiture n'aime pas le froid ».
-
+<!-- H3 -->
 ### Les injecteurs
 
-Un injecteur encrassé ou défectueux peut mal pulvériser le gazole. Le carburant ne brûle pas complètement et ressort en fumée. Selon les cas, elle peut être blanche, grise ou noire. D'autres signes peuvent accompagner le problème : perte de puissance, à-coups, surconsommation, bruit de claquement moteur.
+Un injecteur encrassé pulvérise mal le gazole, qui brûle mal. La fumée peut être blanche, grise ou noire, avec souvent d'autres signes : perte de puissance, à-coups, surconsommation, claquements moteur.
 
-### Les autres pistes
+<!-- H2 -->
+## Les vérifications à faire soi-même (sans être mécanicien)
 
-Plus rarement, un mauvais calage de l'injection ou un manque de compression dans un cylindre peut aussi provoquer ce type de fumée. Ici, seul un diagnostic en garage permettra de trancher.
+**Toujours moteur froid**, pour votre sécurité.
 
----
+<!-- H3 -->
+### 1. Le test des 20 minutes
 
-## Les vérifications que vous pouvez faire vous-même
+Roulez au moins 15 à 20 minutes, puis regardez l'échappement. La fumée a disparu ? C'était de la condensation. Elle est toujours là, bien blanche et épaisse ? Continuez les vérifications.
 
-Pas besoin d'être mécanicien pour faire un premier tri. Voici quelques vérifications simples. **Toujours moteur froid**, pour votre sécurité.
+<!-- H3 -->
+### 2. Le niveau de liquide de refroidissement
 
-### 1. Observer la fumée moteur chaud
+Repérez le **vase d'expansion** : un réservoir en plastique translucide avec des repères MIN et MAX. Notez le niveau, puis revérifiez après quelques jours. S'il baisse sans fuite au sol, c'est un indice fort.
 
-Faites un trajet d'au moins 15 à 20 minutes, puis regardez l'échappement (ou demandez à quelqu'un de regarder pendant que vous accélérez doucement à l'arrêt).
+⚠️ **N'ouvrez jamais le vase d'expansion moteur chaud.** Le circuit est sous pression : le liquide brûlant peut jaillir.
 
-- La fumée a disparu ? C'était très probablement de la condensation.
-- Elle est toujours là, bien blanche et épaisse ? Passez aux vérifications suivantes.
+<!-- H3 -->
+### 3. Le bouchon d'huile et la jauge
 
-### 2. Contrôler le niveau de liquide de refroidissement
+Sous le bouchon de remplissage d'huile, une **pâte beige façon mayonnaise** peut signaler un mélange d'eau et d'huile. Sur la jauge, une huile **laiteuse** ou un niveau qui **monte tout seul** est aussi un mauvais signe.
 
-Ouvrez le capot et repérez le **vase d'expansion** (un réservoir en plastique translucide, avec des repères MIN et MAX).
+> **Pedro :** Attention quand même : un peu de dépôt crémeux sous le bouchon, en hiver, sur une voiture qui ne fait que des petits trajets, ça peut aussi être de la condensation. Je ne m'inquiète vraiment que si c'est abondant et qu'il y a les autres symptômes.
 
-- Notez le niveau, moteur froid, et vérifiez-le à nouveau après quelques jours d'utilisation.
-- Si le niveau baisse régulièrement sans aucune fuite visible au sol, c'est un indice fort que le liquide est brûlé par le moteur.
+<!-- H3 -->
+### 4. Le test du nez
 
-⚠️ **N'ouvrez jamais le bouchon du vase d'expansion ou du radiateur moteur chaud.** Le circuit est sous pression et le liquide brûlant peut jaillir et provoquer de graves brûlures.
-
-### 3. Regarder sous le bouchon de remplissage d'huile
-
-Dévissez le bouchon où l'on verse l'huile moteur (sur le dessus du moteur) et regardez en dessous.
-
-- Si vous voyez une **pâte beige ou crème**, un peu comme de la mayonnaise, cela indique un mélange d'eau et d'huile.
-
-**Attention à ne pas tirer de conclusion trop vite** : un peu de dépôt crémeux sous le bouchon peut aussi apparaître sur une voiture qui fait beaucoup de petits trajets en hiver, à cause de la condensation. Ce n'est vraiment inquiétant que si c'est abondant et associé aux autres symptômes (fumée persistante, perte de liquide).
-
-### 4. Vérifier la jauge d'huile
-
-Sortez la jauge d'huile et regardez la couleur. Une huile **marron clair, laiteuse ou mousseuse** est anormale. Le niveau d'huile qui **monte** sans que vous en ayez ajouté est aussi un mauvais signe : du liquide se mélange peut-être à l'huile.
-
-### 5. Sentir l'odeur
-
-Moteur au ralenti, à l'extérieur et sans vous placer directement face au pot :
+Moteur au ralenti, à l'extérieur, sans vous placer face au pot :
 
 - **odeur sucrée** → liquide de refroidissement ;
-- **odeur de gazole qui pique les yeux** → carburant mal brûlé (diesel) ;
-- **pas d'odeur particulière** → probablement de la vapeur d'eau.
+- **odeur de gazole qui pique** → carburant mal brûlé ;
+- **aucune odeur** → probablement de la vapeur d'eau.
 
-### 6. Surveiller le tableau de bord
+<!-- H2 -->
+## Fumée noire ou bleue : décoder les autres couleurs
 
-Gardez un œil sur l'indicateur de température moteur et sur le voyant de préchauffage (diesel). Une température qui monte anormalement ou un voyant qui clignote sont des informations précieuses à donner à votre garagiste.
+Votre échappement parle, encore faut-il comprendre sa langue.
 
----
-
-## Et si la fumée est noire ou bleue ?
-
-La couleur de la fumée en dit long sur l'état de votre moteur. Voici un petit guide pour ne pas confondre.
-
+<!-- H3 -->
 ### Fumée noire à l'échappement
 
-Une fumée noire signifie que le moteur reçoit **trop de carburant par rapport à l'air**. Le carburant ne brûle pas entièrement et produit de la suie. C'est plus fréquent sur les diesels.
+Elle signifie **trop de carburant pour pas assez d'air**. Les pistes : un **filtre à air encrassé** (le plus simple à vérifier), des injecteurs, une vanne EGR encrassée ou un turbo fatigué.
 
-Causes possibles :
-
-- un **filtre à air encrassé** (le moteur manque d'air) ;
-- des **injecteurs** qui injectent trop de carburant ;
-- une **vanne EGR** encrassée ;
-- un **problème de turbo** qui n'envoie plus assez d'air.
-
-Le filtre à air est la première chose à vérifier : c'est simple, rapide et peu coûteux.
-
+<!-- H3 -->
 ### Fumée bleue à l'échappement
 
-Une fumée bleue ou bleutée signifie que le moteur **brûle de l'huile**. Elle s'accompagne souvent d'une odeur d'huile brûlée et d'une consommation d'huile anormale (vous devez faire l'appoint souvent).
-
-Causes possibles :
-
-- des **segments de piston** usés ;
-- des **joints de queues de soupapes** fatigués (fumée bleue surtout au démarrage ou après un long ralenti) ;
-- un **turbo** qui laisse passer de l'huile ;
-- un **niveau d'huile trop élevé** après une vidange mal faite.
-
-### Le récapitulatif des couleurs
+Elle signifie que le moteur **brûle de l'huile**, souvent avec une odeur d'huile chaude et des appoints fréquents. Les pistes : segments de piston usés, joints de queues de soupapes, turbo, ou tout simplement un niveau d'huile trop haut après une vidange.
 
 | Couleur | Ce qui brûle | Premières pistes |
 |---|---|---|
-| Blanche légère, à froid | De l'eau (condensation) | Normal |
-| Blanche épaisse, moteur chaud | Liquide de refroidissement | Joint de culasse, culasse, refroidisseur EGR |
+| Blanche légère, à froid | Eau | Condensation, normal |
+| Blanche épaisse, à chaud | Liquide de refroidissement | Joint de culasse, culasse, refroidisseur EGR |
 | Blanc-gris, odeur de gazole | Gazole mal brûlé | Bougies de préchauffage, injecteurs |
 | Noire | Trop de carburant | Filtre à air, injecteurs, EGR, turbo |
-| Bleue | De l'huile | Segments, joints de soupapes, turbo |
+| Bleue | Huile | Segments, joints de soupapes, turbo |
 
----
+<!-- H2 -->
+## Comment éviter la fumée blanche (et les grosses factures)
 
-## Quand faut-il aller au garage ?
+La bonne nouvelle, c'est que la plupart des pannes qui provoquent une fumée blanche anormale se préviennent avec des gestes simples. Pas besoin de caisse à outils : un peu de régularité suffit.
 
-### Vous pouvez attendre et surveiller si…
+<!-- H3 -->
+### Surveiller le liquide de refroidissement
 
-- la fumée apparaît uniquement à froid et disparaît après quelques minutes ;
-- le niveau de liquide de refroidissement reste stable ;
-- le moteur fonctionne normalement.
+C'est le geste numéro un. Une fois par mois, moteur froid, jetez un œil au vase d'expansion. Le niveau doit se trouver entre MIN et MAX. Pensez aussi à faire remplacer le liquide aux échéances indiquées dans votre carnet d'entretien : avec le temps, il perd ses propriétés et protège moins bien le moteur contre la surchauffe et la corrosion.
 
-### Prenez rendez-vous rapidement si…
+> **Diana :** Et si le niveau est un peu bas, on peut en rajouter soi-même ?
+>
+> **Pedro :** Oui, moteur froid, avec le liquide préconisé pour votre voiture. Ne mélangez pas n'importe quoi : les liquides n'ont pas tous la même composition. Par contre, si vous devez en rajouter souvent, ce n'est plus de l'entretien, c'est un symptôme. Là, il faut chercher pourquoi il disparaît.
 
-- la fumée persiste moteur chaud ;
-- votre diesel démarre difficilement et fume au démarrage ;
-- vous devez rajouter du liquide de refroidissement régulièrement ;
-- vous voyez une fumée bleue ou noire de façon répétée.
+<!-- H3 -->
+### Ne jamais laisser le moteur surchauffer
 
-### Arrêtez-vous et ne roulez plus si…
+La surchauffe est l'ennemie jurée du joint de culasse. Si l'aiguille de température grimpe, ou si un voyant s'allume, on s'arrête dès que possible en sécurité et on coupe le moteur. Quelques minutes perdues sur la route valent mieux que des semaines sans voiture.
 
-- la température moteur monte dans le rouge ou le voyant de surchauffe s'allume ;
-- la fumée blanche est très abondante et continue ;
-- le moteur perd brutalement de la puissance ou fait un bruit anormal.
+<!-- H3 -->
+### Préparer son diesel avant l'hiver
 
-Dans ce cas, garez-vous dès que possible en sécurité, coupez le moteur et faites appel à votre assistance. Continuer à rouler peut transformer une réparation coûteuse en remplacement complet du moteur.
+Si votre diesel commence à démarrer « en traînant » quand les températures baissent, n'attendez pas le premier matin à -5 °C. Faites contrôler les bougies de préchauffage et la batterie à l'automne : c'est le duo gagnant pour des démarrages sereins tout l'hiver.
 
-### Combien ça peut coûter ?
+> **Pedro :** Chez moi, à l'atelier, on appelait ça « la révision des premières feuilles mortes ». Batterie, préchauffage, liquide de refroidissement, essuie-glaces. Une demi-heure de contrôle, et vous passez l'hiver tranquille.
 
-Les prix varient beaucoup selon le modèle de voiture, la motorisation et le garage. À titre d'ordre de grandeur :
+<!-- H3 -->
+### Penser au filtre à air
 
-- **remplacement des bougies de préchauffage** : de quelques dizaines à quelques centaines d'euros selon le moteur et l'accessibilité ;
-- **nettoyage ou remplacement d'injecteurs** : de quelques centaines d'euros à plus de 1 000 € selon le nombre d'injecteurs ;
-- **remplacement du joint de culasse** : souvent entre 800 € et 2 000 €, parfois plus si la culasse doit être rectifiée.
+Un filtre à air propre, c'est un moteur qui respire bien et qui brûle correctement son carburant. Il fait partie des pièces les moins chères à remplacer, et c'est souvent la première piste à vérifier en cas de fumée noire.
 
-Avant de valider une réparation importante, n'hésitez pas à demander un devis détaillé, et pourquoi pas un deuxième avis. On vous explique comment faire dans notre article [Les erreurs à éviter chez le garagiste](LIEN-ARTICLE-GARAGISTE).
+Pour d'autres astuces du même genre, lisez notre article [Entretenir sa voiture sans se ruiner](LIEN-ARTICLE-ENTRETIEN).
 
----
+<!-- H2 -->
+## Quand aller au garage ?
 
-## Comment éviter la fumée blanche (et les pannes qui vont avec)
+- **Surveillez** si la fumée ne sort qu'à froid, disparaît vite, et que le niveau de liquide est stable.
+- **Prenez rendez-vous** si la fumée persiste à chaud, si votre diesel démarre mal, ou si vous rajoutez souvent du liquide de refroidissement.
+- **Arrêtez-vous immédiatement** si l'aiguille de température monte dans le rouge, si la fumée est très abondante ou si le moteur perd brutalement de la puissance.
 
-Quelques bonnes habitudes suffisent à limiter les risques :
+Côté budget, tout dépend du modèle et du garage. En ordre de grandeur : quelques dizaines à quelques centaines d'euros pour des bougies de préchauffage, et souvent **800 à 2 000 €** pour un joint de culasse. Avant de signer, demandez un devis détaillé : on vous explique comment le lire dans [Les erreurs à éviter chez le garagiste](LIEN-ARTICLE-GARAGISTE).
 
-- **Vérifiez le niveau de liquide de refroidissement une fois par mois**, moteur froid. C'est l'affaire de 30 secondes.
-- **Respectez les intervalles de remplacement du liquide de refroidissement** indiqués dans le carnet d'entretien : un liquide usé protège moins bien le moteur.
-- **Ne laissez jamais un moteur surchauffer.** Au moindre signe, arrêtez-vous : la surchauffe est l'ennemie numéro un du joint de culasse.
-- **Sur un diesel, faites contrôler les bougies de préchauffage avant l'hiver**, surtout si le démarrage devient laborieux.
-- **Changez le filtre à air** aux échéances prévues.
-- **Faites de temps en temps un trajet plus long** si vous ne roulez qu'en ville, pour laisser le moteur et l'échappement monter en température.
+<!-- H2 -->
+## Le mot de la fin de Pedro
 
-Pour aller plus loin, retrouvez nos astuces dans [Entretenir sa voiture sans se ruiner](LIEN-ARTICLE-ENTRETIEN) et notre checklist [Préparer sa voiture pour un long trajet](LIEN-ARTICLE-LONG-TRAJET).
+> **Diana :** Si tu ne devais donner qu'un seul conseil à nos lecteurs ?
+>
+> **Pedro :** Regardez votre vase d'expansion une fois par mois. Trente secondes, moteur froid. C'est le geste le plus simple pour repérer un problème avant qu'il coûte cher. Et si votre voiture fume blanc un matin de janvier, souriez : elle a juste froid, comme vous.
+>
+> *Pedro, expert automobile chez MUNDRIVE*
 
----
+Besoin de bougies de préchauffage, de liquide de refroidissement ou d'un filtre à air ? Retrouvez nos pièces vérifiées, livrées en 2 à 5 jours, sur [la boutique MUNDRIVE](LIEN-BOUTIQUE). Un doute sur la compatibilité ? **Diego**, notre assistant, vous aide à trouver la bonne pièce avec la marque, le modèle et l'année de votre voiture.
 
-## 🔧 Le conseil de Pedro
+<!-- H2 -->
+## L'essentiel à retenir
 
-> ⚠️ **Questions/réponses proposées : à relire et valider par Pedro avant publication.**
-
-**« Pedro, ma voiture fume blanc tous les matins en ce moment. Je dois m'inquiéter ? »**
-
-Si ça s'arrête au bout de quelques minutes et que votre niveau de liquide de refroidissement ne bouge pas, non. C'est de la condensation, c'est l'hiver qui veut ça. Ce que je regarde en premier, moi, c'est le vase d'expansion. Tant que le niveau est stable, le moteur va bien.
-
-**« Comment je sais si c'est le joint de culasse ? »**
-
-Trois indices ensemble : de la fumée blanche qui continue moteur chaud, une odeur un peu sucrée à l'échappement, et du liquide de refroidissement qui disparaît sans fuite visible. Si vous avez les trois, ne tardez pas. Faites faire un diagnostic. Un garage peut faire un test de compression ou un test de CO2 dans le liquide de refroidissement pour confirmer.
-
-**« Mon diesel fume blanc et démarre mal le matin, c'est grave ? »**
-
-Le plus souvent, ce sont les bougies de préchauffage. Rien d'alarmant, mais il ne faut pas laisser traîner : le démarreur et la batterie souffrent à chaque démarrage difficile. C'est une pièce qu'on change avant l'hiver, et le confort au démarrage n'a plus rien à voir.
-
-**« Je peux continuer à rouler en attendant le garage ? »**
-
-Si c'est juste de la condensation, aucun problème. Si vous perdez du liquide de refroidissement, je vous le dis franchement : surveillez la température à chaque trajet et limitez les kilomètres. Et si l'aiguille monte, on s'arrête. Un moteur qui a chauffé fort, c'est souvent la facture qui double.
-
-*— Pedro, expert automobile chez MUNDRIVE*
-
----
-
-## Trouvez la bonne pièce chez MUNDRIVE
-
-Bougies de préchauffage, liquide de refroidissement, filtre à air, joints… Retrouvez des pièces vérifiées et livrées en 2 à 5 jours partout en France sur [notre boutique](LIEN-BOUTIQUE).
-
-Un doute sur la compatibilité avec votre véhicule ? **Diego, notre assistant**, vous aide à trouver la bonne pièce à partir de la marque, du modèle et de l'année de votre voiture.
-
----
-
-## En résumé
-
-- Une **fumée blanche légère au démarrage par temps froid** est **normale** : c'est de la vapeur d'eau.
-- Une **fumée blanche épaisse qui persiste moteur chaud**, avec une **odeur sucrée** et une **baisse du liquide de refroidissement**, peut indiquer un **joint de culasse** défaillant. Faites contrôler rapidement.
-- Sur un **diesel**, une fumée blanc-gris à **odeur de gazole** au démarrage vient souvent des **bougies de préchauffage** ou des **injecteurs**.
-- **Fumée noire** = trop de carburant. **Fumée bleue** = de l'huile qui brûle.
-- En cas de **surchauffe**, on s'arrête immédiatement.
+- **Fumée blanche légère, à froid, qui disparaît** : c'est de la vapeur d'eau, c'est normal.
+- **Fumée blanche épaisse moteur chaud, odeur sucrée, liquide qui baisse** : pensez joint de culasse et consultez vite.
+- **Diesel qui fume blanc-gris et démarre mal** : souvent les bougies de préchauffage.
+- **Noire** = trop de carburant, **bleue** = huile.
+- **Surchauffe** : on s'arrête, toujours.
 
 ---
 ---
 
 # Notes pour Diana (à retirer avant publication)
 
+## Balises
+Les commentaires `<!-- H1 -->`, `<!-- H2 -->`, `<!-- H3 -->` indiquent le niveau de chaque titre. Dans WordPress, choisis le bloc « Titre » avec le niveau correspondant. Un seul H1 par article (le titre).
+
 ## Liens internes à ajouter
 - `LIEN-ARTICLE-GARAGISTE` → « Les erreurs à éviter chez le garagiste »
+- `LIEN-BOUTIQUE` → boutique, idéalement vers les catégories précises si elles existent
 - `LIEN-ARTICLE-ENTRETIEN` → « Entretenir sa voiture sans se ruiner »
-- `LIEN-ARTICLE-LONG-TRAJET` → « Préparer sa voiture pour un long trajet »
-- `LIEN-BOUTIQUE` → boutique, idéalement vers les catégories précises (bougies de préchauffage, liquide de refroidissement, filtres à air) **si elles existent sur le site**
-- Plus tard : lien vers l'article « Ma voiture ne démarre plus », une fois publié
+- À ajouter aussi : l'article « Ma voiture ne démarre plus » quand il sera publié (partie diesel)
 
 ## Points à vérifier avant publication
-1. **Fourchettes de prix** (bougies de préchauffage, injecteurs, joint de culasse) : ce sont des ordres de grandeur courants mais variables. À faire confirmer par Pedro ou à retirer.
-2. **Questions/réponses de Pedro** : rédigées comme proposition, à relire et valider par lui (vocabulaire, avis, tests qu'il recommande).
-3. **Refroidisseur EGR** : cause réelle sur certains diesels, mais Pedro peut préciser ou nuancer selon les modèles.
-4. **Intervalles de remplacement du liquide de refroidissement** : volontairement non chiffrés (ils dépendent du constructeur), on renvoie au carnet d'entretien.
-5. **Produits cités** dans la partie boutique : ne garder que ceux réellement vendus par MUNDRIVE.
-
-## Longueur
-Environ 2 800 mots, conforme à l'objectif d'un article complet.
+1. **Toutes les réponses de Pedro** sont des propositions écrites à sa place : il doit les relire, les corriger et les valider.
+2. **Prix** (bougies de préchauffage, joint de culasse) : ordres de grandeur à confirmer par Pedro ou à retirer.
+3. **Refroidisseur EGR** : cause réelle sur certains diesels, Pedro peut nuancer selon les modèles.
+4. **Produits cités** : ne garder que ceux réellement vendus par MUNDRIVE.
+5. **Mise en scène de l'interview** (« café en main », l'atelier) : à adapter si ça ne correspond pas à la réalité.
