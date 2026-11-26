@@ -238,7 +238,7 @@ function mundrive_diego_bucket($t) {
     if (preg_match('/compat|r[ée]f[ée]rence|ref-|mod[eè]le|convient|va (avec|sur)|prix|stock|combien coute|combien ça coûte/iu', $t)) {
         return 'compat';
     }
-    if (preg_match('/entretien|conseil|guide|comment (faire|changer|poser)|plaquette|frein|distribution|courroie|pneu|batterie|huile|vidange|bougie|embrayage|amortisseur|filtre|essuie|hiver|frimas|moteur|occasion|neuf|reconditionn/iu', $t)) {
+    if (preg_match('/entretien|conseil|guide|comment (faire|changer|poser|g[ée]rer)|plaquette|frein|distribution|courroie|pneu|batterie|huile|vidange|bougie|embrayage|amortisseur|filtre|essuie|hiver|frimas|moteur|occasion|neuf|reconditionn|budget|co[uû]t|assurance|financement|revente|cote|d[ée]cote|contr[oô]le technique|malus|carte grise|immatriculation|carburant|consommation|essence|diesel|hybride|[ée]lectrique|leasing|loa|lld|cr[ée]dit auto/iu', $t)) {
         return 'maintenance';
     }
     return null;
@@ -325,7 +325,7 @@ function mundrive_diego_scripted_fallback($cat, $article, $product) {
     if ($cat === 'general') {
         return "Je n'ai pas encore d'article dédié à ce sujet sur le site. Pour une réponse fiable, vérifiez le carnet d'entretien de votre véhicule ou demandez à un professionnel.";
     }
-    return "Je peux vérifier une compatibilité de pièce, vous conseiller un article du blog, gérer votre abonnement à la newsletter — ou, si vous êtes bloqué·e, vous mettre en relation à contact@mundrive.com.";
+    return "Je n'ai pas de réponse toute prête pour cette question précise. Voici ce que je sais faire en revanche&nbsp;: vérifier la compatibilité d'une pièce, vous orienter vers un article du blog, ou gérer votre abonnement à la newsletter — et pour tout le reste, contact@mundrive.com vous répond sous 24h.";
 }
 
 function mundrive_diego_useful_links() {
@@ -644,10 +644,17 @@ function mundrive_diego_ask_route(WP_REST_Request $req) {
     if ($bucket === 'compat') {
         $cat     = 'compat';
         $product = mundrive_diego_find_product($question);
-    } elseif ($bucket === 'maintenance') {
+    } else {
+        // on cherche toujours un article correspondant, même sans mot-clé reconnu à
+        // l'avance : Diego doit pouvoir retrouver n'importe lequel de tes articles déjà
+        // publiés, peu importe la formulation exacte de la question du visiteur.
         $article = mundrive_diego_find_article($question);
-        // sourcé par un article -> compteur "entretien" (30/j) ; sinon -> "general" (10/j)
-        $cat = $article ? 'entretien' : 'general';
+        if ($article) {
+            $cat = 'entretien'; // sourcé par un article -> compteur 30/j
+        } elseif ($bucket === 'maintenance') {
+            $cat = 'general'; // sujet auto reconnu mais sans article -> compteur 10/j
+        }
+        // sinon (hors-sujet complet) : $cat reste null, pas de quota, pas d'IA
     }
 
     if ($cat !== null) {
@@ -660,10 +667,10 @@ function mundrive_diego_ask_route(WP_REST_Request $req) {
     }
 
     $context   = mundrive_diego_build_context($article, $product);
-    // le budget IA global protège la facture : au-delà, on répond quand même
-    // (articles/produits trouvés automatiquement, sinon message générique),
-    // simplement sans appeler Claude jusqu'à la prochaine quinzaine.
-    $ai_answer = mundrive_diego_global_ai_budget_available()
+    // le budget IA global protège la facture : au-delà (ou si la question est hors-sujet,
+    // $cat === null), on répond quand même (article/produit trouvé automatiquement, sinon
+    // message générique), simplement sans jamais appeler Claude.
+    $ai_answer = ($cat !== null && mundrive_diego_global_ai_budget_available())
         ? mundrive_diego_call_claude($question, $cat, $context, $user_name)
         : null;
 
