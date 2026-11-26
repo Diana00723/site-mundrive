@@ -223,13 +223,16 @@ function mundrive_diego_log($cat, $question, $article, $product, $answered_via) 
 
 function mundrive_diego_quick_intent($t) {
     if (preg_match('/merci|top|parfait|super/iu', $t)) {
-        return "Avec plaisir ! Autre chose sur une pièce, un article ou votre abonnement ?";
+        return ['text' => "Avec plaisir ! Autre chose sur une pièce, un article ou votre abonnement ?", 'link' => null];
     }
     if (preg_match('/newsletter|abonn|infolettre/iu', $t)) {
-        return "Avec plaisir ! Votre bon de bienvenue est valable sans minimum d'achat, et vous recevrez aussi nos conseils d'atelier chaque semaine, sans spam. Donnez-moi votre adresse email pour vous inscrire ?";
+        return [
+            'text' => "Avec plaisir ! Un bon de bienvenue de 10 € vous attend, sans minimum d'achat et valable 1 an. Cliquez sur le lien ci-dessous pour vous inscrire et le recevoir !",
+            'link' => ['label' => 'Recevoir mon bon de bienvenue', 'url' => home_url('/')],
+        ];
     }
     if (preg_match('/humain|quelqu.un|conseiller|parler [aà]|sav|service client|probl[eè]me|bloqu|command/iu', $t)) {
-        return "Je vous mets en relation avec l'équipe MunDrive : écrivez à contact@mundrive.com en décrivant votre situation, vous aurez une réponse sous 24h.";
+        return ['text' => "Je vous mets en relation avec l'équipe MunDrive : écrivez à contact@mundrive.com en décrivant votre situation, vous aurez une réponse sous 24h.", 'link' => null];
     }
     return null;
 }
@@ -636,7 +639,7 @@ function mundrive_diego_ask_route(WP_REST_Request $req) {
     $quick = mundrive_diego_quick_intent($question);
     if ($quick !== null) {
         mundrive_diego_log(null, $question, null, null, 'quick');
-        return new WP_REST_Response(['allowed' => true, 'answer' => $quick, 'article' => null, 'product' => null, 'link' => null], 200);
+        return new WP_REST_Response(['allowed' => true, 'answer' => $quick['text'], 'article' => null, 'product' => null, 'link' => $quick['link']], 200);
     }
 
     // 3) catégorie brute (décidée par le serveur, jamais par le client)
