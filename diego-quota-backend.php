@@ -226,7 +226,7 @@ function mundrive_diego_quick_intent($t) {
         return "Avec plaisir ! Autre chose sur une pièce, un article ou votre abonnement ?";
     }
     if (preg_match('/newsletter|abonn|infolettre/iu', $t)) {
-        return "Avec plaisir — un email par mois avec nos conseils d'atelier et les meilleures offres, sans spam. Voulez-vous que je vous inscrive avec votre adresse email ?";
+        return "Avec plaisir ! Votre bon de bienvenue est valable sans minimum d'achat, et vous recevrez aussi nos conseils d'atelier chaque semaine, sans spam. Donnez-moi votre adresse email pour vous inscrire ?";
     }
     if (preg_match('/humain|quelqu.un|conseiller|parler [aà]|sav|service client|probl[eè]me|bloqu|command/iu', $t)) {
         return "Je vous mets en relation avec l'équipe MunDrive : écrivez à contact@mundrive.com en décrivant votre situation, vous aurez une réponse sous 24h.";
