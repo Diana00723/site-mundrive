@@ -353,7 +353,7 @@ function mundrive_diego_scripted_fallback($cat, $article, $product) {
     if ($cat === 'general') {
         return "Je n'ai pas encore d'article dédié à ce sujet sur le site. Pour une réponse fiable, vérifiez le carnet d'entretien de votre véhicule ou demandez à un professionnel.";
     }
-    return "Je n'ai pas de réponse toute prête pour cette question précise. Voici ce que je sais faire en revanche&nbsp;: vérifier la compatibilité d'une pièce, vous orienter vers un article du blog, ou gérer votre abonnement à la newsletter — et pour tout le reste, contact@mundrive.com vous répond sous 24h.";
+    return "Je n'ai pas de réponse toute prête pour cette question précise. Voici ce que je sais faire en revanche : vérifier la compatibilité d'une pièce, vous orienter vers un article du blog, ou gérer votre abonnement à la newsletter — et pour tout le reste, contact@mundrive.com vous répond sous 24h.";
 }
 
 function mundrive_diego_useful_links() {
