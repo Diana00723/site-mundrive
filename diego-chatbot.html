@@ -703,7 +703,7 @@
   ];
 
   const MAINTENANCE_LIKE = /entretien|conseil|guide|comment (faire|changer|poser)|plaquette|frein|distribution|courroie|pneu|batterie|huile|vidange|bougie|embrayage|amortisseur|filtre|essuie|hiver|frimas|moteur|occasion|neuf|reconditionn/i;
-  const COMPAT_LIKE = /compat|r[ée]f[ée]rence|ref-|mod[eè]le|convient|va (avec|sur)|prix|stock|combien coute|combien ça coûte/i;
+  const COMPAT_LIKE = /compat|r[ée]f[ée]rence|ref-|mod[eè]le|convient|va (avec|sur)|prix|stock|combien coute|combien ça coûte|j'ai besoin d'un|j'ai besoin d'une|il me faut un|il me faut une|je cherche un|je cherche une|je voudrais un|je voudrais une|feu |phare|optique|clignotant|pare-choc|r[ée]troviseur|poign[ée]e de porte|pare-brise|calandre|pot d'[ée]chappement/i;
 
   function classify(text){
     if(/merci|top|parfait|super/i.test(text)) return { cat: null, kind: 'thanks' };

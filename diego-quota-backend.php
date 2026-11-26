@@ -235,7 +235,7 @@ function mundrive_diego_quick_intent($t) {
 }
 
 function mundrive_diego_bucket($t) {
-    if (preg_match('/compat|r[ée]f[ée]rence|ref-|mod[eè]le|convient|va (avec|sur)|prix|stock|combien coute|combien ça coûte/iu', $t)) {
+    if (preg_match('/compat|r[ée]f[ée]rence|ref-|mod[eè]le|convient|va (avec|sur)|prix|stock|combien coute|combien ça coûte|j\'ai besoin d\'un|j\'ai besoin d\'une|il me faut un|il me faut une|je cherche un|je cherche une|je voudrais un|je voudrais une|feu |phare|optique|clignotant|pare-choc|r[ée]troviseur|poign[ée]e de porte|pare-brise|calandre|pot d\'[ée]chappement/iu', $t)) {
         return 'compat';
     }
     if (preg_match('/entretien|conseil|guide|comment (faire|changer|poser|g[ée]rer)|plaquette|frein|distribution|courroie|pneu|batterie|huile|vidange|bougie|embrayage|amortisseur|filtre|essuie|hiver|frimas|moteur|occasion|neuf|reconditionn|budget|co[uû]t|assurance|financement|revente|cote|d[ée]cote|contr[oô]le technique|malus|carte grise|immatriculation|carburant|consommation|essence|diesel|hybride|[ée]lectrique|leasing|loa|lld|cr[ée]dit auto/iu', $t)) {
@@ -641,16 +641,20 @@ function mundrive_diego_ask_route(WP_REST_Request $req) {
     $product = null;
     $cat     = null;
 
-    if ($bucket === 'compat') {
-        $cat     = 'compat';
-        $product = mundrive_diego_find_product($question);
+    // on cherche toujours une pièce et un article correspondants, même sans mot-clé
+    // reconnu à l'avance : Diego doit pouvoir retrouver n'importe quel produit ou
+    // article déjà publié, peu importe la formulation exacte du visiteur
+    // (ex. "j'ai besoin d'un feu bmw" ne contient aucun mot-clé de compat mais doit
+    // quand même déclencher une recherche produit).
+    $product = mundrive_diego_find_product($question);
+    if ($product) {
+        $cat = 'compat';
     } else {
-        // on cherche toujours un article correspondant, même sans mot-clé reconnu à
-        // l'avance : Diego doit pouvoir retrouver n'importe lequel de tes articles déjà
-        // publiés, peu importe la formulation exacte de la question du visiteur.
         $article = mundrive_diego_find_article($question);
         if ($article) {
             $cat = 'entretien'; // sourcé par un article -> compteur 30/j
+        } elseif ($bucket === 'compat') {
+            $cat = 'compat'; // question de compatibilité reconnue mais aucune pièce trouvée -> Diego demande des précisions
         } elseif ($bucket === 'maintenance') {
             $cat = 'general'; // sujet auto reconnu mais sans article -> compteur 10/j
         }
