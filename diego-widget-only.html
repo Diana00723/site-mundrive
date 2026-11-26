@@ -394,6 +394,16 @@
   const MAINTENANCE_LIKE = /entretien|conseil|guide|comment (faire|changer|poser)|plaquette|frein|distribution|courroie|pneu|batterie|huile|vidange|bougie|embrayage|amortisseur|filtre|essuie|hiver|frimas|moteur|occasion|neuf|reconditionn/i;
   const COMPAT_LIKE = /compat|r[ée]f[ée]rence|ref-|mod[eè]le|convient|va (avec|sur)|prix|stock|combien coute|combien ça coûte|j'ai besoin d'un|j'ai besoin d'une|il me faut un|il me faut une|je cherche un|je cherche une|je voudrais un|je voudrais une|feu |phare|optique|clignotant|pare-choc|r[ée]troviseur|poign[ée]e de porte|pare-brise|calandre|pot d'[ée]chappement/i;
 
+  // la recherche WordPress par défaut exige tous les mots de la requête dans le
+  // titre/contenu : on retire les mots de liaison pour ne garder que les mots
+  // utiles ("j'ai besoin d'un feu bmw" -> "feu bmw"), sinon rien ne remonte.
+  const SEARCH_STOPWORDS = new Set(["je","j","tu","il","elle","nous","vous","ils","elles","on","me","m","te","t","se","s","le","la","les","l","un","une","des","du","de","d","ai","as","a","avons","avez","ont","veux","veut","voudrais","voudrait","cherche","cherchons","cherchez","besoin","faut","faudrait","pour","avec","sans","que","qui","quoi","comment","ou","où","et","à","dans","sur","par","pas","ne","n","mon","ma","mes","ton","ta","tes","son","sa","ses","notre","nos","votre","vos","leur","leurs","est","être","suis","es","sommes","êtes","sont"]);
+  function searchTerms(text){
+    const kept = String(text || '').toLowerCase().split(/[\s'’]+/).filter(w => w && !SEARCH_STOPWORDS.has(w));
+    const terms = kept.join(' ').trim();
+    return terms || text || '';
+  }
+
   function classify(text){
     if(/merci|top|parfait|super/i.test(text)) return { cat: null, kind: 'thanks' };
     if(/newsletter|abonn|infolettre/i.test(text)) return { cat: null, kind: 'newsletter' };
@@ -420,7 +430,7 @@
   function buildReply(c){
     switch(c.kind){
       case 'compat':
-        return "Vous devriez trouver ça dans notre boutique — repérez la pièce qui correspond à votre véhicule. Chaque fiche produit a une description détaillée avec les modèles compatibles, à bien vérifier avant d'acheter. Un doute&nbsp;? Écrivez à <strong>contact@mundrive.com</strong>, réponse sous 24h." + linkChip('/?s=' + encodeURIComponent(c.q || '') + '&post_type=product', 'Voir la boutique');
+        return "Vous devriez trouver ça dans notre boutique — repérez la pièce qui correspond à votre véhicule. Chaque fiche produit a une description détaillée avec les modèles compatibles, à bien vérifier avant d'acheter. Un doute&nbsp;? Écrivez à <strong>contact@mundrive.com</strong>, réponse sous 24h." + linkChip('/?s=' + encodeURIComponent(searchTerms(c.q)) + '&post_type=product', 'Voir la boutique');
       case 'article':
         return "Bonne question&nbsp;! Notre atelier a justement écrit un article là-dessus&nbsp;: <strong>" + c.article.title + "</strong> — " + c.article.excerpt + ' <a class="link-chip" href="' + c.article.href + '">Lire l\'article<svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"></path></svg></a>';
       case 'general-known':

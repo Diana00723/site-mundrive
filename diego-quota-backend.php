@@ -251,9 +251,33 @@ function mundrive_diego_bucket($t) {
    RECHERCHE — articles du blog + produits WooCommerce
    ============================================================ */
 
+// la recherche WordPress par défaut exige TOUS les mots de la requête dans le
+// titre/contenu (ET logique) — sans ce nettoyage, "j'ai besoin d'un feu bmw" ne
+// trouve rien car aucune fiche produit ne contient littéralement "j'ai" ou
+// "besoin". On retire les mots de liaison pour ne garder que les mots utiles.
+function mundrive_diego_search_terms($question) {
+    $stopwords = [
+        'je', 'j', 'tu', 'il', 'elle', 'nous', 'vous', 'ils', 'elles', 'on',
+        'me', 'm', 'te', 't', 'se', 's', 'le', 'la', 'les', 'l', 'un', 'une',
+        'des', 'du', 'de', 'd', 'ai', 'as', 'a', 'avons', 'avez', 'ont',
+        'veux', 'veut', 'voudrais', 'voudrait', 'cherche', 'cherchons',
+        'cherchez', 'besoin', 'faut', 'faudrait', 'pour', 'avec', 'sans',
+        'que', 'qui', 'quoi', 'comment', 'ou', 'où', 'et', 'à', 'dans',
+        'sur', 'par', 'pas', 'ne', 'n', 'mon', 'ma', 'mes', 'ton', 'ta',
+        'tes', 'son', 'sa', 'ses', 'notre', 'nos', 'votre', 'vos', 'leur',
+        'leurs', 'est', 'être', 'suis', 'es', 'sommes', 'êtes', 'sont',
+    ];
+    $words = preg_split('/[\s\'’]+/u', mb_strtolower($question));
+    $kept  = array_filter($words, function ($w) use ($stopwords) {
+        return $w !== '' && !in_array($w, $stopwords, true);
+    });
+    $terms = trim(implode(' ', $kept));
+    return $terms !== '' ? $terms : $question;
+}
+
 function mundrive_diego_find_article($question) {
     $q = new WP_Query([
-        's'              => $question,
+        's'              => mundrive_diego_search_terms($question),
         'post_type'      => 'post',
         'post_status'    => 'publish',
         'posts_per_page' => 1,
@@ -273,7 +297,7 @@ function mundrive_diego_find_product($question) {
         return null;
     }
     $q = new WP_Query([
-        's'              => $question,
+        's'              => mundrive_diego_search_terms($question),
         'post_type'      => 'product',
         'post_status'    => 'publish',
         'posts_per_page' => 1,
@@ -697,7 +721,7 @@ function mundrive_diego_ask_route(WP_REST_Request $req) {
 
     $link = null;
     if ($cat === 'compat' && !$product) {
-        $shop_url = add_query_arg(['s' => $question, 'post_type' => 'product'], mundrive_diego_useful_links()['shop']);
+        $shop_url = add_query_arg(['s' => mundrive_diego_search_terms($question), 'post_type' => 'product'], mundrive_diego_useful_links()['shop']);
         $link     = ['label' => 'Voir les pièces correspondantes', 'url' => $shop_url];
     }
 
