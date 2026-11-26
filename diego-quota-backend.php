@@ -317,10 +317,11 @@ function mundrive_diego_scripted_fallback($cat, $article, $product) {
     if ($product) {
         return 'Nous avons « ' . $product->get_name() . ' » (réf. ' . $product->get_sku() . '), '
             . wp_strip_all_tags($product->get_price_html()) . ', '
-            . ($product->is_in_stock() ? 'actuellement en stock.' : 'actuellement en rupture de stock.');
+            . ($product->is_in_stock() ? 'actuellement en stock. ' : 'actuellement en rupture de stock. ')
+            . "Vérifiez bien la fiche produit pour confirmer qu'elle correspond exactement à votre véhicule. Un doute ? Écrivez à contact@mundrive.com, réponse sous 24h.";
     }
     if ($cat === 'compat') {
-        return "Dites-m'en un peu plus : le modèle de votre véhicule, son année, et la référence ou le nom de la pièce — je regarde tout de suite si elle correspond.";
+        return "Vous devriez trouver ça dans notre boutique — repérez la pièce qui correspond à votre véhicule. Chaque fiche produit a une description détaillée avec les modèles compatibles, à bien vérifier avant d'acheter. Un doute ? Écrivez à contact@mundrive.com, réponse sous 24h.";
     }
     if ($cat === 'general') {
         return "Je n'ai pas encore d'article dédié à ce sujet sur le site. Pour une réponse fiable, vérifiez le carnet d'entretien de votre véhicule ou demandez à un professionnel.";
@@ -506,6 +507,9 @@ function mundrive_diego_call_claude($question, $cat, $context, $user_name = null
         . "3) Si un ARTICLE MUNDRIVE est fourni ci-dessous, base ta réponse dessus et mentionne naturellement que MunDrive a un article sur le sujet (ne donne pas d'URL toi-même, elle est ajoutée automatiquement après ta réponse). "
         . "4) Si un PRODUIT MUNDRIVE est fourni ci-dessous, utilise exactement ces données (nom, référence, prix, stock) sans en inventer d'autres. "
         . "5) Ne te présente jamais comme un humain ; tu es un assistant automatisé."
+        . ($cat === 'compat'
+            ? " 6) Pour une question de compatibilité ou de recherche de pièce, oriente le visiteur vers la boutique (un lien y est ajouté automatiquement après ta réponse, ne donne pas d'URL toi-même) et rappelle-lui de bien lire la description détaillée de la fiche produit pour confirmer que la pièce correspond exactement à son véhicule ; en cas de doute, invite-le à écrire à contact@mundrive.com, réponse sous 24h."
+            : "")
         . ($user_name
             ? "\n\nLe visiteur est connecté à son compte et s'appelle " . $user_name . " — vous pouvez l'appeler par son prénom naturellement, sans en abuser (pas besoin à chaque phrase)."
             : "\n\nLe visiteur n'est pas connecté à un compte : vous ne connaissez pas son prénom, restez chaleureux et expert sans en inventer un.")
@@ -688,12 +692,18 @@ function mundrive_diego_ask_route(WP_REST_Request $req) {
 
     mundrive_diego_log($cat, $question, $article, $product, $via);
 
+    $link = null;
+    if ($cat === 'compat' && !$product) {
+        $shop_url = add_query_arg(['s' => $question, 'post_type' => 'product'], mundrive_diego_useful_links()['shop']);
+        $link     = ['label' => 'Voir les pièces correspondantes', 'url' => $shop_url];
+    }
+
     return new WP_REST_Response([
         'allowed' => true,
         'answer'  => $answer,
         'article' => $article ? ['title' => $article->post_title, 'url' => get_permalink($article)] : null,
         'product' => $product ? ['name' => $product->get_name(), 'url' => $product->get_permalink()] : null,
-        'link'    => null,
+        'link'    => $link,
     ], 200);
 }
 

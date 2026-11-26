@@ -731,7 +731,7 @@
   function buildReply(c){
     switch(c.kind){
       case 'compat':
-        return "Dites-m'en un peu plus&nbsp;: le modèle de votre véhicule, son année, et la référence ou le nom de la pièce — je regarde tout de suite si elle correspond.";
+        return "Vous devriez trouver ça dans notre boutique — repérez la pièce qui correspond à votre véhicule. Chaque fiche produit a une description détaillée avec les modèles compatibles, à bien vérifier avant d'acheter. Un doute&nbsp;? Écrivez à <strong>contact@mundrive.com</strong>, réponse sous 24h. <a class=\"link-chip\" href=\"#\">Voir la boutique<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M7 17 17 7M9 7h8v8\"></path></svg></a>";
       case 'article':
         return "Bonne question&nbsp;! Notre atelier a justement écrit un article là-dessus&nbsp;: <strong>" + c.article.title + "</strong> — " + c.article.excerpt + ' <a class="link-chip" href="' + c.article.href + '">Lire l\'article<svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"></path></svg></a>';
       case 'general-known':
